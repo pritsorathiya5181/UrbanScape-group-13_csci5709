@@ -11,6 +11,7 @@
 # Individual Gitlab Repository - Tutorial-2:
 
 Individual Repository for PRITI SRI PANDEY:  [https://git.cs.dal.ca/ppandey/csci5709_priti_pandey_t2]
+Individual Repository for AESHNA VERMA: [https://git.cs.dal.ca/aeshna/csci5709_aeshna_verma_t2]
 
 # Group Gitlab Repository:
 
