@@ -5,13 +5,14 @@
 3.	MANJINDER SINGH – B00866348
 4.	PRIT AJAYKUMAR SORATHIYA – B00890175
 5.	PRITI SRI PANDEY– B00877337
-6.	RIKIN PATEL – B00864960
+6.	RIKIN PINESHKUMAR PATEL – B00864960
 
 
 # Individual Gitlab Repository - Tutorial-2:
 
 Individual Repository for PRITI SRI PANDEY:  [https://git.cs.dal.ca/ppandey/csci5709_priti_pandey_t2]
 Individual Repository for AESHNA VERMA: [https://git.cs.dal.ca/aeshna/csci5709_aeshna_verma_t2]
+Individual Repository for RIKIN PINESHKUMAR PATEL: [https://git.cs.dal.ca/rppatel/csci-5709-rikin_patel_t2]
 
 # Group Gitlab Repository:
 
