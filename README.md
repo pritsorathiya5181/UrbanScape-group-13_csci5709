@@ -13,7 +13,7 @@
 - Individual Repository for AESHNA VERMA: [https://git.cs.dal.ca/aeshna/csci5709_aeshna_verma_t2]
 - Individual Repository for RIKIN PINESHKUMAR PATEL: [https://git.cs.dal.ca/rppatel/csci-5709-rikin_patel_t2]
 - Individual Repository for PRIT AJAYKUMAR SORATHIYA: [https://git.cs.dal.ca/psorathiya/csci-5709-b00890175-prit_ajaykumar_sorathiya]
-
+- Individual Repository for JANHAVI NITIN SONAWANE: [https://git.cs.dal.ca/sonawane/cs5709_janhavi_t2]
 # Group Gitlab Repository:
 
 Group Repository: [https://git.cs.dal.ca/ppandey/group-13_csci5709]
