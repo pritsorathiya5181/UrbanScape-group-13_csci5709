@@ -1,4 +1,4 @@
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react'
 import ServiceTile from './ServiceTile';
 import salonImage from '../../images/salon.jpg';
@@ -29,6 +29,12 @@ function UserHomePage() {
     return (
 
         <div>
+          <Typography style={{ textAlign: "center", padding: "20px" }} variant="h2">
+                                    Welcome Home !
+                                </Typography>
+                                <Typography style={{ textAlign: "center", padding: "10px" }} variant="h4">
+                                    We are the one stop solution for all your worries
+                                </Typography>
     
           <div>
     
