@@ -4,6 +4,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Calendar from '../DateTimePicker/Calendar'
 import {
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -27,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+    // transition: theme.transitions.create('transform', {
+    //   duration: theme.transitions.duration.shortest,
+    // }),
   },
   expandOpen: {
     transform: 'rotate(180deg)',
@@ -53,6 +54,7 @@ function ServiceCard(props) {
         <CardHeader
           title={props.services.title}
           subheader={props.services.subheader}
+          sx={{ textAlign: 'start' }}
         />
         <CardMedia className={classes.media} image={props.services.img} />
         <CardContent>
@@ -61,9 +63,12 @@ function ServiceCard(props) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label='add to cart'>
+          {/* <IconButton aria-label='add to cart'>
             <ShoppingCartIcon />
-          </IconButton>
+          </IconButton> */}
+          <Button variant='text' sx={{ textDecoration: 'underline' }}>
+            Book Service
+          </Button>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,

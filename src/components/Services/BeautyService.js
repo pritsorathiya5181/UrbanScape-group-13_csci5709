@@ -57,7 +57,7 @@ function BeautyService() {
   })
   return (
     <div className={classes.header}>
-      <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h2'>
+      <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h3'>
         Beauty Services
       </Typography>
       <Grid container spacing={1} className={classes.gridcontainer}>
@@ -70,11 +70,11 @@ function BeautyService() {
             </Grid>
           )
         })}
-        <Calendar></Calendar>
+        {/* <Calendar></Calendar> */}
       </Grid>
-      <Button className={classes.button} variant='contained' color='primary'>
+      {/* <Button className={classes.button} variant='contained' color='primary'>
         Book Service
-      </Button>
+      </Button> */}
     </div>
   )
 }
