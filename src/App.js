@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import ResponsiveAppBar from './components/Navbar/ResponsiveNavbar'
+import NavBar from './components/Navbar/NavBar'
 import BeautyService from './components/Services/BeautyService'
 import UserHomePage from './components/User/UserHomePage'
 
 function App() {
   return (
     <Router>
-      <ResponsiveAppBar />
+      <NavBar />
       <section>
         <Routes>
           <Route path='/' element={<UserHomePage />} />
