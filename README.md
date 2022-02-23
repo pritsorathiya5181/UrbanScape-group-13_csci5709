@@ -4,8 +4,8 @@
 
 - _Date Created_: 2 Feb 2022
 - _Last Modification Date_: 23 Feb 2022
-- _Heroku deployed URL_: <https://urbanscapecompany.herokuapp.com/>
-- _Group repository git URL_: <https://g13-urbanscape.herokuapp.com/>
+- _Heroku deployed URL_: <https://g13-urbanscape.herokuapp.com/>
+- _Group repository git URL_: <https://git.cs.dal.ca/ppandey/group-13_csci5709>
 
 ## Authors
 
