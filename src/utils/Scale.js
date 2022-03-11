@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 
-export const partnerBaseUrl = '/professional'
-
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window
   return {

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './ServiceProfile.css'
-import useWindowDimensions, * as PATH from '../../../utils/Scale'
+import useWindowDimensions from '../../../utils/Scale'
+import * as PATH from '../../../utils/constant'
 import ServiceCard from './ServiceCard'
 import { useSelector } from 'react-redux'
 import { Tooltip } from '@mui/material'
@@ -172,8 +173,8 @@ const ServiceProfile = () => {
         {services?.length > 0 ? (
           <section className='service-item'>
             <section className={width > 600 ? 'service-row' : 'service-column'}>
-              {services.map((item) => {
-                return <ServiceCard item={item} />
+              {services.map((item, index) => {
+                return <ServiceCard key={index.toString()} item={item} />
               })}
             </section>
           </section>

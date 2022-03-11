@@ -1,4 +1,4 @@
-import * as PATH from './Scale'
+import * as PATH from './constant'
 
 export const ServiceItem = [
   {

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './AddService.css'
-import useWindowDimensions, * as PATH from '../../../utils/Scale'
+import useWindowDimensions from '../../../utils/Scale'
+import * as PATH from '../../../utils/constant'
 import { ServiceCategory } from '../../../utils/service'
 import {
   Button,

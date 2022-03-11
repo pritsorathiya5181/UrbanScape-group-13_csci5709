@@ -23,7 +23,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import * as MENU from '../../../utils/constant'
 import { makeStyles } from '@mui/styles'
 
-const ResponsiveAppBar = () => {
+const NavBar = () => {
   let navigate = useNavigate()
 
   const useStyles = makeStyles((theme) => ({
@@ -100,7 +100,7 @@ const ResponsiveAppBar = () => {
         }}
       >
         {MENU.pages.map((page, index) => (
-          <>
+          <React.Fragment key={index.toString()}>
             <Button
               key={index.toString()}
               //   onClick={handleCloseNavMenu}
@@ -120,7 +120,7 @@ const ResponsiveAppBar = () => {
               {page}
               {page === 'Services' && <KeyboardArrowDownIcon />}
             </Button>
-          </>
+          </React.Fragment>
         ))}
       </Box>
     )
@@ -260,4 +260,4 @@ const ResponsiveAppBar = () => {
     </AppBar>
   )
 }
-export default ResponsiveAppBar
+export default NavBar

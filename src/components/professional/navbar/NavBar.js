@@ -12,18 +12,14 @@ import {
   Tooltip,
   AppBar,
 } from '@mui/material'
-
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import HouseIcon from '@mui/icons-material/House'
 import PersonIcon from '@mui/icons-material/Person'
 import MenuIcon from '@mui/icons-material/Menu'
 
-import * as MENU from '../../utils/constant'
+import * as MENU from '../../../utils/constant'
 import { makeStyles } from '@mui/styles'
 
-const ResponsiveAppBar = () => {
+const NavBar = () => {
   let navigate = useNavigate()
 
   const useStyles = makeStyles((theme) => ({
@@ -38,8 +34,6 @@ const ResponsiveAppBar = () => {
 
   const [pageNavOption, setPageNameOption] = useState(null)
   const [profileSettingOption, setProfileSettingOption] = useState(null)
-  const [serviceOption, setServiceOption] = useState(null)
-
   const handleOpenNavMenu = (event) => {
     setPageNameOption(event.currentTarget)
   }
@@ -59,20 +53,14 @@ const ResponsiveAppBar = () => {
     navigate('./')
   }
 
-  const navigateToBeautyServices = () => {
-    handleClose()
-    navigate('./beautyservices')
+  const navigatePages = (endpoint) => {
+    if (endpoint === 'Services') {
+      navigate(`./myservices`)
+    } else if (endpoint == 'Schedule') {
+      navigate('./')
+    }
+    handleCloseNavMenu()
   }
-
-  const handleClick = (event) => {
-    setServiceOption(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setServiceOption(null)
-  }
-
-  const openMenu = Boolean(serviceOption)
 
   const renderAppIconView = () => {
     return (
@@ -99,16 +87,14 @@ const ResponsiveAppBar = () => {
           display: { xs: 'none', md: 'flex' },
         }}
       >
-        {MENU.pages.map((page, index) => (
-          <>
+        {MENU.professionalPages.map((page, index) => (
+          <React.Fragment key={index.toString()}>
             <Button
               key={index.toString()}
-              //   onClick={handleCloseNavMenu}
-              onClick={page === 'Services' ? handleClick : handleCloseNavMenu}
+              onClick={() => navigatePages(page)}
               sx={{
                 my: 2,
                 color: 'white',
-                // display: 'block',
                 fontSize: '20px',
                 fontWeight: 'bold',
                 textTransform: 'capitalize',
@@ -118,9 +104,8 @@ const ResponsiveAppBar = () => {
               }}
             >
               {page}
-              {page === 'Services' && <KeyboardArrowDownIcon />}
             </Button>
-          </>
+          </React.Fragment>
         ))}
       </Box>
     )
@@ -157,10 +142,9 @@ const ResponsiveAppBar = () => {
             display: { xs: 'block', md: 'none' },
           }}
         >
-          {MENU.pages.map((page) => (
-            <MenuItem key={page} onClick={handleCloseNavMenu}>
+          {MENU.professionalPages.map((page) => (
+            <MenuItem key={page} onClick={() => navigatePages(page)}>
               <Typography textAlign='center'>{page}</Typography>
-              {page === 'Services' && <ArrowDropDownIcon />}
             </MenuItem>
           ))}
         </Menu>
@@ -177,11 +161,6 @@ const ResponsiveAppBar = () => {
           width: { md: '120px', xs: 'fit-content' },
         }}
       >
-        <Tooltip title='Open cart'>
-          <IconButton sx={{ paddingRight: 1 }}>
-            <ShoppingCartIcon fontSize='large' sx={{ color: 'white' }} />
-          </IconButton>
-        </Tooltip>
         <Tooltip title='Open settings'>
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <PersonIcon fontSize='large' sx={{ color: 'white' }} />
@@ -203,30 +182,13 @@ const ResponsiveAppBar = () => {
           open={Boolean(profileSettingOption)}
           onClose={handleCloseUserMenu}
         >
-          {MENU.profileSettings.map((setting) => (
+          {MENU.professionalProfileSetting.map((setting) => (
             <MenuItem key={setting} onClick={handleCloseUserMenu}>
               <Typography textAlign='center'>{setting}</Typography>
             </MenuItem>
           ))}
         </Menu>
       </Box>
-    )
-  }
-
-  const renderServiceView = () => {
-    return (
-      <Menu
-        getContentAnchorEl={null}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-        id='menu-list'
-        open={openMenu}
-        onClose={handleClose}
-        anchorEl={serviceOption}
-      >
-        <MenuItem onClick={navigateToBeautyServices}>Beauty Services</MenuItem>
-        <MenuItem onClick={handleClose}>Home Repair Services</MenuItem>
-      </Menu>
     )
   }
 
@@ -253,11 +215,10 @@ const ResponsiveAppBar = () => {
             {renderAppIconView()}
           </Box>
 
-          {renderServiceView()}
           {renderProfileView()}
         </Toolbar>
       </Container>
     </AppBar>
   )
 }
-export default ResponsiveAppBar
+export default NavBar

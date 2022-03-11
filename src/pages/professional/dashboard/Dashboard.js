@@ -1,11 +1,11 @@
 import React from 'react'
-import ProfessionalNavBar from '../../../components/professional/navbar/ProfessionalNavBar'
+import NavBar from '../../../components/professional/NavBar/NavBar'
 import './Dashboard.css'
 
 const Dashboard = () => {
   return (
     <main className='contianer'>
-      <ProfessionalNavBar />
+      <NavBar />
     </main>
   )
 }
