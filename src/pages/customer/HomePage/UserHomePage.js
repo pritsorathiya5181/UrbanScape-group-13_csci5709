@@ -1,8 +1,8 @@
 import React from 'react'
 import ServiceTile from './ServiceTile'
-import salonImage from '../../asserts/images/salon.jpg'
-import plumbingImg from '../../asserts/images/carpentry.jpg'
-import carpentryImg from '../../asserts/images/plumbing.jpg'
+import salonImage from '../../../asserts/images/salon.jpg'
+import plumbingImg from '../../../asserts/images/carpentry.jpg'
+import carpentryImg from '../../../asserts/images/plumbing.jpg'
 import { Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 

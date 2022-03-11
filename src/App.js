@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import NavBar from './components/Navbar/NavBar'
-import BeautyService from './components/Services/BeautyService'
-import UserHomePage from './components/User/UserHomePage'
+import BeautyService from './pages/customer/ServicePage/BeautyService'
+import UserHomePage from './pages/customer/HomePage/UserHomePage'
 
 function App() {
   return (

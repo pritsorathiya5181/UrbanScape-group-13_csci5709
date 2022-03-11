@@ -15,15 +15,26 @@ import {
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import ArrowRightIcon from '@mui/icons-material/ArrowRight'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import HouseIcon from '@mui/icons-material/House'
 import PersonIcon from '@mui/icons-material/Person'
 import MenuIcon from '@mui/icons-material/Menu'
 
 import * as MENU from '../../utils/constant'
+import { makeStyles } from '@mui/styles'
 
 const ResponsiveAppBar = () => {
   let navigate = useNavigate()
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    toolbar: {
+      height: '50px',
+    },
+  }))
+  const classes = useStyles()
 
   const [pageNavOption, setPageNameOption] = useState(null)
   const [profileSettingOption, setProfileSettingOption] = useState(null)
@@ -149,7 +160,7 @@ const ResponsiveAppBar = () => {
           {MENU.pages.map((page) => (
             <MenuItem key={page} onClick={handleCloseNavMenu}>
               <Typography textAlign='center'>{page}</Typography>
-              {page === 'Services' && <ArrowRightIcon />}
+              {page === 'Services' && <ArrowDropDownIcon />}
             </MenuItem>
           ))}
         </Menu>
@@ -222,7 +233,7 @@ const ResponsiveAppBar = () => {
   return (
     <AppBar position='static'>
       <Container maxWidth='100%'>
-        <Toolbar disableGutters>
+        <Toolbar disableGutters className={classes.toolbar}>
           <Box
             noWrap
             component='div'
