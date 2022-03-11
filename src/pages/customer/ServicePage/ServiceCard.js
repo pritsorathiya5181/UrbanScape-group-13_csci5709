@@ -2,7 +2,7 @@ import React from 'react'
 import clsx from 'clsx'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import Calendar from '../../../components/DateTimePicker/Calendar'
+import Calendar from '../../../components/customer/DateTimePicker/Calendar'
 import {
   Button,
   Card,

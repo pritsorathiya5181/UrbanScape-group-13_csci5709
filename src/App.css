@@ -1,0 +1,14 @@
+:root {
+  --theme-dark: #1c1b1b;
+  --theme-white: #fff;
+  --theme-blue: #1888ff;
+  --theme-light: #ced3de;
+
+  /* navbar */
+  --gradient-dark: #1a1717;
+  --dark-menu: #242222;
+  --hover-blue: #5cabff;
+
+  /* service */
+  --theme-seperator: #a9aca9;
+}

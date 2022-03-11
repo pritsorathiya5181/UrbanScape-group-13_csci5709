@@ -3,7 +3,7 @@ import ServiceCard from './ServiceCard'
 import headMassageImage from '../../../asserts/images/head-massage.jpg'
 import facialImage from '../../../asserts/images/facial.jpg'
 import haircutImage from '../../../asserts/images/haircut.jpg'
-import Calendar from '../../../components/DateTimePicker/Calendar'
+import Calendar from '../../../components/customer/DateTimePicker/Calendar'
 import { Button, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 
