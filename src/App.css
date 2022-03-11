@@ -1,0 +1,15 @@
+:root {
+  --theme-white: #fff;
+  --theme-light: #bbdefb;
+  --theme-blue: #1e88e5;
+  --theme-dark: #0d47a1;
+  --theme-black: #000000;
+
+  /* navbar */
+  --gradient-dark: #1a1717;
+  --dark-menu: #242222;
+  --hover-blue: #5cabff;
+
+  /* service */
+  --theme-seperator: #a9aca9;
+}
