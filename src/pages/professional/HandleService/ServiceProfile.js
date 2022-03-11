@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './ServiceProfile.css'
-import useWindowDimensions from '../../../utils/Scale'
-import * as PATH from '../../../utils/constant'
+import useWindowDimensions from '../../../utils/scale'
+import * as PATH from '../../../utils/string'
 import ServiceCard from './ServiceCard'
 import { useSelector } from 'react-redux'
-import { Tooltip } from '@mui/material'
+import NavBar from '../../../components/professional/NavBar/NavBar'
+import AddIcon from '@mui/icons-material/Add'
 
 const ServiceProfile = () => {
+  const navigate = useNavigate()
   const { width } = useWindowDimensions()
 
   const [services, setServices] = useState([
@@ -16,6 +18,7 @@ const ServiceProfile = () => {
       serviceCategory: 'Hair Cutting',
       serviceLocation: 'Quinpool Rd',
       serviceTime: '10.30AM - 12.00PM',
+      serviceCost: '14',
       serviceImage: [
         {
           photoId: 1,
@@ -36,6 +39,7 @@ const ServiceProfile = () => {
       serviceCategory: 'Home Decoration',
       serviceLocation: 'Joseph Howe dr',
       serviceTime: '11.30AM - 01.00PM',
+      serviceCost: '12',
       serviceImage: [
         {
           photoId: 1,
@@ -56,6 +60,7 @@ const ServiceProfile = () => {
       serviceCategory: 'Personal Beauty',
       serviceLocation: 'South park rd',
       serviceTime: '11.30AM - 02.00PM',
+      serviceCost: '16',
       serviceImage: [
         {
           photoId: 1,
@@ -76,6 +81,7 @@ const ServiceProfile = () => {
       serviceCategory: 'Spa',
       serviceLocation: 'Quinpool Rd',
       serviceTime: '10.30AM - 12.00PM',
+      serviceCost: '12',
       serviceImage: [
         {
           photoId: 1,
@@ -96,6 +102,7 @@ const ServiceProfile = () => {
       serviceCategory: 'Hair Cutting',
       serviceLocation: 'Quinpool Rd',
       serviceTime: '10.30AM - 12.00PM',
+      serviceCost: '16',
       serviceImage: [
         {
           photoId: 1,
@@ -116,6 +123,7 @@ const ServiceProfile = () => {
       serviceCategory: 'Hair Cutting',
       serviceLocation: 'Quinpool Rd',
       serviceTime: '10.30AM - 12.00PM',
+      serviceCost: '18',
       serviceImage: [
         {
           photoId: 1,
@@ -141,27 +149,22 @@ const ServiceProfile = () => {
   }, [])
 
   // setServices(servicesList)
+  const navigateAddService = () => {
+    navigate(`${PATH.partnerBaseUrl}/addservice`)
+  }
 
   return (
     <>
-      <nav className='service-navbar'>
-        <Link to={`${PATH.partnerBaseUrl}/myservices`} className='navbar-logo'>
-          My Services
-        </Link>
-        {width > 550 ? (
-          <Link to={`${PATH.partnerBaseUrl}/addservice`}>
-            <button className='add-service-btn'>Add Service</button>
-          </Link>
-        ) : (
-          <Tooltip title='Add new service'>
-            <Link to={`${PATH.partnerBaseUrl}/addservice`}>
-              <figure className='add-service-btn'>
-                <i className='far fa-plus fa-lg' />
-              </figure>
-            </Link>
-          </Tooltip>
+      <NavBar />
+
+      <div className='title-view'>
+        <p className='page-title'>My Services</p>
+        {width > 600 && (
+          <button className='add-btn' onClick={() => navigateAddService()}>
+            Add Service
+          </button>
         )}
-      </nav>
+      </div>
 
       <section
         style={{
@@ -172,7 +175,15 @@ const ServiceProfile = () => {
       >
         {services?.length > 0 ? (
           <section className='service-item'>
-            <section className={width > 600 ? 'service-row' : 'service-column'}>
+            <section
+              className={
+                width > 600
+                  ? width > 1085
+                    ? 'service-row'
+                    : 'service-row-center'
+                  : 'service-column'
+              }
+            >
               {services.map((item, index) => {
                 return <ServiceCard key={index.toString()} item={item} />
               })}
@@ -184,6 +195,15 @@ const ServiceProfile = () => {
           </details>
         )}
       </section>
+
+      {width < 600 && (
+        <section
+          className='footer-add-btn'
+          onClick={() => navigateAddService()}
+        >
+          <AddIcon fontSize='large' sx={{ color: 'white' }} />
+        </section>
+      )}
     </>
   )
 }

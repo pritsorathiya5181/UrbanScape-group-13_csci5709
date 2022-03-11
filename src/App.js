@@ -32,6 +32,11 @@ function App() {
               path='/professional/addservice/'
               element={<AddService />}
             />
+            <Route
+              exact
+              path='/professional/updateservice/'
+              element={<AddService />}
+            />
           </Routes>
         </section>
       </Router>

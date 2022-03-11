@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import './AddService.css'
-import useWindowDimensions from '../../../utils/Scale'
-import * as PATH from '../../../utils/constant'
+import useWindowDimensions from '../../../utils/scale'
+import * as PATH from '../../../utils/string'
 import { ServiceCategory } from '../../../utils/service'
 import {
   Button,
@@ -12,12 +12,17 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
 import { useDispatch } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
+import NavBar from '../../../components/professional/NavBar/NavBar'
+import { makeStyles } from '@mui/styles'
 
 const AddService = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { state } = useLocation()
+
   const { height, width } = useWindowDimensions()
 
   const [category, setCategory] = React.useState('')
@@ -34,17 +39,37 @@ const AddService = () => {
   ])
   const [isDisabled, setIsDisabled] = useState(true)
 
+  const useStyles = makeStyles((theme) => ({
+    input: {
+      '&::placeholder': {
+        textOverflow: 'ellipsis !important',
+        color: 'black !important',
+        fontSize: 16,
+      },
+    },
+  }))
+  const classes = useStyles()
+
   useEffect(() => {
     if (
       category.length > 0 &&
       cost.length > 0 &&
       photos.length > 1 &&
       location.length > 0 &&
-      fromTime.length > 0 &&
-      toTime.length > 0 &&
+      // fromTime.length > 0 &&
+      // toTime.length > 0 &&
       description.length > 0
     ) {
       setIsDisabled(false)
+    }
+
+    if (state?.isUpdate && state?.serviceData) {
+      const data = state.serviceData
+      setCategory(data?.serviceCategory)
+      setCost(data?.serviceCost)
+      setPhotos(data?.serviceImage)
+      setLocation(data?.serviceLocation)
+      setDescription(data?.serviceDesc)
     }
   }, [category, cost, photos, location, fromTime, toTime, description])
 
@@ -123,6 +148,7 @@ const AddService = () => {
       serviceCategory: category,
       serviceLocation: location,
       serviceTime: fromTime + '-' + toTime,
+      serviceCost: cost,
       serviceDesc: description,
       serviceImage: photos,
     }
@@ -149,111 +175,111 @@ const AddService = () => {
 
   return (
     <>
-      <nav className='service-navbar'>
-        <Link to={`${PATH.partnerBaseUrl}/addservice`} className='navbar-logo'>
-          Add Service
-        </Link>
-        {width < 550 && (
-          <Link to={`${PATH.partnerBaseUrl}/myservices`}>
-            <div
-              className='add-service-btn'
-              onClick={() => {
-                onAddService()
-              }}
+      <NavBar />
+
+      <section className='title-view'>
+        <p className='page-title'>
+          {state?.isUpdate ? 'Update Service' : 'Add Services'}
+        </p>
+      </section>
+
+      {/* <section className='split'> */}
+      <section className='centered-view'>
+        <section className='row'>
+          <p className='serviceTitle'>Category</p>
+          <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>
+            {/* <InputLabel id='demo-simple-select-helper-label'>Age</InputLabel> */}
+            <Select
+              displayEmpty
+              labelId='demo-simple-select-helper-label'
+              id='demo-simple-select-helper'
+              value={category}
+              // label='Age'
+              onChange={onSelectCategory}
+              placeholder='Select Category'
             >
-              <i class='far fa-arrow-left'></i>
-            </div>
-          </Link>
-        )}
-      </nav>
-      <section className='split'>
-        <section className='centered'>
-          <section className='row'>
-            <p className='serviceTitle'>Category</p>
-            <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>
-              {/* <InputLabel id='demo-simple-select-helper-label'>Age</InputLabel> */}
-              <Select
-                displayEmpty
-                labelId='demo-simple-select-helper-label'
-                id='demo-simple-select-helper'
-                value={category}
-                // label='Age'
-                onChange={onSelectCategory}
-                placeholder='Select Category'
-              >
-                <MenuItem disabled value=''>
-                  <em>Select a category...</em>
+              <MenuItem disabled value=''>
+                <em>Select a category...</em>
+              </MenuItem>
+              {ServiceCategory.map((name) => (
+                <MenuItem key={name} value={name}>
+                  {name}
                 </MenuItem>
-                {ServiceCategory.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </section>
-          <section className='row'>
-            <p className='serviceTitle'>Cost</p>
-            <TextField
-              required
-              sx={{ width: getWidth() }}
-              id='cost'
-              type='text'
-              value={cost}
-              placeholder='Service cost (e.g. 10, 20)'
-              onChange={handleChangeInput}
-            />
-          </section>
-          <section className='row'>
-            <p className='serviceTitle'>Photos</p>
-            <div
-              style={{
-                display: 'flex',
-                width: width < 600 ? 320 : 400,
-                flexWrap: 'wrap',
-                flexDirection: 'row',
-              }}
-            >
-              {photos.map((item) => {
-                return item.isPhoto ? (
-                  <button key={item.photoId} className='addImage'>
-                    <img
-                      alt='serviceImg'
-                      className='serviceImg'
-                      src={item.photoUrl}
-                    />
-                  </button>
-                ) : (
-                  <div style={{ flexDirection: 'column', display: 'flex' }}>
-                    <input
-                      id='car'
-                      type='file'
-                      accept='image/*'
-                      capture='camera'
-                      onChange={handleFileChange}
-                      className='fileInput'
-                    />
-                    <div key={item.photoId} className='addImage'>
-                      <i className='fas fa-plus fa-lg' />
-                    </div>
+              ))}
+            </Select>
+          </FormControl>
+        </section>
+        <section className='row'>
+          <p className='serviceTitle'>Cost</p>
+          <TextField
+            required
+            sx={{ width: getWidth() }}
+            id='cost'
+            type='text'
+            value={cost}
+            placeholder='Service cost (e.g. 10, 20)'
+            InputProps={{
+              classes: {
+                input: classes.input,
+              },
+            }}
+            onChange={handleChangeInput}
+          />
+        </section>
+        <section className='row'>
+          <p className='serviceTitle'>Photos</p>
+          <div
+            style={{
+              display: 'flex',
+              width: width < 600 ? 320 : 420,
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+            }}
+          >
+            {photos.map((item) => {
+              return item.isPhoto ? (
+                <button key={item.photoId} className='addImage'>
+                  <img
+                    alt='serviceImg'
+                    className='serviceImg'
+                    src={item.photoUrl}
+                  />
+                </button>
+              ) : (
+                <div
+                  key={item.photoId}
+                  style={{ flexDirection: 'column', display: 'flex' }}
+                >
+                  <input
+                    id='car'
+                    type='file'
+                    accept='image/*'
+                    capture='camera'
+                    onChange={handleFileChange}
+                    className='fileInput'
+                  />
+                  <div key={item.photoId} className='addImage'>
+                    {/* <i className='fas fa-plus fa-lg' /> */}
+                    <AddIcon fontSize='large' />
                   </div>
-                )
-              })}
-            </div>
-          </section>
-          <section className='row'>
-            <p className='serviceTitle'>Location</p>
-            <TextField
-              required
-              sx={{ width: getWidth() }}
-              id='location'
-              type='text'
-              value={location}
-              placeholder='Preferred Location (e.g. Quinpool Rd, Halifax)'
-              onChange={handleChangeInput}
-            />
-          </section>
-          <section className='row'>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+        <section className='row'>
+          <p className='serviceTitle'>Location</p>
+          <TextField
+            required
+            sx={{ width: getWidth() }}
+            id='location'
+            type='text'
+            value={location}
+            placeholder='Preferred Location (e.g. Quinpool Rd, Halifax)'
+            onChange={handleChangeInput}
+          />
+        </section>
+        {/* <section className='row'>
             <p className='serviceTitle'>Time</p>
             <div
               style={{
@@ -285,47 +311,70 @@ const AddService = () => {
                 />
               </Tooltip>
             </div>
-          </section>
-          <section className='row'>
-            <p className='serviceTitle'>Description</p>
-            <TextField
-              required
-              sx={{ width: getWidth() }}
-              multiline
-              minRows={3}
-              id='description'
-              type='text'
-              value={description}
-              placeholder='Description'
-              onChange={handleChangeInput}
-            />
-          </section>
-          <Tooltip
-            title={
-              isDisabled ? 'Please enter all the details' : 'Add new service'
-            }
-          >
-            <section>
-              <Button
-                disabled={isDisabled}
-                sx={{
-                  width: width < 600 ? 320 : 170,
-                  backgroundColor: '#1c1b1b',
-                  marginTop: '20px',
-                  marginBottom: width < 600 ? 30 : 0,
-                }}
-                // className='add-service-btn'
-                variant='contained'
-                onClick={() => {
-                  onAddService()
-                }}
-              >
-                Add
-              </Button>
-            </section>
-          </Tooltip>
+          </section> */}
+        <section className='row'>
+          <p className='serviceTitle'>Description</p>
+          <TextField
+            required
+            sx={{ width: getWidth() }}
+            multiline
+            minRows={3}
+            id='description'
+            type='text'
+            value={description}
+            placeholder='Description'
+            onChange={handleChangeInput}
+          />
         </section>
+        <Tooltip
+          title={
+            isDisabled ? 'Please enter all the details' : 'Add new service'
+          }
+        >
+          <section>
+            <Button
+              // disabled={isDisabled}
+              sx={{
+                width: width < 600 ? 320 : 170,
+                backgroundColor: '#1e88e5',
+                marginTop: '20px',
+                marginBottom: width < 600 ? 30 : 0,
+                '&:hover': {
+                  backgroundColor: '#0d47a1',
+                  color: '#fff',
+                },
+              }}
+              variant='contained'
+              onClick={() => {
+                onAddService()
+              }}
+            >
+              Update
+            </Button>
+            <Button
+              // disabled={isDisabled}
+              sx={{
+                width: width < 600 ? 320 : 170,
+                backgroundColor: '#1e88e5',
+                marginTop: '20px',
+                marginBottom: width < 600 ? 30 : 0,
+                '&:hover': {
+                  backgroundColor: '#0d47a1',
+                  color: '#fff',
+                },
+                marginLeft: 1,
+              }}
+              variant='contained'
+              onClick={() => {
+                onAddService()
+              }}
+            >
+              Delete
+            </Button>
+          </section>
+        </Tooltip>
       </section>
+      {/* </section> */}
     </>
   )
 }

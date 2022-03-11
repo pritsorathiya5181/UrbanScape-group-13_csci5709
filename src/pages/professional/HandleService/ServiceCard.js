@@ -4,9 +4,12 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import './ServiceCard.css'
-import useWindowDimensions from '../../../utils/Scale'
+import useWindowDimensions from '../../../utils/scale'
+import { useNavigate } from 'react-router-dom'
+import * as PATH from '../../../utils/string'
 
 const ServiceCard = ({ item }) => {
+  const navigate = useNavigate()
   const { width } = useWindowDimensions()
 
   const adjustContent = (content) => {
@@ -15,15 +18,27 @@ const ServiceCard = ({ item }) => {
     }
     return content
   }
+
+  const openService = (item) => {
+    console.log('item', item)
+    navigate(`${PATH.partnerBaseUrl}/updateservice`, {
+      state: {
+        serviceData: item,
+        isUpdate: true,
+      },
+    })
+  }
+
   return (
     <Card
       sx={{
-        width: width < 380 ? 280 : 300,
-        marginLeft: width < 380 ? 0 : 10,
+        width: width < 450 ? 280 : 300,
+        marginLeft: width < 450 ? 0 : '5%',
         marginBottom: 5,
         backgroundColor: '#CED3DE',
+        cursor: 'pointer',
       }}
-      onClick={() => console.log('first')}
+      onClick={() => openService(item)}
     >
       <CardMedia
         component='img'

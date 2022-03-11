@@ -15,8 +15,8 @@ import {
 import HouseIcon from '@mui/icons-material/House'
 import PersonIcon from '@mui/icons-material/Person'
 import MenuIcon from '@mui/icons-material/Menu'
-
 import * as MENU from '../../../utils/constant'
+import * as PATH from '../../../utils/string'
 import { makeStyles } from '@mui/styles'
 
 const NavBar = () => {
@@ -55,9 +55,9 @@ const NavBar = () => {
 
   const navigatePages = (endpoint) => {
     if (endpoint === 'Services') {
-      navigate(`./myservices`)
-    } else if (endpoint == 'Schedule') {
-      navigate('./')
+      navigate(`${PATH.partnerBaseUrl}/myservices`)
+    } else if (endpoint === 'Schedule') {
+      navigate(`${PATH.partnerBaseUrl}`)
     }
     handleCloseNavMenu()
   }

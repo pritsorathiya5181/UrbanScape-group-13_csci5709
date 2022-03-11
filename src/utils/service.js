@@ -1,4 +1,4 @@
-import * as PATH from './constant'
+import * as PATH from './string'
 
 export const ServiceItem = [
   {
