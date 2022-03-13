@@ -36,6 +36,7 @@
   width: 100%;
   background-color: var(--theme-dark);
   transition: all 1s ease-in;
+  color: var(--theme-white);
 }
 
 .inactive {
@@ -60,6 +61,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .profile-personal-title {
@@ -77,6 +79,8 @@
 
 .profile-option-btn {
   padding: 10px 20px;
+  border: 1px solid var(--theme-dark);
+  border-bottom: 0px;
 }
 
 .selected {
@@ -87,7 +91,7 @@
 .detail-view {
   border: 2px solid var(--theme-dark);
   width: 80%;
-  min-height: 55%;
+  height: 510px;
   padding: 20px;
 }
 

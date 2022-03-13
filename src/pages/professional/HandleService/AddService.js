@@ -23,7 +23,7 @@ const AddService = () => {
   const dispatch = useDispatch()
   const { state } = useLocation()
 
-  const { height, width } = useWindowDimensions()
+  const { width } = useWindowDimensions()
 
   const [category, setCategory] = React.useState('')
   const [cost, setCost] = useState('')
@@ -123,13 +123,7 @@ const AddService = () => {
     if (files && files[0]) {
       var reader = new FileReader()
 
-      // reader.onloadstart = () => this.setState({loading: true});
-
       reader.onload = (event) => {
-        // this.setState({
-        //   data: event.target.result,
-        //   loading: false
-        // });
         var imageResult = {
           photoId: photos.length,
           isPhoto: true,
@@ -328,50 +322,78 @@ const AddService = () => {
         </section>
         <Tooltip
           title={
-            isDisabled ? 'Please enter all the details' : 'Add new service'
+            isDisabled
+              ? 'Please enter all the details'
+              : state.isUpdate
+              ? 'Update service'
+              : 'Add new service'
           }
         >
-          <section>
-            <Button
-              // disabled={isDisabled}
-              sx={{
-                width: width < 600 ? 320 : 170,
-                backgroundColor: '#1e88e5',
-                marginTop: '20px',
-                marginBottom: width < 600 ? 30 : 0,
-                '&:hover': {
-                  backgroundColor: '#0d47a1',
-                  color: '#fff',
-                },
-              }}
-              variant='contained'
-              onClick={() => {
-                onAddService()
-              }}
-            >
-              Update
-            </Button>
-            <Button
-              // disabled={isDisabled}
-              sx={{
-                width: width < 600 ? 320 : 170,
-                backgroundColor: '#1e88e5',
-                marginTop: '20px',
-                marginBottom: width < 600 ? 30 : 0,
-                '&:hover': {
-                  backgroundColor: '#0d47a1',
-                  color: '#fff',
-                },
-                marginLeft: 1,
-              }}
-              variant='contained'
-              onClick={() => {
-                onAddService()
-              }}
-            >
-              Delete
-            </Button>
-          </section>
+          {state?.isUpdate ? (
+            <section>
+              <Button
+                // disabled={isDisabled}
+                sx={{
+                  width: width < 600 ? 320 : 170,
+                  backgroundColor: '#1e88e5',
+                  marginTop: '20px',
+                  marginBottom: width < 600 ? 30 : 0,
+                  '&:hover': {
+                    backgroundColor: '#0d47a1',
+                    color: '#fff',
+                  },
+                }}
+                variant='contained'
+                onClick={() => {
+                  onAddService()
+                }}
+              >
+                Update
+              </Button>
+              <Button
+                sx={{
+                  width: width < 600 ? 320 : 170,
+                  backgroundColor: '#1e88e5',
+                  marginTop: '20px',
+                  marginBottom: width < 600 ? 30 : 0,
+                  '&:hover': {
+                    backgroundColor: '#0d47a1',
+                    color: '#fff',
+                  },
+                  marginLeft: 1,
+                }}
+                variant='contained'
+                onClick={() => {
+                  onAddService()
+                }}
+              >
+                Delete
+              </Button>
+            </section>
+          ) : (
+            <section>
+              <Button
+                disabled={isDisabled}
+                sx={{
+                  width: width < 600 ? 320 : 170,
+                  backgroundColor: '#1e88e5',
+                  marginTop: '20px',
+                  marginBottom: width < 600 ? 30 : 0,
+                  '&:hover': {
+                    backgroundColor: '#0d47a1',
+                    color: '#fff',
+                  },
+                  marginLeft: 1,
+                }}
+                variant='contained'
+                onClick={() => {
+                  onAddService()
+                }}
+              >
+                Add
+              </Button>
+            </section>
+          )}
         </Tooltip>
       </section>
       {/* </section> */}

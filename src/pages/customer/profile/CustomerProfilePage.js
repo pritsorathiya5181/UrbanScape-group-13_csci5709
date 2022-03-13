@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import './ProfilePage.css'
-import NavBar from '../../components/professional/NavBar/NavBar'
+import './CustomerProfilePage.css'
+import NavBar from '../../../components/professional/NavBar/NavBar'
 import PersonIcon from '@mui/icons-material/Person'
 import { Button, FormControl, TextField } from '@mui/material'
-import useWindowDimensions from '../../utils/scale'
+import useWindowDimensions from '../../../utils/scale'
+import { makeStyles } from '@mui/styles'
+import DialogAlert from '../../../components/DialogAlert'
 
-const ProfilePage = () => {
+const CustomerProfilePage = () => {
   const { width } = useWindowDimensions()
+
   const [isProfileMenuOpen, setisProfileMenuOpen] = useState(false)
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState('info')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [mobileNo, setMobileNo] = useState('')
   const [about, setAbout] = useState('')
-  const [experience, setExperience] = useState('')
-  const [workedHours, setWorkedHours] = useState('')
   const [address, setAddress] = useState('')
 
   useEffect(() => {
@@ -39,12 +41,6 @@ const ProfilePage = () => {
       case 'about':
         setAbout(value)
         break
-      case 'experience':
-        setExperience(value)
-        break
-      case 'workedhours':
-        setWorkedHours(value)
-        break
       case 'address':
         setAddress(value)
         break
@@ -53,12 +49,29 @@ const ProfilePage = () => {
     }
   }
 
-  const profilePersonalDetailView = () => {
+  const useStyles = makeStyles((theme) => ({
+    textField: {
+      borderBottom: '1px solid white !important',
+      '&:hover': {
+        border: 'none !important',
+      },
+    },
+  }))
+
+  const classes = useStyles()
+
+  const profilePersonalDetailView = (isMenu) => {
     return (
       <section className='profile-view'>
         <section className='profile-img-view'>
           <section className='profile-img'>
-            <PersonIcon fontSize='large' />
+            {/* <PersonIcon fontSize='large' /> */}
+            <img
+              src={require('../../../asserts/logo/app/Capture.JPG')}
+              alt='profile_image'
+              width={'100%'}
+              height={'100%'}
+            />
           </section>
         </section>
 
@@ -69,11 +82,13 @@ const ProfilePage = () => {
               required
               variant='standard'
               id='name'
+              type='text'
               sx={{
                 width: '100%',
                 paddingTop: '10px',
               }}
-              type='text'
+              InputProps={{ style: { color: isMenu && 'white' } }}
+              className={isMenu && classes.textField}
               value={name}
               placeholder='Tom Holland'
               onChange={handleChangeInput}
@@ -86,11 +101,13 @@ const ProfilePage = () => {
               required
               variant='standard'
               id='email'
+              type='text'
               sx={{
                 width: '100%',
                 paddingTop: '10px',
               }}
-              type='text'
+              InputProps={{ style: { color: isMenu && 'white' } }}
+              className={isMenu && classes.textField}
               value={email}
               placeholder='tomholland@gmail.com'
               onChange={handleChangeInput}
@@ -103,11 +120,13 @@ const ProfilePage = () => {
               required
               variant='standard'
               id='mobileno'
+              type='text'
               sx={{
                 width: '100%',
                 paddingTop: '10px',
               }}
-              type='text'
+              InputProps={{ style: { color: isMenu && 'white' } }}
+              className={isMenu && classes.textField}
               value={mobileNo}
               placeholder='+19029029021'
               onChange={handleChangeInput}
@@ -141,7 +160,7 @@ const ProfilePage = () => {
             <TextField
               required
               variant='outlined'
-              id='name'
+              id='about'
               sx={{
                 width: '100%',
                 paddingTop: '10px',
@@ -153,50 +172,6 @@ const ProfilePage = () => {
               placeholder='Lorem Ipsum....'
               onChange={handleChangeInput}
             />
-          </section>
-
-          <section>
-            <p className='detail-view-title-text'>Overview</p>
-            <section className='row-option'>
-              <p className=''>Exerience</p>
-              <TextField
-                required
-                variant='standard'
-                id='name'
-                sx={{
-                  width: '8%',
-                  padding: '0px 10px',
-                  justifyContent: 'flex-end',
-                  height: '40px',
-                }}
-                inputProps={{ min: 0, style: { textAlign: 'center' } }}
-                type='text'
-                value={experience}
-                placeholder='i.e. 2,3'
-                onChange={handleChangeInput}
-              />
-              <p className=''>Years</p>
-            </section>
-            <section className='row-option'>
-              <p className=''>Worked hours</p>
-              <TextField
-                required
-                variant='standard'
-                id='name'
-                sx={{
-                  width: '11%',
-                  padding: '0px 10px',
-                  justifyContent: 'flex-end',
-                  height: '40px',
-                }}
-                inputProps={{ min: 0, style: { textAlign: 'center' } }}
-                type='text'
-                value={workedHours}
-                placeholder='i.e. 150, 200'
-                onChange={handleChangeInput}
-              />
-              <p className=''>Hours</p>
-            </section>
           </section>
 
           <section>
@@ -225,9 +200,23 @@ const ProfilePage = () => {
           }}
           color='error'
           variant='contained'
+          onClick={() => {
+            setIsAlertOpen(true)
+          }}
         >
           Delete Account
         </Button>
+        <DialogAlert
+          open={isAlertOpen}
+          title='Delete Account'
+          message='Are you sure want to delete the account?'
+          handleClose={() => {
+            setIsAlertOpen(false)
+          }}
+          handleOpen={() => {
+            setIsAlertOpen(false)
+          }}
+        />
       </section>
     )
   }
@@ -235,15 +224,61 @@ const ProfilePage = () => {
   const changePasswordView = () => {
     return (
       <section>
-        <text>change password</text>
+        <FormControl sx={{ width: '92%', marginTop: '30px' }}>
+          <section>
+            <p className='profile-personal-title'>New Password</p>
+            <TextField
+              required
+              variant='standard'
+              id='newpassword'
+              sx={{
+                width: '100%',
+                paddingTop: '10px',
+              }}
+              type='password'
+              value={name}
+              placeholder='********'
+              onChange={handleChangeInput}
+            />
+          </section>
+
+          <section>
+            <p className='profile-personal-title'>Confirm New Password</p>
+            <TextField
+              required
+              variant='standard'
+              id='confirmnewpass'
+              sx={{
+                width: '100%',
+                paddingTop: '10px',
+              }}
+              type='password'
+              value={email}
+              placeholder='********'
+              onChange={handleChangeInput}
+            />
+          </section>
+        </FormControl>
+
+        <Button
+          sx={{
+            backgroundColor: '#1e88e5',
+            marginTop: '30px',
+            '&:hover': {
+              backgroundColor: '#0d47a1',
+              color: '#fff',
+            },
+          }}
+          variant='contained'
+        >
+          Change
+        </Button>
       </section>
     )
   }
   console.log('first', isProfileMenuOpen)
   return (
     <>
-      <NavBar />
-
       <section>
         {width < 800 && (
           <PersonIcon
@@ -251,7 +286,9 @@ const ProfilePage = () => {
           />
         )}
         {width > 800 && (
-          <aside className='split left'>{profilePersonalDetailView()}</aside>
+          <aside className='split left'>
+            {profilePersonalDetailView(false)}
+          </aside>
         )}
 
         <section
@@ -263,7 +300,7 @@ const ProfilePage = () => {
               : 'inactive'
           }
         >
-          {profilePersonalDetailView()}
+          {profilePersonalDetailView(true)}
         </section>
 
         <section
@@ -301,10 +338,24 @@ const ProfilePage = () => {
             {selectedOption === 'info' && infoView()}
             {selectedOption === 'changepass' && changePasswordView()}
           </section>
+          <Button
+            sx={{
+              backgroundColor: '#1e88e5',
+              marginTop: '20px',
+              marginBottom: width < 600 ? 30 : 0,
+              '&:hover': {
+                backgroundColor: '#0d47a1',
+                color: '#fff',
+              },
+            }}
+            variant='contained'
+          >
+            Update Profile
+          </Button>
         </section>
       </section>
     </>
   )
 }
 
-export default ProfilePage
+export default CustomerProfilePage
