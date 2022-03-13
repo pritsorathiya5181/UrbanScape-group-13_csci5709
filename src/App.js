@@ -1,5 +1,6 @@
 import React from 'react'
 import './App.css'
+import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import NavBar from './components/customer/Navbar/NavBar'
 import BeautyService from './pages/customer/ServicePage/BeautyService'
@@ -8,7 +9,7 @@ import Dashboard from './pages/professional/dashboard/Dashboard'
 import AddService from './pages/professional/HandleService/AddService'
 import ServiceProfile from './pages/professional/HandleService/ServiceProfile'
 import store from './store/store'
-import { Provider } from 'react-redux'
+import ProfilePage from './pages/profile/ProfilePage'
 
 function App() {
   const url = window.location.pathname
@@ -36,6 +37,11 @@ function App() {
               exact
               path='/professional/updateservice/'
               element={<AddService />}
+            />
+            <Route
+              exact
+              path='/professional/myprofile/'
+              element={<ProfilePage />}
             />
           </Routes>
         </section>

@@ -50,7 +50,7 @@ const NavBar = () => {
   }
 
   const navigateToHome = () => {
-    navigate('./')
+    navigate('/professional')
   }
 
   const navigatePages = (endpoint) => {
