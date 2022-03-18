@@ -1,10 +1,13 @@
 import React from 'react'
+import './UserHomePageStyle.css'
 import ServiceTile from './ServiceTile'
 import salonImage from '../../../asserts/images/salon.jpg'
 import plumbingImg from '../../../asserts/images/carpentry.jpg'
 import carpentryImg from '../../../asserts/images/plumbing.jpg'
 import { Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import { Carousel } from 'react-responsive-carousel'
 
 const useStyles = makeStyles({
   gridcontainer: {
@@ -44,6 +47,43 @@ function UserHomePage() {
       <Typography style={{ textAlign: 'center', padding: '10px' }} variant='h4'>
         We are the one stop solution for all your worries
       </Typography>
+
+      <Carousel
+        autoPlay
+        infiniteLoop
+        showArrows={false}
+        showThumbs={false}
+        renderIndicator={(onClickHandler, isSelected, index, label) => {
+          const defStyle = { marginLeft: 20, color: 'white', cursor: 'pointer' }
+          const style = isSelected
+            ? { ...defStyle, color: 'red' }
+            : { ...defStyle }
+          return (
+            <span
+              style={style}
+              onClick={onClickHandler}
+              onKeyDown={onClickHandler}
+              value={index}
+              key={index}
+              role='button'
+              tabIndex={0}
+              aria-label={`${label} ${index + 1}`}
+            >
+              {'cust ' + index}
+            </span>
+          )
+        }}
+      >
+        <div>
+          <img src={carpentryImg} />
+        </div>
+        <div>
+          <img src={salonImage} />
+        </div>
+        <div>
+          <img src={plumbingImg} />
+        </div>
+      </Carousel>
 
       <div>
         <Grid container spacing={3} className={classes.gridcontainer}>
