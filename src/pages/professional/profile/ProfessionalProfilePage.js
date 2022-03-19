@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './ProfessionalProfilePage.css'
 import NavBar from '../../../components/professional/NavBar/NavBar'
-import PersonIcon from '@mui/icons-material/Person'
 import { Button, FormControl, TextField } from '@mui/material'
 import useWindowDimensions from '../../../utils/scale'
 import { makeStyles } from '@mui/styles'

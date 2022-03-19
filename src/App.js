@@ -11,6 +11,8 @@ import AddService from './pages/professional/HandleService/AddService'
 import ServiceProfile from './pages/professional/HandleService/ServiceProfile'
 import ProfessionalProfilePage from './pages/professional/profile/ProfessionalProfilePage'
 import CustomerProfilePage from './pages/customer/profile/CustomerProfilePage'
+import ServiceRequests from './pages/professional/ServicesListing/ServiceRequests'
+import ServiceHistory from './pages/professional/ServicesListing/ServiceHistory'
 
 function App() {
   const url = window.location.pathname
@@ -43,6 +45,16 @@ function App() {
             exact
             path='/professional/updateservice/'
             element={<AddService />}
+          />
+          <Route
+            exact
+            path='/professional/servicerequests/'
+            element={<ServiceRequests />}
+          />
+          <Route
+            exact
+            path='/professional/servicehistory/'
+            element={<ServiceHistory />}
           />
           <Route
             exact
