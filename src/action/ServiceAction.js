@@ -29,10 +29,10 @@ export function getRecords() {
             console.log('recent error', error)
             rejects(error)
           })
-      } catch (e) {
+      } catch (error) {
         dispatch({
           type: 'GET_SERVICES',
-          error: e,
+          error: error,
         })
       }
     })
@@ -51,7 +51,7 @@ export function addService(value) {
         var myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
 
-        console.log('service', JSON.stringify(value))
+        // console.log('service', JSON.stringify(value))
         var raw = JSON.stringify(value)
 
         var requestOptions = {
@@ -68,17 +68,88 @@ export function addService(value) {
             dispatch({
               type: 'ADD_SERVICE',
               subtype: 'success',
-              // addData: result.data,
             })
             resolve(result)
           })
           .catch((error) => {
             rejects(error)
           })
-      } catch (e) {
+      } catch (error) {
         dispatch({
           type: 'ADD_SERVICE',
-          error: e,
+          error: error,
+        })
+      }
+    })
+  }
+}
+
+export function updateService(value, serviceId) {
+  return function (dispatch, getState) {
+    return new Promise(async (resolve, rejects) => {
+      try {
+        var myHeaders = new Headers()
+        myHeaders.append('Content-Type', 'application/json')
+
+        var raw = JSON.stringify(value)
+
+        var requestOptions = {
+          method: 'PUT',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow',
+        }
+
+        fetch(`${BASE_URL}service/${serviceId}`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            console.log('update service==', result)
+            dispatch({
+              type: 'UPDATE_SERVICE',
+              subtype: 'success',
+              updateService: result.service,
+            })
+            resolve(result)
+          })
+          .catch((error) => {
+            rejects(error)
+          })
+      } catch (error) {
+        dispatch({
+          type: 'UPDATE_SERVICE',
+          error: error,
+        })
+      }
+    })
+  }
+}
+
+export function deleteService(serviceId) {
+  return function (dispatch, getState) {
+    return new Promise(async (resolve, rejects) => {
+      try {
+        var requestOptions = {
+          method: 'DELETE',
+          redirect: 'follow',
+        }
+
+        fetch(`${BASE_URL}service/${serviceId}`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            console.log('delete service==', result)
+            dispatch({
+              type: 'DELETE_SERVICE',
+              subtype: 'success',
+            })
+            resolve(result)
+          })
+          .catch((error) => {
+            rejects(error)
+          })
+      } catch (error) {
+        dispatch({
+          type: 'DELETE_SERVICE',
+          error: error,
         })
       }
     })

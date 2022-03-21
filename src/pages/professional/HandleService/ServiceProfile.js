@@ -36,22 +36,16 @@ const ServiceProfile = (props) => {
     <>
       <NavBar />
 
-      <div className='title-view'>
+      <header className='title-view'>
         <p className='page-title'>My Services</p>
         {width > 600 && (
           <button className='add-btn' onClick={() => navigateAddService()}>
             Add Service
           </button>
         )}
-      </div>
+      </header>
 
-      <section
-        style={{
-          display: 'flex',
-          flex: 1,
-          alignItems: 'center',
-        }}
-      >
+      <section className='service-list-container'>
         {serviceList?.length > 0 ? (
           <section className='service-item'>
             <section

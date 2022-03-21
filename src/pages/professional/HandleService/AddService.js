@@ -66,13 +66,25 @@ const AddService = (props) => {
 
     if (state?.isUpdate && state?.serviceData) {
       const data = state.serviceData
-      setCategory(data?.serviceCategory)
-      setCost(data?.serviceCost)
-      setPhotos(data?.serviceImage)
-      setLocation(data?.serviceLocation)
-      setDescription(data?.serviceDescription)
+      setCategory(category || data?.serviceCategory)
+      setCost(cost || data?.serviceCost)
+      photos.length > 1
+        ? setPhotos(photos || data?.serviceImage)
+        : setPhotos(data?.serviceImage)
+      setLocation(location || data?.serviceLocation)
+      setDescription(description || data?.serviceDescription)
     }
-  }, [category, cost, photos, location, fromTime, toTime, description])
+  }, [
+    category,
+    cost,
+    photos,
+    location,
+    fromTime,
+    toTime,
+    description,
+    state?.isUpdate,
+    state?.serviceData,
+  ])
 
   const onSelectCategory = (event) => {
     setCategory(event.target.value)
@@ -150,11 +162,43 @@ const AddService = (props) => {
     props.action
       .addService(serviceObj)
       .then((res) => {
+        navigate(`${PATH.partnerBaseUrl}/myservices`)
+      })
+      .catch((err) => {
+        console.log('add service error', err)
+      })
+  }
+
+  const onUpdateService = () => {
+    const updateServiceObj = {
+      subjectId: state?.serviceData?.subjectId,
+      serviceCategory: category,
+      serviceLocation: location,
+      serviceCost: cost,
+      serviceImage: photos,
+      serviceDescription: description,
+    }
+
+    props.action
+      .updateService(updateServiceObj, state?.serviceData?.serviceId)
+      .then((res) => {
         console.log('res', res)
         navigate(`${PATH.partnerBaseUrl}/myservices`)
       })
       .catch((err) => {
-        console.log('err', err)
+        console.log('update service error', err)
+      })
+  }
+
+  const onDeleteService = () => {
+    props.action
+      .deleteService(state?.serviceData?.serviceId)
+      .then((res) => {
+        console.log('res', res)
+        navigate(`${PATH.partnerBaseUrl}/myservices`)
+      })
+      .catch((err) => {
+        console.log('delete service error', err)
       })
   }
 
@@ -176,103 +220,103 @@ const AddService = (props) => {
         </p>
       </section>
 
-      {/* <section className='split'> */}
       <section className='centered-view'>
-        <section className='row'>
-          <p className='serviceTitle'>Category</p>
-          <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>
-            {/* <InputLabel id='demo-simple-select-helper-label'>Age</InputLabel> */}
-            <Select
-              displayEmpty
-              labelId='demo-simple-select-helper-label'
-              id='demo-simple-select-helper'
-              value={category}
-              // label='Age'
-              onChange={onSelectCategory}
-              placeholder='Select Category'
-            >
-              <MenuItem disabled value=''>
-                <em>Select a category...</em>
-              </MenuItem>
-              {ServiceCategory.map((name) => (
-                <MenuItem key={name} value={name}>
-                  {name}
+        <div className='form-view'>
+          <section className='row'>
+            <p className='serviceTitle'>Category</p>
+            <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>
+              {/* <InputLabel id='demo-simple-select-helper-label'>Age</InputLabel> */}
+              <Select
+                displayEmpty
+                labelId='demo-simple-select-helper-label'
+                id='demo-simple-select-helper'
+                value={category}
+                // label='Age'
+                onChange={onSelectCategory}
+                placeholder='Select Category'
+              >
+                <MenuItem disabled value=''>
+                  <em>Select a category...</em>
                 </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </section>
-        <section className='row'>
-          <p className='serviceTitle'>Cost</p>
-          <TextField
-            required
-            sx={{ width: getWidth() }}
-            id='cost'
-            type='text'
-            value={cost}
-            placeholder='Service cost (e.g. 10, 20)'
-            InputProps={{
-              classes: {
-                input: classes.input,
-              },
-            }}
-            onChange={handleChangeInput}
-          />
-        </section>
-        <section className='row'>
-          <p className='serviceTitle'>Photos</p>
-          <div
-            style={{
-              display: 'flex',
-              width: width < 600 ? 320 : 420,
-              flexWrap: 'wrap',
-              flexDirection: 'row',
-            }}
-          >
-            {photos.map((item) => {
-              return item.isPhoto ? (
-                <button key={item.photoId} className='addImage'>
-                  <img
-                    alt='serviceImg'
-                    className='serviceImg'
-                    src={item.photoUrl}
-                  />
-                </button>
-              ) : (
-                <div
-                  key={item.photoId}
-                  style={{ flexDirection: 'column', display: 'flex' }}
-                >
-                  <input
-                    id='car'
-                    type='file'
-                    accept='image/*'
-                    capture='camera'
-                    onChange={handleFileChange}
-                    className='fileInput'
-                  />
-                  <div key={item.photoId} className='addImage'>
-                    {/* <i className='fas fa-plus fa-lg' /> */}
-                    <AddIcon fontSize='large' />
+                {ServiceCategory.map((name) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </section>
+          <section className='row'>
+            <p className='serviceTitle'>Cost</p>
+            <TextField
+              required
+              sx={{ width: getWidth() }}
+              id='cost'
+              type='text'
+              value={cost}
+              placeholder='Service cost (e.g. 10, 20)'
+              InputProps={{
+                classes: {
+                  input: classes.input,
+                },
+              }}
+              onChange={handleChangeInput}
+            />
+          </section>
+          <section className='row'>
+            <p className='serviceTitle'>Photos</p>
+            <div
+              style={{
+                display: 'flex',
+                width: width < 600 ? 320 : 420,
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+              }}
+            >
+              {photos.map((item) => {
+                return item.isPhoto ? (
+                  <button key={item.photoId} className='addImage'>
+                    <img
+                      alt='serviceImg'
+                      className='serviceImg'
+                      src={item.photoUrl}
+                    />
+                  </button>
+                ) : (
+                  <div
+                    key={item.photoId}
+                    style={{ flexDirection: 'column', display: 'flex' }}
+                  >
+                    <input
+                      id='car'
+                      type='file'
+                      accept='image/*'
+                      capture='camera'
+                      onChange={handleFileChange}
+                      className='fileInput'
+                    />
+                    <div key={item.photoId} className='addImage'>
+                      {/* <i className='fas fa-plus fa-lg' /> */}
+                      <AddIcon fontSize='large' />
+                    </div>
                   </div>
-                </div>
-              )
-            })}
-          </div>
-        </section>
-        <section className='row'>
-          <p className='serviceTitle'>Location</p>
-          <TextField
-            required
-            sx={{ width: getWidth() }}
-            id='location'
-            type='text'
-            value={location}
-            placeholder='Preferred Location (e.g. Quinpool Rd, Halifax)'
-            onChange={handleChangeInput}
-          />
-        </section>
-        {/* <section className='row'>
+                )
+              })}
+            </div>
+          </section>
+          <section className='row'>
+            <p className='serviceTitle'>Location</p>
+            <TextField
+              required
+              sx={{ width: getWidth() }}
+              id='location'
+              type='text'
+              value={location}
+              placeholder='Preferred Location (e.g. Quinpool Rd, Halifax)'
+              onChange={handleChangeInput}
+            />
+          </section>
+          {/* <section className='row'>
             <p className='serviceTitle'>Time</p>
             <div
               style={{
@@ -305,97 +349,106 @@ const AddService = (props) => {
               </Tooltip>
             </div>
           </section> */}
-        <section className='row'>
-          <p className='serviceTitle'>Description</p>
-          <TextField
-            required
-            sx={{ width: getWidth() }}
-            multiline
-            minRows={3}
-            id='description'
-            type='text'
-            value={description}
-            placeholder='Description'
-            onChange={handleChangeInput}
-          />
-        </section>
-        <Tooltip
-          title={
-            isDisabled
-              ? 'Please enter all the details'
-              : state?.isUpdate
-              ? 'Update service'
-              : 'Add new service'
-          }
-        >
+          <section className='row'>
+            <p className='serviceTitle'>Description</p>
+            <TextField
+              required
+              sx={{ width: getWidth() }}
+              multiline
+              minRows={3}
+              id='description'
+              type='text'
+              value={description}
+              placeholder='Description'
+              onChange={handleChangeInput}
+            />
+          </section>
+
           {state?.isUpdate ? (
             <section>
-              <Button
-                // disabled={isDisabled}
-                sx={{
-                  width: width < 600 ? 320 : 170,
-                  backgroundColor: '#1e88e5',
-                  marginTop: '20px',
-                  marginBottom: width < 600 ? 30 : 0,
-                  '&:hover': {
-                    backgroundColor: '#0d47a1',
-                    color: '#fff',
-                  },
-                }}
-                variant='contained'
-                onClick={() => {
-                  onAddService()
-                }}
+              <Tooltip
+                title={
+                  isDisabled ? 'Please enter all the details' : 'Update service'
+                }
               >
-                Update
-              </Button>
-              <Button
-                sx={{
-                  width: width < 600 ? 320 : 170,
-                  backgroundColor: '#1e88e5',
-                  marginTop: '20px',
-                  marginBottom: width < 600 ? 30 : 0,
-                  '&:hover': {
-                    backgroundColor: '#0d47a1',
-                    color: '#fff',
-                  },
-                  marginLeft: 1,
-                }}
-                variant='contained'
-                onClick={() => {
-                  onAddService()
-                }}
+                <Button
+                  // disabled={isDisabled}
+                  sx={{
+                    width: width < 600 ? 320 : 170,
+                    backgroundColor: '#1e88e5',
+                    marginTop: '20px',
+                    marginBottom: width < 600 ? 30 : 0,
+                    '&:hover': {
+                      backgroundColor: '#0d47a1',
+                      color: '#fff',
+                    },
+                  }}
+                  variant='contained'
+                  onClick={() => {
+                    onUpdateService()
+                  }}
+                >
+                  Update
+                </Button>
+              </Tooltip>
+              <Tooltip
+                title={
+                  isDisabled ? 'Please enter all the details' : 'Delete service'
+                }
               >
-                Delete
-              </Button>
+                <Button
+                  sx={{
+                    width: width < 600 ? 320 : 170,
+                    backgroundColor: '#1e88e5',
+                    marginTop: '20px',
+                    marginBottom: width < 600 ? 30 : 0,
+                    '&:hover': {
+                      backgroundColor: '#0d47a1',
+                      color: '#fff',
+                    },
+                    marginLeft: 1,
+                  }}
+                  variant='contained'
+                  onClick={() => {
+                    onDeleteService()
+                  }}
+                >
+                  Delete
+                </Button>
+              </Tooltip>
             </section>
           ) : (
-            <section>
-              <Button
-                disabled={isDisabled}
-                sx={{
-                  width: width < 600 ? 320 : 170,
-                  backgroundColor: '#1e88e5',
-                  marginTop: '20px',
-                  marginBottom: width < 600 ? 30 : 0,
-                  '&:hover': {
-                    backgroundColor: '#0d47a1',
-                    color: '#fff',
-                  },
-                  marginLeft: 1,
-                }}
-                variant='contained'
-                onClick={() => {
-                  onAddService()
-                }}
-              >
-                Add
-              </Button>
-            </section>
+            <Tooltip
+              title={
+                isDisabled ? 'Please enter all the details' : 'Add new service'
+              }
+            >
+              <section>
+                <Button
+                  disabled={isDisabled}
+                  sx={{
+                    width: width < 600 ? 320 : 170,
+                    backgroundColor: '#1e88e5',
+                    marginTop: '20px',
+                    marginBottom: width < 600 ? 30 : 0,
+                    '&:hover': {
+                      backgroundColor: '#0d47a1',
+                      color: '#fff',
+                    },
+                    marginLeft: 1,
+                  }}
+                  variant='contained'
+                  onClick={() => {
+                    onAddService()
+                  }}
+                >
+                  Add
+                </Button>
+              </section>
+            </Tooltip>
           )}
-        </Tooltip>
+        </div>
       </section>
-      {/* </section> */}
     </>
   )
 }

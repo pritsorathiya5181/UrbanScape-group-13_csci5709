@@ -8,8 +8,6 @@ const activitiesReducer = (state = initialState, action) => {
         addServiceError: action.error ? action.error : null,
         addServiceSuccess: action.subtype === 'success',
         addServiceLoading: action.subtype === 'loading',
-        addService:
-          action.subtype === 'success' ? action.addService : state.addService,
       }
     case 'GET_SERVICES':
       return {
@@ -21,6 +19,24 @@ const activitiesReducer = (state = initialState, action) => {
           action.subtype === 'success'
             ? action.servicesData
             : state.servicesData,
+      }
+    case 'UPDATE_SERVICE':
+      return {
+        ...state,
+        updateServiceError: action.error ? action.error : null,
+        updateServiceSuccess: action.subtype === 'success',
+        updateServiceLoading: action.subtype === 'loading',
+        updateService:
+          action.subtype === 'success'
+            ? action.updateService
+            : state.updateService,
+      }
+    case 'DELETE_SERVICE':
+      return {
+        ...state,
+        deleteServiceError: action.error ? action.error : null,
+        deleteServiceSuccess: action.subtype === 'success',
+        deleteServiceLoading: action.subtype === 'loading',
       }
     default:
       return state
