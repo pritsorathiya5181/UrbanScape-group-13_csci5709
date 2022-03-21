@@ -104,6 +104,7 @@ export default function CustomTable(props) {
                         )
                       })}
                     </TableRow>
+
                     {openDetails === rowIndex && (
                       <TableRow>
                         <TableCell colSpan={12}>
@@ -117,51 +118,70 @@ export default function CustomTable(props) {
                                 ).format('MMMM Do YYYY')}
                               </p>
                               <p>Notes: {row?.serviceDetails?.notes}</p>
-                              <section
-                                style={{
-                                  display: 'flex',
-                                  flexDirection: 'row',
-                                  alignItems: 'center',
-                                }}
-                              >
-                                <Button
-                                  variant='contained'
-                                  onClick={() => {
-                                    setOpenDetails(false)
-                                    props.onApprove()
+                              {!props?.historyPage ? (
+                                <section
+                                  style={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
                                   }}
                                 >
-                                  Approve
-                                </Button>
-                                <Button
-                                  variant='contained'
-                                  color='error'
-                                  sx={{
-                                    marginLeft: '10px',
-                                  }}
-                                  onClick={() => {
-                                    setOpenDetails(false)
-                                    props.onReject()
-                                  }}
-                                >
-                                  Reject
-                                </Button>
-                                <Button
-                                  variant='contained'
-                                  black
-                                  sx={{
-                                    marginLeft: '10px',
-                                    backgroundColor: '#D8D5DB',
-                                    color: 'black',
-                                    ' &&: hover': {
+                                  <Button
+                                    variant='contained'
+                                    onClick={() => {
+                                      setOpenDetails(false)
+                                      props.onApprove()
+                                    }}
+                                  >
+                                    Approve
+                                  </Button>
+                                  <Button
+                                    variant='contained'
+                                    color='error'
+                                    sx={{
+                                      marginLeft: '10px',
+                                    }}
+                                    onClick={() => {
+                                      setOpenDetails(false)
+                                      props.onReject()
+                                    }}
+                                  >
+                                    Reject
+                                  </Button>
+                                  <Button
+                                    variant='contained'
+                                    black
+                                    sx={{
+                                      marginLeft: '10px',
                                       backgroundColor: '#D8D5DB',
-                                    },
-                                  }}
-                                  onClick={() => setOpenDetails(false)}
-                                >
-                                  Close
-                                </Button>
-                              </section>
+                                      color: 'black',
+                                      ' &&: hover': {
+                                        backgroundColor: '#D8D5DB',
+                                      },
+                                    }}
+                                    onClick={() => setOpenDetails(false)}
+                                  >
+                                    Close
+                                  </Button>
+                                </section>
+                              ) : (
+                                <section>
+                                  <Button
+                                    variant='contained'
+                                    black
+                                    sx={{
+                                      backgroundColor: '#D8D5DB',
+                                      color: 'black',
+                                      ' &&: hover': {
+                                        backgroundColor: '#D8D5DB',
+                                      },
+                                    }}
+                                    onClick={() => setOpenDetails(false)}
+                                  >
+                                    Okay
+                                  </Button>
+                                </section>
+                              )}
                             </section>
                           </section>
                         </TableCell>

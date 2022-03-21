@@ -4,7 +4,7 @@ import * as HEADERS from '../../../utils/constant'
 import CustomTable from '../../../components/professional/Table/CustomTable'
 import DialogAlert from '../../../components/DialogAlert'
 
-const ServiceHistory = () => {
+const ServiceRequests = () => {
   const [isAlertOpen, setIsAlertOpen] = useState(false)
 
   const [serviceRequests, setServiceRequests] = useState([
@@ -108,6 +108,7 @@ const ServiceHistory = () => {
           <CustomTable
             headerData={HEADERS.SERVICE_REQUEST_HEADERS}
             serviceData={serviceRequests}
+            historyPage={false}
             onApprove={() => {
               console.log('Approve')
             }}
@@ -133,4 +134,4 @@ const ServiceHistory = () => {
   )
 }
 
-export default ServiceHistory
+export default ServiceRequests

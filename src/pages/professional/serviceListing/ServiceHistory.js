@@ -4,7 +4,7 @@ import * as HEADERS from '../../../utils/constant'
 import CustomTable from '../../../components/professional/Table/CustomTable'
 import DialogAlert from '../../../components/DialogAlert'
 
-const ServiceRequests = () => {
+const ServiceHistory = () => {
   const [isAlertOpen, setIsAlertOpen] = useState(false)
 
   const [serviceRequests, setServiceRequests] = useState([
@@ -87,7 +87,7 @@ const ServiceRequests = () => {
       <NavBar />
 
       <header className='title-view'>
-        <p className='page-title'>Service Requests</p>
+        <p className='page-title'>Proceed Services</p>
       </header>
 
       <section
@@ -108,6 +108,7 @@ const ServiceRequests = () => {
           <CustomTable
             headerData={HEADERS.SERVICE_REQUEST_HEADERS}
             serviceData={serviceRequests}
+            historyPage={true}
             onApprove={() => {
               console.log('Approve')
             }}
@@ -133,4 +134,4 @@ const ServiceRequests = () => {
   )
 }
 
-export default ServiceRequests
+export default ServiceHistory

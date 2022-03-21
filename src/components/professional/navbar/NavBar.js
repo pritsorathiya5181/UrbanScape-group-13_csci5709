@@ -87,7 +87,7 @@ const NavBar = () => {
           display: { xs: 'none', md: 'flex' },
         }}
       >
-        {MENU.professionalPages.map((page, index) => (
+        {MENU.PROFESSIONAL_PAGES.map((page, index) => (
           <React.Fragment key={index.toString()}>
             <Button
               key={index.toString()}
@@ -142,7 +142,7 @@ const NavBar = () => {
             display: { xs: 'block', md: 'none' },
           }}
         >
-          {MENU.professionalPages.map((page) => (
+          {MENU.PROFESSIONAL_PAGES.map((page) => (
             <MenuItem key={page} onClick={() => navigatePages(page)}>
               <Typography textAlign='center'>{page}</Typography>
             </MenuItem>
@@ -182,7 +182,7 @@ const NavBar = () => {
           open={Boolean(profileSettingOption)}
           onClose={handleCloseUserMenu}
         >
-          {MENU.professionalProfileSetting.map((setting) => (
+          {MENU.PROFESSIONAL_PROFILE_SETTINGS.map((setting) => (
             <MenuItem key={setting} onClick={handleCloseUserMenu}>
               <Typography textAlign='center'>{setting}</Typography>
             </MenuItem>

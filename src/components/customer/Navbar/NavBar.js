@@ -99,7 +99,7 @@ const NavBar = () => {
           display: { xs: 'none', md: 'flex' },
         }}
       >
-        {MENU.pages.map((page, index) => (
+        {MENU.PAGES.map((page, index) => (
           <React.Fragment key={index.toString()}>
             <Button
               key={index.toString()}
@@ -157,7 +157,7 @@ const NavBar = () => {
             display: { xs: 'block', md: 'none' },
           }}
         >
-          {MENU.pages.map((page) => (
+          {MENU.PAGES.map((page) => (
             <MenuItem key={page} onClick={handleCloseNavMenu}>
               <Typography textAlign='center'>{page}</Typography>
               {page === 'Services' && <ArrowDropDownIcon />}
@@ -203,7 +203,7 @@ const NavBar = () => {
           open={Boolean(profileSettingOption)}
           onClose={handleCloseUserMenu}
         >
-          {MENU.profileSettings.map((setting) => (
+          {MENU.PROFILE_SETTINGS.map((setting) => (
             <MenuItem key={setting} onClick={handleCloseUserMenu}>
               <Typography textAlign='center'>{setting}</Typography>
             </MenuItem>

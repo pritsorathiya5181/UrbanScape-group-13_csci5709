@@ -7,12 +7,12 @@ import NavBar from './components/customer/Navbar/NavBar'
 import BeautyService from './pages/customer/ServicePage/BeautyService'
 import UserHomePage from './pages/customer/HomePage/UserHomePage'
 import Dashboard from './pages/professional/dashboard/Dashboard'
-import AddService from './pages/professional/HandleService/AddService'
-import ServiceProfile from './pages/professional/HandleService/ServiceProfile'
+import AddService from './pages/professional/handleService/AddService'
+import ServiceProfile from './pages/professional/handleService/ServiceProfile'
 import ProfessionalProfilePage from './pages/professional/profile/ProfessionalProfilePage'
 import CustomerProfilePage from './pages/customer/profile/CustomerProfilePage'
-import ServiceRequests from './pages/professional/ServicesListing/ServiceRequests'
-import ServiceHistory from './pages/professional/ServicesListing/ServiceHistory'
+import ServiceRequests from './pages/professional/serviceListing/ServiceRequests'
+import ServiceHistory from './pages/professional/serviceListing/ServiceHistory'
 
 function App() {
   const url = window.location.pathname

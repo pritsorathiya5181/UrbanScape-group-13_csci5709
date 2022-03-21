@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
 import './AddService.css'
-import useWindowDimensions from '../../../utils/scale'
-import * as PATH from '../../../utils/string'
-import { ServiceCategory } from '../../../utils/service'
 import {
   Button,
   FormControl,
@@ -12,15 +10,18 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
-import { useDispatch } from 'react-redux'
-import { v4 as uuidv4 } from 'uuid'
-import NavBar from '../../../components/professional/NavBar/NavBar'
 import { makeStyles } from '@mui/styles'
+import { v4 as uuidv4 } from 'uuid'
+import AddIcon from '@mui/icons-material/Add'
+import * as PATH from '../../../utils/string'
+import { ServiceCategory } from '../../../utils/service'
+import NavBar from '../../../components/professional/NavBar/NavBar'
+import useWindowDimensions from '../../../utils/scale'
+import * as ServiceAction from '../../../action/ServiceAction'
+import { connect } from 'react-redux'
 
-const AddService = () => {
+const AddService = (props) => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const { state } = useLocation()
 
   const { width } = useWindowDimensions()
@@ -69,7 +70,7 @@ const AddService = () => {
       setCost(data?.serviceCost)
       setPhotos(data?.serviceImage)
       setLocation(data?.serviceLocation)
-      setDescription(data?.serviceDesc)
+      setDescription(data?.serviceDescription)
     }
   }, [category, cost, photos, location, fromTime, toTime, description])
 
@@ -79,7 +80,6 @@ const AddService = () => {
 
   const handleChangeInput = (event) => {
     const value = event.target.value
-    console.log('first', value)
     switch (event.target.id) {
       case 'cost':
         if (/^[0-9]*$/.test(value)) {
@@ -141,22 +141,21 @@ const AddService = () => {
       serviceId: uuidv4(),
       serviceCategory: category,
       serviceLocation: location,
-      serviceTime: fromTime + '-' + toTime,
+      // serviceTime: fromTime + '-' + toTime,
       serviceCost: cost,
-      serviceDesc: description,
       serviceImage: photos,
+      serviceDescription: description,
     }
 
-    dispatch({
-      type: 'ADD_SERVICE',
-      payload: {
-        serviceObj: serviceObj,
-      },
-    })
-
-    // servicesList = [...servicesList, serviceObj]
-    // localStorage.setItem('services', servicesList)
-    navigate(`${PATH.partnerBaseUrl}/myservices`)
+    props.action
+      .addService(serviceObj)
+      .then((res) => {
+        console.log('res', res)
+        navigate(`${PATH.partnerBaseUrl}/myservices`)
+      })
+      .catch((err) => {
+        console.log('err', err)
+      })
   }
 
   const getWidth = () => {
@@ -324,7 +323,7 @@ const AddService = () => {
           title={
             isDisabled
               ? 'Please enter all the details'
-              : state.isUpdate
+              : state?.isUpdate
               ? 'Update service'
               : 'Add new service'
           }
@@ -401,4 +400,18 @@ const AddService = () => {
   )
 }
 
-export default AddService
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      addService: state.services,
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(ServiceAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddService)

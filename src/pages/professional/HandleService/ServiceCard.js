@@ -13,7 +13,7 @@ const ServiceCard = ({ item }) => {
   const { width } = useWindowDimensions()
 
   const adjustContent = (content) => {
-    if (content.length > 60) {
+    if (content?.length > 60) {
       return content.substring(0, 100) + '...'
     }
     return content
@@ -60,7 +60,7 @@ const ServiceCard = ({ item }) => {
             overflow: 'hidden',
           }}
         >
-          {adjustContent(item.serviceDesc)}
+          {adjustContent(item.serviceDescription)}
         </Typography>
       </CardContent>
       {/* <CardActions>
