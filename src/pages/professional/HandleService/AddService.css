@@ -63,7 +63,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .centered {
+  .centered-view {
     top: 70px;
     left: 10px;
     transform: translate(0%, 0%);

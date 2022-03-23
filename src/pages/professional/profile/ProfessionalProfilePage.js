@@ -83,7 +83,15 @@ const ProfessionalProfilePage = () => {
           </section>
         </section>
 
-        <FormControl sx={{ width: '92%', marginTop: '30px' }}>
+        <FormControl
+          sx={{
+            width: '92%',
+            marginTop: '30px',
+            // boxShadow: isMenu && '6px 6px 16px 0 grey',
+            // borderRadius: isMenu && '15px',
+            // padding: isMenu && '10px',
+          }}
+        >
           <section>
             <p className='profile-personal-title'>Name</p>
             <TextField
@@ -95,8 +103,8 @@ const ProfessionalProfilePage = () => {
                 width: '100%',
                 paddingTop: '10px',
               }}
-              InputProps={{ style: { color: isMenu && 'white' } }}
-              className={isMenu && classes.textField}
+              // InputProps={{ style: { color: isMenu && 'white' } }}
+              // className={isMenu && classes.textField}
               value={name}
               placeholder='Tom Holland'
               onChange={handleChangeInput}
@@ -114,8 +122,8 @@ const ProfessionalProfilePage = () => {
                 width: '100%',
                 paddingTop: '10px',
               }}
-              InputProps={{ style: { color: isMenu && 'white' } }}
-              className={isMenu && classes.textField}
+              // InputProps={{ style: { color: isMenu && 'white' } }}
+              // className={isMenu && classes.textField}
               value={email}
               placeholder='tomholland@gmail.com'
               onChange={handleChangeInput}
@@ -133,8 +141,8 @@ const ProfessionalProfilePage = () => {
                 width: '100%',
                 paddingTop: '10px',
               }}
-              InputProps={{ style: { color: isMenu && 'white' } }}
-              className={isMenu && classes.textField}
+              // InputProps={{ style: { color: isMenu && 'white' } }}
+              // className={isMenu && classes.textField}
               value={mobileNo}
               placeholder='+19029029021'
               onChange={handleChangeInput}
@@ -158,8 +166,9 @@ const ProfessionalProfilePage = () => {
         <section></section>
         <Button
           sx={{
-            color: 'white !important',
+            // color: 'white !important',
             marginTop: '10px',
+            display: isMenu ? 'flex' : 'none',
           }}
           variant='text'
           onClick={() => setisProfileMenuOpen(false)}
@@ -209,7 +218,7 @@ const ProfessionalProfilePage = () => {
                   height: '40px',
                 }}
                 inputProps={{ min: 0, style: { textAlign: 'center' } }}
-                type='text'
+                type='number'
                 value={experience}
                 placeholder='i.e. 2,3'
                 onChange={handleChangeInput}
@@ -229,7 +238,7 @@ const ProfessionalProfilePage = () => {
                   height: '40px',
                 }}
                 inputProps={{ min: 0, style: { textAlign: 'center' } }}
-                type='text'
+                type='number'
                 value={workedHours}
                 placeholder='i.e. 150, 200'
                 onChange={handleChangeInput}
@@ -382,8 +391,8 @@ const ProfessionalProfilePage = () => {
             <text
               className={
                 selectedOption === 'info'
-                  ? 'profile-option-btn selected'
-                  : 'profile-option-btn'
+                  ? 'profile-option-btn left-option selected'
+                  : 'profile-option-btn left-option'
               }
               onClick={() => setSelectedOption('info')}
             >
@@ -392,8 +401,8 @@ const ProfessionalProfilePage = () => {
             <text
               className={
                 selectedOption === 'changepass'
-                  ? 'profile-option-btn selected'
-                  : 'profile-option-btn'
+                  ? 'profile-option-btn right-option selected'
+                  : 'profile-option-btn right-option'
               }
               onClick={() => setSelectedOption('changepass')}
             >

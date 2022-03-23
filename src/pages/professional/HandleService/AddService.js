@@ -221,7 +221,7 @@ const AddService = (props) => {
       </section>
 
       <section className='centered-view'>
-        <div className='form-view'>
+        <div className={width >= 700 && 'form-view'}>
           <section className='row'>
             <p className='serviceTitle'>Category</p>
             <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>

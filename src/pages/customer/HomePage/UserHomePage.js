@@ -8,6 +8,19 @@ import { Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Carousel } from 'react-responsive-carousel'
+import Slider from '../../../components/Slider'
+import CategoryItem from '../../../components/CategoryItem'
+import styled, { css } from 'styled-components'
+import NewsLetter from '../../../components/NewsLetter'
+import Footer from '../../../components/Footer'
+
+export const mobile = (props) => {
+  return css`
+    @media only screen and (max-width: 380px) {
+      ${props}
+    }
+  `
+}
 
 const useStyles = makeStyles({
   gridcontainer: {
@@ -39,16 +52,24 @@ function UserHomePage() {
     description: 'Coming Soon',
   })
 
+  const Container = styled.div`
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+    ${mobile({ padding: '0px', flexDirection: 'column' })}
+  `
+
   return (
     <div>
-      <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h2'>
+      {/* <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h2'>
         Welcome Home !
       </Typography>
       <Typography style={{ textAlign: 'center', padding: '10px' }} variant='h4'>
         We are the one stop solution for all your worries
-      </Typography>
+      </Typography> */}
+      <Slider />
 
-      <Carousel
+      {/* <Carousel
         autoPlay
         infiniteLoop
         showArrows={false}
@@ -83,10 +104,10 @@ function UserHomePage() {
         <div>
           <img src={plumbingImg} />
         </div>
-      </Carousel>
+      </Carousel> */}
 
       <div>
-        <Grid container spacing={3} className={classes.gridcontainer}>
+        {/* <Grid container spacing={3} className={classes.gridcontainer}>
           {offeredServices.map((service, index) => {
             return (
               <Grid key={index.toString()} item xs={12} sm={6} md={3}>
@@ -96,8 +117,17 @@ function UserHomePage() {
               </Grid>
             )
           })}
-        </Grid>
+        </Grid> */}
       </div>
+      <Container>
+        {offeredServices.map((item) => (
+          <CategoryItem item={item} key={item.id} />
+        ))}
+      </Container>
+
+      <NewsLetter />
+
+      <Footer />
     </div>
   )
 }

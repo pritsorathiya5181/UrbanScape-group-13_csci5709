@@ -162,3 +162,28 @@ export const SERVICE_LIST = [
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
   },
 ]
+
+// userhomepage-slider-items
+export const SLIDE_ITEMS = [
+  {
+    id: 1,
+    img: require('../asserts/images/facial.jpg'),
+    title: 'FACIAL MASSAGE',
+    desc: "Don't compromise on your skin's natural beauty!",
+    bg: 'f5fafd',
+  },
+  {
+    id: 2,
+    img: require('../asserts/images/facial.jpg'),
+    title: 'HAIR CUTTING',
+    desc: "Don't compromise with your hair style!",
+    bg: 'fcf1ed',
+  },
+  {
+    id: 3,
+    img: require('../asserts/images/head-massage.jpg'),
+    title: 'Head Massage',
+    desc: 'Deep relaxation for your head',
+    bg: 'fbf0f4',
+  },
+]

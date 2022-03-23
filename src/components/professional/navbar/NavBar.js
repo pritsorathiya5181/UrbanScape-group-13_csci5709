@@ -49,6 +49,13 @@ const NavBar = () => {
     setProfileSettingOption(null)
   }
 
+  const navigateToProfileSettings = (setting) => {
+    if (setting === 'My Profile') {
+      navigate('/professional/myprofile')
+    }
+    setProfileSettingOption(null)
+  }
+
   const navigateToHome = () => {
     navigate('/professional')
   }
@@ -183,7 +190,10 @@ const NavBar = () => {
           onClose={handleCloseUserMenu}
         >
           {MENU.PROFESSIONAL_PROFILE_SETTINGS.map((setting) => (
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
+            <MenuItem
+              key={setting}
+              onClick={() => navigateToProfileSettings(setting)}
+            >
               <Typography textAlign='center'>{setting}</Typography>
             </MenuItem>
           ))}

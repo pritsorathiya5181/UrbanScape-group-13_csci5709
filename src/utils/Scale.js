@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { css } from 'styled-components'
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window
@@ -23,4 +24,12 @@ export default function useWindowDimensions() {
   }, [])
 
   return windowDimensions
+}
+
+export const mobile = (props) => {
+  return css`
+    @media only screen and (max-width: 380px) {
+      ${props}
+    }
+  `
 }

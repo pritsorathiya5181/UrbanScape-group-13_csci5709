@@ -9,22 +9,32 @@ import AddIcon from '@mui/icons-material/Add'
 import useWindowDimensions from '../../../utils/scale'
 import * as PATH from '../../../utils/string'
 import * as ServiceAction from '../../../action/ServiceAction'
+import Loader from '../../../components/customloader/Loader'
 
 const ServiceProfile = (props) => {
   const navigate = useNavigate()
   const { width } = useWindowDimensions()
 
   const [serviceList, setServicesList] = useState(props.servicesData || [])
+  const [serviceLoading, setServiceLoading] = useState(false)
 
   useEffect(() => {
-    props.action
-      .getRecords()
-      .then((res) => {
-        setServicesList(res?.services)
-      })
-      .catch((err) => {
-        console.log('err', err)
-      })
+    function getServices() {
+      setServiceLoading(true)
+      props.action
+        .getRecords()
+        .then((res) => {
+          setServiceLoading(false)
+          setServicesList(res?.services)
+        })
+        .catch((err) => {
+          setServiceLoading(false)
+          alert(err)
+          // console.log('err', err)
+        })
+    }
+
+    getServices()
   }, [])
 
   // setServices(servicesList)
@@ -45,29 +55,35 @@ const ServiceProfile = (props) => {
         )}
       </header>
 
-      <section className='service-list-container'>
-        {serviceList?.length > 0 ? (
-          <section className='service-item'>
-            <section
-              className={
-                width > 600
-                  ? width > 1085
-                    ? 'service-row'
-                    : 'service-row-center'
-                  : 'service-column'
-              }
-            >
-              {serviceList.map((item, index) => {
-                return <ServiceCard key={index.toString()} item={item} />
-              })}
+      {serviceLoading ? (
+        <section className='centeredText'>
+          <Loader />
+        </section>
+      ) : (
+        <section className='service-list-container'>
+          {serviceList?.length > 0 ? (
+            <section className='service-item'>
+              <section
+                className={
+                  width > 600
+                    ? width > 1085
+                      ? 'service-row'
+                      : 'service-row-center'
+                    : 'service-column'
+                }
+              >
+                {serviceList.map((item, index) => {
+                  return <ServiceCard key={index.toString()} item={item} />
+                })}
+              </section>
             </section>
-          </section>
-        ) : (
-          <section className='centered'>
-            <h1>You haven't add any service. Please add first! :)</h1>
-          </section>
-        )}
-      </section>
+          ) : (
+            <section className='centeredText'>
+              <h1>You haven't add any service. Please add first! :)</h1>
+            </section>
+          )}
+        </section>
+      )}
 
       {width < 600 && (
         <section

@@ -14,6 +14,7 @@ export function getRecords() {
           redirect: 'follow',
         }
 
+        setTimeout(resolve, 20000)
         fetch(`${BASE_URL}service/services`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
@@ -26,7 +27,7 @@ export function getRecords() {
             resolve(result)
           })
           .catch((error) => {
-            console.log('recent error', error)
+            console.log('all service error', error)
             rejects(error)
           })
       } catch (error) {
