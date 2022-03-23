@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import './ServiceCard.css'
+import ChevronRight from '@mui/icons-material/ChevronRight'
+import ChevronLeft from '@mui/icons-material/ChevronLeft'
 import useWindowDimensions from '../../../utils/scale'
 import { useNavigate } from 'react-router-dom'
 import * as PATH from '../../../utils/string'
@@ -11,9 +13,10 @@ import * as PATH from '../../../utils/string'
 const ServiceCard = ({ item }) => {
   const navigate = useNavigate()
   const { width } = useWindowDimensions()
+  const [imageIndex, setImageIndex] = useState(0)
 
   const adjustContent = (content) => {
-    if (content.length > 60) {
+    if (content?.length > 60) {
       return content.substring(0, 100) + '...'
     }
     return content
@@ -37,17 +40,49 @@ const ServiceCard = ({ item }) => {
         marginBottom: 5,
         backgroundColor: '#CED3DE',
         cursor: 'pointer',
+        boxShadow: '6px 6px 16px 0 grey',
+        borderRedius: '15px',
+        overflow: 'hidden',
       }}
-      onClick={() => openService(item)}
     >
-      <CardMedia
-        component='img'
-        height='140'
-        image={item.serviceImage[0].photoUrl}
-        alt='green iguana'
-        style={{ borderBottom: '1px solid #1c1b1b' }}
-      />
-      <CardContent>
+      <section style={{ position: 'relative' }}>
+        {imageIndex > 0 && (
+          <ChevronLeft
+            style={{
+              position: 'absolute',
+              left: 10,
+              top: '50%',
+              backgroundColor: '#0d47a150',
+              borderRadius: '50%',
+              padding: '3px',
+              zIndex: 1,
+            }}
+            onClick={() => setImageIndex(imageIndex - 1)}
+          />
+        )}
+        <CardMedia
+          component='img'
+          height='240'
+          image={item.serviceImage[imageIndex].photoUrl}
+          alt='green iguana'
+          style={{ borderBottom: '2px solid #0d47a1' }}
+        />
+        {item.serviceImage?.length - 2 > imageIndex && (
+          <ChevronRight
+            style={{
+              position: 'absolute',
+              right: 10,
+              top: '50%',
+              backgroundColor: '#0d47a150',
+              borderRadius: '50%',
+              padding: '3px',
+              zIndex: 1,
+            }}
+            onClick={() => setImageIndex(imageIndex + 1)}
+          />
+        )}
+      </section>
+      <CardContent onClick={() => openService(item)}>
         <Typography gutterBottom variant='h5' component='div'>
           {item.serviceCategory}
         </Typography>
@@ -60,7 +95,7 @@ const ServiceCard = ({ item }) => {
             overflow: 'hidden',
           }}
         >
-          {adjustContent(item.serviceDesc)}
+          {adjustContent(item.serviceDescription)}
         </Typography>
       </CardContent>
       {/* <CardActions>

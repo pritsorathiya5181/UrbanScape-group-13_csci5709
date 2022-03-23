@@ -35,9 +35,9 @@
 .menu {
   left: 0;
   width: 100%;
-  background-color: var(--theme-dark) !important;
+  background-color: var(--theme-white) !important;
   transition: all 1s ease-in;
-  color: var(--theme-white);
+  /* color: var(--theme-black); */
 }
 
 .inactive {
@@ -78,6 +78,14 @@
   flex-direction: row;
 }
 
+.left-option {
+  border-top-left-radius: 10px;
+}
+
+.right-option {
+  border-top-right-radius: 10px;
+}
+
 .profile-option-btn {
   padding: 10px 20px;
   border: 1px solid var(--theme-dark);
@@ -95,10 +103,13 @@
   height: 510px;
   padding: 20px;
   /* background-color: var(--theme-dark); */
-  border-radius: 10px;
+  /* border-radius: 10px;
   -webkit-box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 2px 3px 5px 0px rgba(0, 0, 0, 0.75); */
+  background-color: transparent;
+  box-shadow: 6px 6px 16px 0 grey;
+  border-radius: 15px;
 }
 
 .detail-view-title-text {

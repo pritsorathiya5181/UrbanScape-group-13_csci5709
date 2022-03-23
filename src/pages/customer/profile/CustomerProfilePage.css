@@ -89,7 +89,7 @@
 }
 
 .detail-view {
-  border: 2px solid var(--theme-dark);
+  /* border: 2px solid var(--theme-dark); */
   width: 80%;
   height: 510px;
   padding: 20px;

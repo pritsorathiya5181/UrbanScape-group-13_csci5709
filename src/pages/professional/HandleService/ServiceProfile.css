@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  background-color: white !important;
 }
 
 .page-title {
@@ -20,7 +21,7 @@
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 15px;
-  border: none;
+  border: 2px solid transparent;
 }
 
 .add-btn:hover {
@@ -28,6 +29,14 @@
   border: 2px solid var(--theme-dark);
   color: var(--theme-black);
   font-weight: 700;
+  box-shadow: 6px 8px 16px -4px #0d47a1;
+}
+
+.service-list-container {
+  display: 'flex';
+  flex: 1;
+  align-items: 'center';
+  background-color: 'white' !important;
 }
 
 .service-item {
@@ -81,7 +90,7 @@
   flex-wrap: wrap;
 }
 
-.centered {
+.centeredText {
   position: absolute;
   top: 50%;
   left: 50%;

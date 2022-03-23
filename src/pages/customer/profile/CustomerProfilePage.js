@@ -316,8 +316,8 @@ const CustomerProfilePage = () => {
             <text
               className={
                 selectedOption === 'info'
-                  ? 'profile-option-btn selected'
-                  : 'profile-option-btn'
+                  ? 'profile-option-btn left-option selected'
+                  : 'profile-option-btn left-option'
               }
               onClick={() => setSelectedOption('info')}
             >
@@ -326,8 +326,8 @@ const CustomerProfilePage = () => {
             <text
               className={
                 selectedOption === 'changepass'
-                  ? 'profile-option-btn selected'
-                  : 'profile-option-btn'
+                  ? 'profile-option-btn right-option selected'
+                  : 'profile-option-btn right-option'
               }
               onClick={() => setSelectedOption('changepass')}
             >
