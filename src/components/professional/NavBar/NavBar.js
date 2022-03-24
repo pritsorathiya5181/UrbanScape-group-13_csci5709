@@ -64,7 +64,7 @@ const NavBar = () => {
     if (endpoint === 'Services') {
       navigate(`${PATH.partnerBaseUrl}/myservices`)
     } else if (endpoint === 'Schedule') {
-      navigate(`${PATH.partnerBaseUrl}`)
+      navigate(`${PATH.partnerBaseUrl}/servicerequests`)
     }
     handleCloseNavMenu()
   }

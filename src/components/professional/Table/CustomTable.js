@@ -15,19 +15,27 @@ export default function CustomTable(props) {
 
   function createData(
     serviceNo,
+    serviceCategory,
     serviceName,
-    customerName,
-    customerLocation,
-    mobileNo,
-    serviceDetails
+    clientName,
+    clientAddress,
+    clientContact,
+    clientEmail,
+    serviceTime,
+    date,
+    specialInstructions
   ) {
     return {
       serviceNo,
+      serviceCategory,
       serviceName,
-      customerName,
-      customerLocation,
-      mobileNo,
-      serviceDetails,
+      clientName,
+      clientAddress,
+      clientContact,
+      clientEmail,
+      serviceTime,
+      date,
+      specialInstructions,
     }
   }
 
@@ -37,11 +45,15 @@ export default function CustomTable(props) {
     rows.push(
       createData(
         index + 1,
+        service.serviceCategory,
         service.serviceName,
-        service.customerName,
-        service.customerLocation,
-        service.mobileNo,
-        service.serviceDetails
+        service.clientName,
+        service.clientAddress,
+        service.clientContact,
+        service.clientEmail,
+        service.serviceTime,
+        service.date,
+        service.specialInstructions
       )
     )
   })
@@ -86,7 +98,7 @@ export default function CustomTable(props) {
                       hover
                       role='checkbox'
                       tabIndex={-1}
-                      key={row.code}
+                      key={rowIndex.toString()}
                       style={{ cursor: 'pointer' }}
                     >
                       {columns.map((column) => {
@@ -111,13 +123,13 @@ export default function CustomTable(props) {
                           <section>
                             <section>
                               <p>
-                                Service time: {row?.serviceDetails?.serviceTime}
+                                Service time: {row?.serviceTime ?? '10.00 AM'}
                                 {', '}
                                 {moment(
-                                  row?.serviceDetails?.serviceData
+                                  row?.date ? new Date(row?.date) : new Date()
                                 ).format('MMMM Do YYYY')}
                               </p>
-                              <p>Notes: {row?.serviceDetails?.notes}</p>
+                              <p>Notes: {row?.specialInstructions ?? ''}</p>
                               {!props?.historyPage ? (
                                 <section
                                   style={{
@@ -130,7 +142,7 @@ export default function CustomTable(props) {
                                     variant='contained'
                                     onClick={() => {
                                       setOpenDetails(false)
-                                      props.onApprove()
+                                      props.onApprove(row)
                                     }}
                                   >
                                     Approve
@@ -150,12 +162,11 @@ export default function CustomTable(props) {
                                   </Button>
                                   <Button
                                     variant='contained'
-                                    black
                                     sx={{
                                       marginLeft: '10px',
                                       backgroundColor: '#D8D5DB',
                                       color: 'black',
-                                      ' &&: hover': {
+                                      '&&: hover': {
                                         backgroundColor: '#D8D5DB',
                                       },
                                     }}

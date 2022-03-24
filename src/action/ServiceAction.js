@@ -1,6 +1,6 @@
 import { BASE_URL } from '../utils/string'
 
-export function getRecords() {
+export function getRecords(userId) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
       try {
@@ -15,7 +15,7 @@ export function getRecords() {
         }
 
         setTimeout(resolve, 20000)
-        fetch(`${BASE_URL}service/services`, requestOptions)
+        fetch(`${BASE_URL}service/services/${userId}`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
             console.log('all services==', result)
@@ -89,6 +89,11 @@ export function updateService(value, serviceId) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
       try {
+        dispatch({
+          type: 'UPDATE_SERVICE',
+          subtype: 'loading',
+        })
+
         var myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
 
@@ -129,6 +134,11 @@ export function deleteService(serviceId) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
       try {
+        dispatch({
+          type: 'DELETE_SERVICE',
+          subtype: 'loading',
+        })
+
         var requestOptions = {
           method: 'DELETE',
           redirect: 'follow',
@@ -150,6 +160,44 @@ export function deleteService(serviceId) {
       } catch (error) {
         dispatch({
           type: 'DELETE_SERVICE',
+          error: error,
+        })
+      }
+    })
+  }
+}
+
+export function getServiceStats(userId) {
+  return function (dispatch, getState) {
+    return new Promise(async (resolve, rejects) => {
+      try {
+        dispatch({
+          type: 'SERVICE_STATS',
+          subtype: 'loading',
+        })
+
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow',
+        }
+
+        fetch(`${BASE_URL}service/stats/${userId}`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            console.log('service stats==', result)
+            dispatch({
+              type: 'SERVICE_STATS',
+              subtype: 'success',
+              serviceStatsData: result.serviceStats,
+            })
+            resolve(result)
+          })
+          .catch((error) => {
+            rejects(error)
+          })
+      } catch (error) {
+        dispatch({
+          type: 'SERVICE_STATS',
           error: error,
         })
       }
