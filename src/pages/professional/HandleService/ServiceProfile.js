@@ -21,8 +21,9 @@ const ServiceProfile = (props) => {
   useEffect(() => {
     function getServices() {
       setServiceLoading(true)
+      const userId = 'd86aa655-fe4a-40ee-af69-67718d7ec759'
       props.action
-        .getRecords()
+        .getRecords(userId)
         .then((res) => {
           setServiceLoading(false)
           setServicesList(res?.services)

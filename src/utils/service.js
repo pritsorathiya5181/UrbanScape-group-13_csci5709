@@ -14,9 +14,29 @@ export const ServiceItem = [
   },
 ]
 
-export const ServiceCategory = [
-  'Hair Cutting',
-  'Home Decoration',
-  'Personal Beauty',
-  'Spa',
+export const SERVICE_CATEGORY = [
+  {
+    title: 'Beauty',
+    serviceList: [
+      'Haircut',
+      'Head Massage',
+      'Hair Coloring',
+      'Spa',
+      'Facial',
+      'Body Massage',
+    ],
+  },
+  {
+    title: 'Home',
+    serviceList: [
+      'Home Decoration',
+      'Home Cleaning',
+      'Home Renovation',
+      'Home Repair',
+    ],
+  },
+  {
+    title: 'Health',
+    serviceList: ['Dental', 'Medical', 'Diet', 'Fitness'],
+  },
 ]

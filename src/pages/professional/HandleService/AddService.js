@@ -14,7 +14,7 @@ import { makeStyles } from '@mui/styles'
 import { v4 as uuidv4 } from 'uuid'
 import AddIcon from '@mui/icons-material/Add'
 import * as PATH from '../../../utils/string'
-import { ServiceCategory } from '../../../utils/service'
+import { SERVICE_CATEGORY } from '../../../utils/service'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import useWindowDimensions from '../../../utils/scale'
 import * as ServiceAction from '../../../action/ServiceAction'
@@ -26,7 +26,8 @@ const AddService = (props) => {
 
   const { width } = useWindowDimensions()
 
-  const [category, setCategory] = React.useState('')
+  const [category, setCategory] = useState('')
+  const [serviceName, setServiceName] = useState('')
   const [cost, setCost] = useState('')
   const [location, setLocation] = useState('')
   const [fromTime, setFromTime] = useState('')
@@ -53,7 +54,8 @@ const AddService = (props) => {
 
   useEffect(() => {
     if (
-      category.length > 0 &&
+      category?.length > 0 &&
+      serviceName?.length > 0 &&
       cost.length > 0 &&
       photos.length > 1 &&
       location.length > 0 &&
@@ -66,7 +68,9 @@ const AddService = (props) => {
 
     if (state?.isUpdate && state?.serviceData) {
       const data = state.serviceData
+
       setCategory(category || data?.serviceCategory)
+      setServiceName(serviceName || data?.serviceName)
       setCost(cost || data?.serviceCost)
       photos.length > 1
         ? setPhotos(photos || data?.serviceImage)
@@ -76,6 +80,7 @@ const AddService = (props) => {
     }
   }, [
     category,
+    serviceName,
     cost,
     photos,
     location,
@@ -88,6 +93,11 @@ const AddService = (props) => {
 
   const onSelectCategory = (event) => {
     setCategory(event.target.value)
+    setServiceName('')
+  }
+
+  const onSelectServiceName = (event) => {
+    setServiceName(event.target.value)
   }
 
   const handleChangeInput = (event) => {
@@ -152,11 +162,13 @@ const AddService = (props) => {
     const serviceObj = {
       serviceId: uuidv4(),
       serviceCategory: category,
+      serviceName: serviceName,
       serviceLocation: location,
       // serviceTime: fromTime + '-' + toTime,
       serviceCost: cost,
       serviceImage: photos,
       serviceDescription: description,
+      userId: 'd86aa655-fe4a-40ee-af69-67718d7ec759',
     }
 
     props.action
@@ -173,6 +185,7 @@ const AddService = (props) => {
     const updateServiceObj = {
       subjectId: state?.serviceData?.subjectId,
       serviceCategory: category,
+      serviceName: serviceName,
       serviceLocation: location,
       serviceCost: cost,
       serviceImage: photos,
@@ -238,11 +251,41 @@ const AddService = (props) => {
                 <MenuItem disabled value=''>
                   <em>Select a category...</em>
                 </MenuItem>
-                {ServiceCategory.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    {name}
-                  </MenuItem>
-                ))}
+                {SERVICE_CATEGORY.map((item) => item.title).map((name) => {
+                  return (
+                    <MenuItem key={name} value={name}>
+                      {name}
+                    </MenuItem>
+                  )
+                })}
+              </Select>
+            </FormControl>
+          </section>
+          <section className='row'>
+            <p className='serviceTitle'>Name</p>
+            <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>
+              {/* <InputLabel id='demo-simple-select-helper-label'>Age</InputLabel> */}
+              <Select
+                displayEmpty
+                labelId='demo-simple-select-helper-label'
+                id='demo-simple-select-helper'
+                value={serviceName}
+                // label='Age'
+                onChange={onSelectServiceName}
+                placeholder='Select Category'
+              >
+                <MenuItem disabled value=''>
+                  <em>Select a category...</em>
+                </MenuItem>
+                {SERVICE_CATEGORY.map((item) => {
+                  if (item.title === category) {
+                    return item.serviceList.map((name) => (
+                      <MenuItem key={name} value={name}>
+                        {name}
+                      </MenuItem>
+                    ))
+                  }
+                })}
               </Select>
             </FormControl>
           </section>

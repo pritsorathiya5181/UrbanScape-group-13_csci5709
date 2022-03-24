@@ -3,84 +3,30 @@ import NavBar from '../../../components/professional/NavBar/NavBar'
 import * as HEADERS from '../../../utils/constant'
 import CustomTable from '../../../components/professional/Table/CustomTable'
 import DialogAlert from '../../../components/DialogAlert'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as orderAction from '../../../action/orderAction'
 
-const ServiceRequests = () => {
+const ServiceRequests = (props) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false)
+  // const reduxStates = useSelector((state) => state.services)
 
-  const [serviceRequests, setServiceRequests] = useState([
-    {
-      serviceName: 'Hair Cut',
-      customerName: 'John Doe',
-      customerLocation: 'New York',
-      mobileNo: '+1-123-456-7890',
-      serviceDetails: {
-        serviceTime: '10:00 AM',
-        serviceDate: new Date(),
-        notes:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
-      },
-    },
-    {
-      serviceName: 'Hair Cut',
-      customerName: 'John Doe',
-      customerLocation: 'New York',
-      mobileNo: '+1-123-456-7890',
-      serviceDetails: {
-        serviceTime: '10:00 AM',
-        serviceDate: new Date(),
-        notes:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
-      },
-    },
-    {
-      serviceName: 'Hair Cut',
-      customerName: 'John Doe',
-      customerLocation: 'New York',
-      mobileNo: '+1-123-456-7890',
-      serviceDetails: {
-        serviceTime: '10:00 AM',
-        serviceDate: new Date(),
-        notes:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
-      },
-    },
-    {
-      serviceName: 'Hair Cut',
-      customerName: 'John Doe',
-      customerLocation: 'New York',
-      mobileNo: '+1-123-456-7890',
-      serviceDetails: {
-        serviceTime: '10:00 AM',
-        serviceDate: new Date(),
-        notes:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
-      },
-    },
-    {
-      serviceName: 'Hair Cut',
-      customerName: 'John Doe',
-      customerLocation: 'New York',
-      mobileNo: '+1-123-456-7890',
-      serviceDetails: {
-        serviceTime: '10:00 AM',
-        serviceDate: new Date(),
-        notes:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
-      },
-    },
-    {
-      serviceName: 'Hair Cut',
-      customerName: 'John Doe',
-      customerLocation: 'New York',
-      mobileNo: '+1-123-456-7890',
-      serviceDetails: {
-        serviceTime: '10:00 AM',
-        serviceDate: new Date(),
-        notes:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
-      },
-    },
-  ])
+  console.log(props)
+  const [serviceRequests, setServiceRequests] = useState(
+    props?.serviceStatsData?.pendingRequests || HEADERS?.SERVICE_REQUESTS
+  )
+
+  const onServiceApprove = (serviceItem) => {
+    console.log(serviceItem)
+    props.action
+      .approveServiceRequest(serviceItem)
+      .then((res) => {
+        // console.log('approve res', res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   return (
     <>
@@ -109,8 +55,8 @@ const ServiceRequests = () => {
             headerData={HEADERS.SERVICE_REQUEST_HEADERS}
             serviceData={serviceRequests}
             historyPage={false}
-            onApprove={() => {
-              console.log('Approve')
+            onApprove={(serviceItem) => {
+              onServiceApprove(serviceItem)
             }}
             onReject={() => {
               setIsAlertOpen(true)
@@ -134,4 +80,19 @@ const ServiceRequests = () => {
   )
 }
 
-export default ServiceRequests
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      serviceStatsData: state.services.serviceStatsData,
+      orders: state.orders,
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(orderAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ServiceRequests)
