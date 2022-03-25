@@ -6,6 +6,7 @@ import useWindowDimensions from '../../../utils/scale'
 import { makeStyles } from '@mui/styles'
 import DialogAlert from '../../../components/DialogAlert'
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos'
+import swal from 'sweetalert'
 
 const ProfessionalProfilePage = () => {
   const { width } = useWindowDimensions()
@@ -274,7 +275,20 @@ const ProfessionalProfilePage = () => {
           color='error'
           variant='contained'
           onClick={() => {
-            setIsAlertOpen(true)
+            // setIsAlertOpen(true)
+            swal({
+              title: 'Delete Account',
+              text: 'Are you sure want to delete the account?',
+              icon: 'warning',
+              buttons: true,
+              dangerMode: true,
+            }).then((willDelete) => {
+              if (willDelete) {
+                swal('Account has been deleted successfully!', {
+                  icon: 'success',
+                })
+              }
+            })
           }}
         >
           Delete Account

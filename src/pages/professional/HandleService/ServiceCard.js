@@ -39,7 +39,6 @@ const ServiceCard = ({ item }) => {
         marginLeft: width < 450 ? 0 : '5%',
         marginBottom: 5,
         backgroundColor: '#CED3DE',
-        cursor: 'pointer',
         boxShadow: '6px 6px 16px 0 grey',
         borderRedius: '15px',
         overflow: 'hidden',
@@ -82,7 +81,12 @@ const ServiceCard = ({ item }) => {
           />
         )}
       </section>
-      <CardContent onClick={() => openService(item)}>
+      <CardContent
+        onClick={() => openService(item)}
+        sx={{
+          cursor: 'pointer',
+        }}
+      >
         <Typography gutterBottom variant='h5' component='div'>
           {item.serviceCategory}
         </Typography>
