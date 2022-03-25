@@ -9,6 +9,13 @@ const activitiesReducer = (state = initialState, action) => {
         acceptServiceSuccess: action.subtype === 'success',
         acceptServiceLoading: action.subtype === 'loading',
       }
+    case 'CANCEL_SERVICE_REQUEST':
+      return {
+        ...state,
+        cancelServiceError: action.error ? action.error : null,
+        cancelServiceSuccess: action.subtype === 'success',
+        cancelServiceLoading: action.subtype === 'loading',
+      }
     default:
       return state
   }

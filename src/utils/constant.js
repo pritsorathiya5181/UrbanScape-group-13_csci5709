@@ -168,14 +168,14 @@ export const SLIDE_ITEMS = [
   {
     id: 1,
     img: require('../asserts/images/facial.jpg'),
-    title: 'FACIAL MASSAGE',
+    title: 'Facial Massage',
     desc: "Don't compromise on your skin's natural beauty!",
     bg: 'f5fafd',
   },
   {
     id: 2,
-    img: require('../asserts/images/facial.jpg'),
-    title: 'HAIR CUTTING',
+    img: require('../asserts/images/haircut.jpg'),
+    title: 'Hair Cutting',
     desc: "Don't compromise with your hair style!",
     bg: 'fcf1ed',
   },

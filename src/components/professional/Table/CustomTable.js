@@ -15,27 +15,29 @@ export default function CustomTable(props) {
 
   function createData(
     serviceNo,
-    serviceCategory,
-    serviceName,
-    clientName,
-    clientAddress,
-    clientContact,
-    clientEmail,
-    serviceTime,
-    date,
-    specialInstructions
+    // serviceCategory,
+    // serviceName,
+    // clientName,
+    // clientAddress,
+    // clientContact,
+    // clientEmail,
+    // serviceTime,
+    // date,
+    // specialInstructions
+    service
   ) {
     return {
       serviceNo,
-      serviceCategory,
-      serviceName,
-      clientName,
-      clientAddress,
-      clientContact,
-      clientEmail,
-      serviceTime,
-      date,
-      specialInstructions,
+      // serviceCategory,
+      // serviceName,
+      // clientName,
+      // clientAddress,
+      // clientContact,
+      // clientEmail,
+      // serviceTime,
+      // date,
+      // specialInstructions,
+      ...service,
     }
   }
 
@@ -45,15 +47,16 @@ export default function CustomTable(props) {
     rows.push(
       createData(
         index + 1,
-        service.serviceCategory,
-        service.serviceName,
-        service.clientName,
-        service.clientAddress,
-        service.clientContact,
-        service.clientEmail,
-        service.serviceTime,
-        service.date,
-        service.specialInstructions
+        // service.serviceCategory,
+        // service.serviceName,
+        // service.clientName,
+        // service.clientAddress,
+        // service.clientContact,
+        // service.clientEmail,
+        // service.serviceTime,
+        // service.date,
+        // service.specialInstructions
+        service
       )
     )
   })
@@ -72,7 +75,14 @@ export default function CustomTable(props) {
   }
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper
+      sx={{
+        width: '100%',
+        overflow: 'hidden',
+        boxShadow: '3px 3px 8px 0 grey',
+        borderRadius: '5px',
+      }}
+    >
       <TableContainer sx={{ maxHeight: 600 }}>
         <Table stickyHeader aria-label='sticky table'>
           <TableHead>
@@ -81,7 +91,12 @@ export default function CustomTable(props) {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{
+                    minWidth: column.minWidth,
+                    fontWeight: 'bold',
+                    fontSize: '1rem',
+                    color: '#0d47a1',
+                  }}
                 >
                   {column.label}
                 </TableCell>
@@ -130,6 +145,24 @@ export default function CustomTable(props) {
                                 ).format('MMMM Do YYYY')}
                               </p>
                               <p>Notes: {row?.specialInstructions ?? ''}</p>
+                              {props?.historyPage && row?.orderItemStatus && (
+                                <p>
+                                  Service Status:{' '}
+                                  <Button
+                                    variant='contained'
+                                    color={
+                                      row?.orderItemStatus === 'Approved'
+                                        ? 'success'
+                                        : 'error'
+                                    }
+                                    sx={{
+                                      marginLeft: '10px',
+                                    }}
+                                  >
+                                    {row?.orderItemStatus}
+                                  </Button>
+                                </p>
+                              )}
                               {!props?.historyPage ? (
                                 <section
                                   style={{
@@ -155,7 +188,7 @@ export default function CustomTable(props) {
                                     }}
                                     onClick={() => {
                                       setOpenDetails(false)
-                                      props.onReject()
+                                      props.onReject(row)
                                     }}
                                   >
                                     Reject
@@ -179,7 +212,6 @@ export default function CustomTable(props) {
                                 <section>
                                   <Button
                                     variant='contained'
-                                    black
                                     sx={{
                                       backgroundColor: '#D8D5DB',
                                       color: 'black',
