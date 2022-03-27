@@ -99,14 +99,14 @@ const handleSubmit = () => {
     <section>
       <Card className={classes.root}>
         <CardHeader
-          title={props.services.title}
+          title={props.services.serviceName}
           subheader={props.services.subheader}
           sx={{ textAlign: 'start' }}
         />
         <CardMedia className={classes.media} image={props.services.img} />
         <CardContent>
           <Typography variant='body2' color='textSecondary' component='p'>
-            {props.services.content}
+            {props.services.title}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -118,7 +118,7 @@ const handleSubmit = () => {
           </Button>
           <Dialog open={open} onClose={handleClose}>
           <form >
-        <DialogTitle>Book {props.services.title}</DialogTitle>
+        <DialogTitle>Book {props.services.serviceName}</DialogTitle>
         <DialogContent dividers>
         
           <TextField
@@ -188,12 +188,16 @@ const handleSubmit = () => {
           
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit" align="center" variant="contained" onClick={() => handleSubmit()}>Add To Cart</Button>
+        <Button variant="outlined" onClick={handleClose}>Cancel</Button>
+                <Button type="submit" align="center" variant="contained">
+            <ShoppingCartIcon sx={{ color: 'white', padding: "5px" }} fontSize="small"/>Add To Cart </Button>
         </DialogActions>
         </form>
       </Dialog>
-      500$
+      <div>
+      {props.services.price}
+      </div>
+      
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -207,7 +211,7 @@ const handleSubmit = () => {
         </CardActions>
         <Collapse in={expanded} timeout='auto' unmountOnExit>
           <CardContent>
-            <Typography paragraph>{props.services.description}</Typography>
+            <Typography paragraph>{props.services.desc}</Typography>
           </CardContent>
         </Collapse>
       </Card>
