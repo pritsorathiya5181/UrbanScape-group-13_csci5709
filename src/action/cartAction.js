@@ -92,3 +92,53 @@ export function getCartItems(userId) {
       })
     }
   }
+
+  export function addCartItem(user, value) {
+    return function (dispatch, getState) {
+      return new Promise(async (resolve, rejects) => {
+        try {
+
+          console.log("CartAction Add")
+          console.log("pARAMS: ", user, value)
+          dispatch({
+            type: 'ADD_CART_ITEM',
+            subtype: 'loading',
+          })
+
+          var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify(value);
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch(`${BASE_URL}cart/${user.trim()}`, requestOptions)
+  .then(response => response.text())
+  .then((result) => {
+    console.log('add cart item :', result)
+    dispatch({
+      type: 'ADD_CART_ITEM',
+      subtype: 'success',
+    })
+    resolve(result)
+  })
+  .catch((error) => {
+    console.log("cartAction error ",error)
+    rejects(error)
+  })
+  
+         
+        } catch (error) {
+          dispatch({
+            type: 'ADD_CART_ITEM',
+            error: error,
+          })
+        }
+      })
+    }
+  }

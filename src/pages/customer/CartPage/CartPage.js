@@ -61,6 +61,35 @@ useEffect(() => {
 
 }, [])
 
+const onAddCartItem = () => {
+  const user = 'aes'
+  const uniqueItemId= Date.now().toString()
+
+  var raw = {
+    "itemNo": uniqueItemId,
+    "serviceCategory": "Beauty",
+    "serviceName": "Haircut",
+    "date": "22-March-2022",
+    "clientAddress": "6545 Sunrise Street",
+    "clientName": "Julia",
+    "clientContact": "445-55-6444",
+    "clientEmail": "julia@email.com",
+    "servicePrice": 45.6,
+    "professionalName": null,
+    "orderItemStatus": "Pending",
+    "specialInstructions": null
+  };
+
+  props.action
+    .addCartItem(user, raw)
+    .then((res) => {
+     // navigate(`${PATH.partnerBaseUrl}/myservices`)
+     console.log("Result" , res)
+    })
+    .catch((err) => {
+      console.log('Add Cart Item Error', err)
+    })
+}
 
 function  removeFromCart (item) {
     console.log("Remove from cart!");
@@ -70,13 +99,10 @@ function  removeFromCart (item) {
   
   }
   
-
-
  return (
     <div>
       <Typography variant="h3" textAlign="center"> CART </Typography>
       <Typography variant="h6" textAlign="center"> You have ({cartItems.length}) items in your cart</Typography>
-    
      <div >
 
     <TableContainer component={Paper}>
