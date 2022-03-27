@@ -10,7 +10,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {addCartItem} from '../../../action/cartAction';
+import * as cartAction from '../../../action/cartAction'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 import {
   Button,
@@ -66,9 +68,14 @@ function ServiceCard(props) {
     setBookingDetails({ ...bookingDetails, [name]: value });
 };
 
-const handleSubmit = (event) => {
-  event.preventDefault();
-  addCartItem(bookingDetails);
+const handleSubmit = () => {
+
+  props.action.addCartItem(bookingDetails).then((res) => {
+    console.log("Result" , res)
+   })
+   .catch((err) => {
+     console.log('Add Cart Item Error', err)
+   })
   handleClose();
 
 }
@@ -110,7 +117,7 @@ const handleSubmit = (event) => {
             Book Service
           </Button>
           <Dialog open={open} onClose={handleClose}>
-          <form onSubmit={handleSubmit}>
+          <form >
         <DialogTitle>Book {props.services.title}</DialogTitle>
         <DialogContent dividers>
         
@@ -182,7 +189,7 @@ const handleSubmit = (event) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit" align="center" variant="contained">Add To Cart</Button>
+          <Button type="submit" align="center" variant="contained" onClick={() => handleSubmit()}>Add To Cart</Button>
         </DialogActions>
         </form>
       </Dialog>
@@ -208,4 +215,18 @@ const handleSubmit = (event) => {
   )
 }
 
-export default ServiceCard
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      cartData: state.cart
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(cartAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ServiceCard)

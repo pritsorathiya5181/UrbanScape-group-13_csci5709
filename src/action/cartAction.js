@@ -94,32 +94,50 @@ export function getCartItems(userId) {
   }
 
   export function addCartItem(value) {
-    console.log("Cart Items Are " + JSON.stringify(value));
-    let user = '';
     return function (dispatch, getState) {
       return new Promise(async (resolve, rejects) => {
         try {
+          console.log("Cart Items Are " + JSON.stringify(value));
+          console.log("Cart " + value.address);
+          let user = 'Janet';
+          const uniqueItemId= Date.now().toString()
+      
+
+          var raw = {
+            "itemNo": uniqueItemId,
+            "serviceCategory": "Beauty",
+            "serviceName": "Haircut",
+            "date": "22-March-2022",
+            "clientAddress": value.address,
+            "clientName": value.fName,
+            "clientContact": value.contactNum,
+            "clientEmail": value.address,
+            "servicePrice": 45.6,
+            "professionalName": null,
+            "orderItemStatus": "Pending",
+            "specialInstructions": value.instructions
+          };
 
           console.log("CartAction Add")
-          console.log("pARAMS: ", user, value)
+          console.log("pARAMS: ", user, raw)
           dispatch({
             type: 'ADD_CART_ITEM',
             subtype: 'loading',
           })
 
           var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
+          myHeaders.append("Content-Type", "application/json");
 
-var raw = JSON.stringify(value);
+          var payload = JSON.stringify(raw);
 
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
+          var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: payload,
+          redirect: 'follow'
+          };
 
-fetch(`${BASE_URL}cart/${user.trim()}`, requestOptions)
+fetch(`${BASE_URL}cart/${user}`, requestOptions)
   .then(response => response.text())
   .then((result) => {
     console.log('add cart item :', result)
