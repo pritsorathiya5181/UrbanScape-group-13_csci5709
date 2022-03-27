@@ -20,6 +20,13 @@ const cartReducer = (state = initialState, action) => {
               ? action.cartData
               : state.cartData,
         }
+        case 'ADD_CART_ITEM':
+        return {
+          ...state,
+          cartAddDataError: action.error ? action.error : null,
+          cartAddDataSuccess: action.subtype === 'success',
+          cartAddDataLoading: action.subtype === 'loading',
+        }
 
 
     default:
