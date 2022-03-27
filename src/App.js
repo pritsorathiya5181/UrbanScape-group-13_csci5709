@@ -13,6 +13,7 @@ import ProfessionalProfilePage from './pages/professional/profile/ProfessionalPr
 import CustomerProfilePage from './pages/customer/profile/CustomerProfilePage'
 import ServiceRequests from './pages/professional/serviceListing/ServiceRequests'
 import ServiceHistory from './pages/professional/serviceListing/ServiceHistory'
+import CartPage from './pages/customer/CartPage/CartPage'
 
 function App() {
   const url = window.location.pathname
@@ -30,6 +31,12 @@ function App() {
             path='/customer/myprofile/'
             element={<CustomerProfilePage />}
           />
+          <Route
+            exact
+            path='/customer/cartpage/'
+            element={<CartPage />}
+          />
+
           <Route exact path='/professional' element={<Dashboard />} />
           <Route
             exact
