@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   rightAlignItem: {
     marginLeft: "auto"
-},
+  },
   avatar: {
     backgroundColor: red[500],
   },
@@ -59,18 +59,18 @@ const useStyles = makeStyles((theme) => ({
 
 function ServiceCard(props) {
   const classes = useStyles()
-  const defaultFormValues = { fName: "", contactNum: null, email: "", address: "", instructions: ""};
-  const [bookingDetails, setBookingDetails] = useState(defaultFormValues);
+  const defaultFormValues = { fName: "", contactNum: null, email: "", address: "", bookingTime: "2017-05-24T10:30", instructions: "" };
+  const [bookingFormDetails, setBookingFormDetails] = useState(defaultFormValues);
   const [expanded, setExpanded] = React.useState(false)
 
   const handleBooking = (e) => {
     const { name, value } = e.target;
-    setBookingDetails({ ...bookingDetails, [name]: value });
-};
+    setBookingFormDetails({ ...bookingFormDetails, [name]: value });
+  };
 
 const handleSubmit = () => {
 
-  props.action.addCartItem(bookingDetails).then((res) => {
+  props.action.addCartItem(bookingFormDetails).then((res) => {
     console.log("Result" , res)
    })
    .catch((err) => {
@@ -78,7 +78,7 @@ const handleSubmit = () => {
    })
   handleClose();
 
-}
+  }
 
 
   const handleExpandClick = () => {
@@ -125,7 +125,7 @@ const handleSubmit = () => {
             autoFocus
             margin="dense"
             id="outlined-basic"
-            value={bookingDetails.fName} 
+            value={bookingFormDetails.fName} 
             onChange={handleBooking}
             fullWidth
             name="fName"
@@ -138,7 +138,7 @@ const handleSubmit = () => {
             margin="dense"
             fullWidth
             id="outlined-basic"
-            value={bookingDetails.contactNum} 
+            value={bookingFormDetails.contactNum} 
             onChange={handleBooking}
             name="contactNum"
             label="Contact Number"
@@ -150,7 +150,7 @@ const handleSubmit = () => {
             margin="dense"
             id="outlined-basic"
             name="email"
-            value={bookingDetails.email} 
+            value={bookingFormDetails.email} 
             onChange={handleBooking}
             fullWidth
             label="Email Address"
@@ -161,7 +161,7 @@ const handleSubmit = () => {
             autoFocus
             margin="dense"
             id="outlined-basic"
-            value={bookingDetails.address} 
+            value={bookingFormDetails.address} 
             onChange={handleBooking}
             fullWidth
             name="address"
@@ -175,7 +175,7 @@ const handleSubmit = () => {
             autoFocus
             margin="dense"
             name="instructions"
-            value={bookingDetails.instructions} 
+            value={bookingFormDetails.instructions} 
             onChange={handleBooking}
             fullWidth
             id="outlined-basic"
