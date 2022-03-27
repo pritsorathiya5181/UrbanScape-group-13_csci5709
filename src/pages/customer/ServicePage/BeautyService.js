@@ -4,8 +4,12 @@ import headMassageImage from '../../../asserts/images/head-massage.jpg'
 import facialImage from '../../../asserts/images/facial.jpg'
 import haircutImage from '../../../asserts/images/haircut.jpg'
 import Calendar from '../../../components/customer/DateTimePicker/Calendar'
+import * as serviceCategoryAction from '../../../action/serviceCategoryAction'
 import { Button, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
+import { useEffect, useState } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles({
   div: {
@@ -29,32 +33,45 @@ const useStyles = makeStyles({
   },
 })
 
-function BeautyService() {
+function BeautyService(props) {
   const classes = useStyles()
+  const [beautyServices, setBeautyServices] = useState([]);
 
-  const beautyServices = []
-  beautyServices.push({
-    title: 'Head Massage',
-    img: headMassageImage,
-    content: 'Book our relaxing head massage to recharge your energy',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  })
-  beautyServices.push({
-    title: 'Hair Cut',
-    img: haircutImage,
-    content:
-      'Pamper yourself with a new look with our professional hair cutting experience',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  })
-  beautyServices.push({
-    title: 'Facial',
-    img: facialImage,
-    content: 'Relax your facial muscles with our rejuvenating facial',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  })
+  useEffect(() => {
+    props.action.getServices().then((res) => {
+      console.log("API Result" , res)
+      console.log("Beauty Services are " + JSON.stringify(res.serviceCategories.filter(serviceCategory => serviceCategory.serviceCategory === 'Beauty')))
+      let servicesOffered = res.serviceCategories.filter(serviceCategory => serviceCategory.serviceCategory === 'Beauty');
+      setBeautyServices(servicesOffered[0].services);
+      
+     })
+     .catch((err) => {
+       console.log('Add Cart Item Error', err)
+     })
+}, [])
+
+  // beautyServices.push({
+  //   title: 'Head Massage',
+  //   img: headMassageImage,
+  //   content: 'Book our relaxing head massage to recharge your energy',
+  //   description:
+  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  // })
+  // beautyServices.push({
+  //   title: 'Hair Cut',
+  //   img: haircutImage,
+  //   content:
+  //     'Pamper yourself with a new look with our professional hair cutting experience',
+  //   description:
+  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  // })
+  // beautyServices.push({
+  //   title: 'Facial',
+  //   img: facialImage,
+  //   content: 'Relax your facial muscles with our rejuvenating facial',
+  //   description:
+  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  // })
   return (
     <div className={classes.header}>
       <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h3'>
@@ -79,4 +96,18 @@ function BeautyService() {
   )
 }
 
-export default BeautyService
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      serviceCategories: state.serviceCategories
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(serviceCategoryAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BeautyService)
