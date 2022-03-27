@@ -10,7 +10,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {addCartItem} from '../../../action/cartAction';
+import * as cartAction from '../../../action/cartAction'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 import {
   Button,
@@ -49,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   rightAlignItem: {
     marginLeft: "auto"
-},
+  },
   avatar: {
     backgroundColor: red[500],
   },
@@ -57,21 +59,26 @@ const useStyles = makeStyles((theme) => ({
 
 function ServiceCard(props) {
   const classes = useStyles()
-  const defaultFormValues = { fName: "", contactNum: null, email: "", address: "", instructions: ""};
-  const [bookingDetails, setBookingDetails] = useState(defaultFormValues);
+  const defaultFormValues = { fName: "", contactNum: null, email: "", address: "", bookingTime: "2017-05-24T10:30", instructions: "" };
+  const [bookingFormDetails, setBookingFormDetails] = useState(defaultFormValues);
   const [expanded, setExpanded] = React.useState(false)
 
   const handleBooking = (e) => {
     const { name, value } = e.target;
-    setBookingDetails({ ...bookingDetails, [name]: value });
-};
+    setBookingFormDetails({ ...bookingFormDetails, [name]: value });
+  };
 
-const handleSubmit = (event) => {
-  event.preventDefault();
-  addCartItem(bookingDetails);
+const handleSubmit = () => {
+
+  props.action.addCartItem(bookingFormDetails).then((res) => {
+    console.log("Result" , res)
+   })
+   .catch((err) => {
+     console.log('Add Cart Item Error', err)
+   })
   handleClose();
 
-}
+  }
 
 
   const handleExpandClick = () => {
@@ -92,14 +99,14 @@ const handleSubmit = (event) => {
     <section>
       <Card className={classes.root}>
         <CardHeader
-          title={props.services.title}
+          title={props.services.serviceName}
           subheader={props.services.subheader}
           sx={{ textAlign: 'start' }}
         />
         <CardMedia className={classes.media} image={props.services.img} />
         <CardContent>
           <Typography variant='body2' color='textSecondary' component='p'>
-            {props.services.content}
+            {props.services.title}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -110,15 +117,15 @@ const handleSubmit = (event) => {
             Book Service
           </Button>
           <Dialog open={open} onClose={handleClose}>
-          <form onSubmit={handleSubmit}>
-        <DialogTitle>Book {props.services.title}</DialogTitle>
+          <form >
+        <DialogTitle>Book {props.services.serviceName}</DialogTitle>
         <DialogContent dividers>
         
           <TextField
             autoFocus
             margin="dense"
             id="outlined-basic"
-            value={bookingDetails.fName} 
+            value={bookingFormDetails.fName} 
             onChange={handleBooking}
             fullWidth
             name="fName"
@@ -131,7 +138,7 @@ const handleSubmit = (event) => {
             margin="dense"
             fullWidth
             id="outlined-basic"
-            value={bookingDetails.contactNum} 
+            value={bookingFormDetails.contactNum} 
             onChange={handleBooking}
             name="contactNum"
             label="Contact Number"
@@ -143,7 +150,7 @@ const handleSubmit = (event) => {
             margin="dense"
             id="outlined-basic"
             name="email"
-            value={bookingDetails.email} 
+            value={bookingFormDetails.email} 
             onChange={handleBooking}
             fullWidth
             label="Email Address"
@@ -154,7 +161,7 @@ const handleSubmit = (event) => {
             autoFocus
             margin="dense"
             id="outlined-basic"
-            value={bookingDetails.address} 
+            value={bookingFormDetails.address} 
             onChange={handleBooking}
             fullWidth
             name="address"
@@ -168,7 +175,7 @@ const handleSubmit = (event) => {
             autoFocus
             margin="dense"
             name="instructions"
-            value={bookingDetails.instructions} 
+            value={bookingFormDetails.instructions} 
             onChange={handleBooking}
             fullWidth
             id="outlined-basic"
@@ -181,12 +188,16 @@ const handleSubmit = (event) => {
           
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit" align="center" variant="contained">Add To Cart</Button>
+        <Button variant="outlined" onClick={handleClose}>Cancel</Button>
+                <Button type="submit" align="center" variant="contained">
+            <ShoppingCartIcon sx={{ color: 'white', padding: "5px" }} fontSize="small"/>Add To Cart </Button>
         </DialogActions>
         </form>
       </Dialog>
-      500$
+      <div>
+      {props.services.price}
+      </div>
+      
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -200,7 +211,7 @@ const handleSubmit = (event) => {
         </CardActions>
         <Collapse in={expanded} timeout='auto' unmountOnExit>
           <CardContent>
-            <Typography paragraph>{props.services.description}</Typography>
+            <Typography paragraph>{props.services.desc}</Typography>
           </CardContent>
         </Collapse>
       </Card>
@@ -208,4 +219,18 @@ const handleSubmit = (event) => {
   )
 }
 
-export default ServiceCard
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      cartData: state.cart
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(cartAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ServiceCard)
