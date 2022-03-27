@@ -3,6 +3,12 @@ import clsx from 'clsx'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Calendar from '../../../components/customer/DateTimePicker/Calendar'
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import {
   Button,
   Card,
@@ -48,6 +54,16 @@ function ServiceCard(props) {
     setExpanded(!expanded)
   }
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpenDialog = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <section>
       <Card className={classes.root}>
@@ -66,9 +82,68 @@ function ServiceCard(props) {
           {/* <IconButton aria-label='add to cart'>
             <ShoppingCartIcon />
           </IconButton> */}
-          <Button variant='text' sx={{ textDecoration: 'underline' }}>
+          <Button variant='text' onClick={handleClickOpenDialog} sx={{ textDecoration: 'underline' }}>
             Book Service
           </Button>
+          <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Book {props.services.title}</DialogTitle>
+        <DialogContent dividers>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="outlined-basic"
+            fullWidth
+            label="Full Name"
+            type="fname"
+            variant="outlined"
+          />
+           <TextField
+            autoFocus
+            margin="dense"
+            fullWidth
+            id="outlined-basic"
+            label="Contact Number"
+            type="contactNum"
+            variant="outlined"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="outlined-basic"
+            fullWidth
+            label="Email Address"
+            type="email"
+            variant="outlined"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="outlined-basic"
+            fullWidth
+            label="Address"
+            type="address"
+            multiline
+            rows={4}
+            variant="outlined"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            fullWidth
+            id="outlined-basic"
+            multiline
+            rows={2}
+            label="Special Instructions"
+            type="email"
+            variant="outlined"
+          />
+          
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose} color='primary'>Add To Cart</Button>
+        </DialogActions>
+      </Dialog>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
