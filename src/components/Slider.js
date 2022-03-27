@@ -90,17 +90,19 @@ const Slider = () => {
     }
   }
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSlideIndex((slideIndex + 1) % 3)
-    }, 3000)
-  })
+  useEffect(() => {})
+
+  const timer = setTimeout(() => {
+    setSlideIndex((slideIndex + 1) % 3)
+  }, 5000)
 
   return (
     <Container>
-      <Arrow direction='left' onClick={() => handleClick('left')}>
-        <ArrowLeftOutlined />
-      </Arrow>
+      {slideIndex > 0 && (
+        <Arrow direction='left' onClick={() => handleClick('left')}>
+          <ArrowLeftOutlined />
+        </Arrow>
+      )}
       <Wrapper slideIndex={slideIndex}>
         {SLIDE_ITEMS.map((item) => (
           <Slide bg={item.bg} key={item.id}>
@@ -115,9 +117,11 @@ const Slider = () => {
           </Slide>
         ))}
       </Wrapper>
-      <Arrow direction='right' onClick={() => handleClick('right')}>
-        <ArrowRightOutlined />
-      </Arrow>
+      {slideIndex < 2 && (
+        <Arrow direction='right' onClick={() => handleClick('right')}>
+          <ArrowRightOutlined />
+        </Arrow>
+      )}
     </Container>
   )
 }

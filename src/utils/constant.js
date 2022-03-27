@@ -11,22 +11,22 @@ export const SERVICE_REQUEST_HEADERS = [
   { id: 'serviceNo', label: 'No.', minWidth: '10%' },
   { id: 'serviceName', label: 'Service name', minWidth: 100 },
   {
-    id: 'customerName',
-    label: 'Customer name',
+    id: 'clientName',
+    label: 'Client name',
     minWidth: 170,
     align: 'center',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'customerLocation',
-    label: 'Customer Location',
+    id: 'clientAddress',
+    label: 'Client Address',
     minWidth: 170,
     align: 'center',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
-    id: 'mobileNo',
-    label: 'Mobile No',
+    id: 'clientContact',
+    label: 'Client Contact No.',
     minWidth: 170,
     align: 'center',
     format: (value) => value.toFixed(2),
@@ -168,14 +168,14 @@ export const SLIDE_ITEMS = [
   {
     id: 1,
     img: require('../asserts/images/facial.jpg'),
-    title: 'FACIAL MASSAGE',
+    title: 'Facial Massage',
     desc: "Don't compromise on your skin's natural beauty!",
     bg: 'f5fafd',
   },
   {
     id: 2,
-    img: require('../asserts/images/facial.jpg'),
-    title: 'HAIR CUTTING',
+    img: require('../asserts/images/haircut.jpg'),
+    title: 'Hair Cutting',
     desc: "Don't compromise with your hair style!",
     bg: 'fcf1ed',
   },
@@ -185,5 +185,81 @@ export const SLIDE_ITEMS = [
     title: 'Head Massage',
     desc: 'Deep relaxation for your head',
     bg: 'fbf0f4',
+  },
+]
+
+// professional-servicestats-requestsList
+export const SERVICE_REQUESTS = [
+  {
+    serviceCategory: 'Beauty',
+    serviceName: 'HairCut',
+    clientName: 'John Doe',
+    clientAddress: 'New York',
+    clientContact: '+1-123-456-7890',
+    clientEmail: 'fresky.france@gmail.com',
+    serviceTime: '10:00 AM',
+    date: new Date(),
+    specialInstructions:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
+  },
+  {
+    serviceCategory: 'Beauty',
+    serviceName: 'HairCut',
+    clientName: 'John Doe',
+    clientAddress: 'New York',
+    clientContact: '+1-123-456-7890',
+    clientEmail: 'fresky.france@gmail.com',
+    serviceTime: '10:00 AM',
+    date: new Date(),
+    specialInstructions:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
+  },
+  {
+    serviceCategory: 'Beauty',
+    serviceName: 'HairCut',
+    clientName: 'John Doe',
+    clientAddress: 'New York',
+    clientContact: '+1-123-456-7890',
+    clientEmail: 'fresky.france@gmail.com',
+    serviceTime: '10:00 AM',
+    date: new Date(),
+    specialInstructions:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
+  },
+  {
+    serviceCategory: 'Beauty',
+    serviceName: 'HairCut',
+    clientName: 'John Doe',
+    clientAddress: 'New York',
+    clientContact: '+1-123-456-7890',
+    clientEmail: 'fresky.france@gmail.com',
+    serviceTime: '10:00 AM',
+    date: new Date(),
+    specialInstructions:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
+  },
+  {
+    serviceCategory: 'Beauty',
+    serviceName: 'HairCut',
+    clientName: 'John Doe',
+    clientAddress: 'New York',
+    clientContact: '+1-123-456-7890',
+    clientEmail: 'fresky.france@gmail.com',
+    serviceTime: '10:00 AM',
+    date: new Date(),
+    specialInstructions:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
+  },
+  {
+    serviceCategory: 'Beauty',
+    serviceName: 'HairCut',
+    clientName: 'John Doe',
+    clientAddress: 'New York',
+    clientContact: '+1-123-456-7890',
+    clientEmail: 'fresky.france@gmail.com',
+    serviceTime: '10:00 AM',
+    date: new Date(),
+    specialInstructions:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
   },
 ]

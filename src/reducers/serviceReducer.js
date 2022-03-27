@@ -38,6 +38,18 @@ const activitiesReducer = (state = initialState, action) => {
         deleteServiceSuccess: action.subtype === 'success',
         deleteServiceLoading: action.subtype === 'loading',
       }
+
+    case 'SERVICE_STATS':
+      return {
+        ...state,
+        serviceStatsDataError: action.error ? action.error : null,
+        serviceStatsDataSuccess: action.subtype === 'success',
+        serviceStatsDataLoading: action.subtype === 'loading',
+        serviceStatsData:
+          action.subtype === 'success'
+            ? action.serviceStatsData
+            : state.serviceStatsData,
+      }
     default:
       return state
   }
