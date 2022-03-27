@@ -1,6 +1,7 @@
-import React from 'react'
-import clsx from 'clsx'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import React from 'react';
+import clsx from 'clsx';
+import { useState } from 'react';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Calendar from '../../../components/customer/DateTimePicker/Calendar'
 import TextField from '@mui/material/TextField';
@@ -9,6 +10,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import {addCartItem} from '../../../action/cartAction';
+
 import {
   Button,
   Card,
@@ -31,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
+  cardAction: {
+    display: "flex"
+  },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
@@ -41,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
+  rightAlignItem: {
+    marginLeft: "auto"
+},
   avatar: {
     backgroundColor: red[500],
   },
@@ -48,7 +57,22 @@ const useStyles = makeStyles((theme) => ({
 
 function ServiceCard(props) {
   const classes = useStyles()
+  const defaultFormValues = { fName: "", contactNum: null, email: "", address: "", instructions: ""};
+  const [bookingDetails, setBookingDetails] = useState(defaultFormValues);
   const [expanded, setExpanded] = React.useState(false)
+
+  const handleBooking = (e) => {
+    const { name, value } = e.target;
+    setBookingDetails({ ...bookingDetails, [name]: value });
+};
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  addCartItem(bookingDetails);
+  handleClose();
+
+}
+
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -86,13 +110,18 @@ function ServiceCard(props) {
             Book Service
           </Button>
           <Dialog open={open} onClose={handleClose}>
+          <form onSubmit={handleSubmit}>
         <DialogTitle>Book {props.services.title}</DialogTitle>
         <DialogContent dividers>
+        
           <TextField
             autoFocus
             margin="dense"
             id="outlined-basic"
+            value={bookingDetails.fName} 
+            onChange={handleBooking}
             fullWidth
+            name="fName"
             label="Full Name"
             type="fname"
             variant="outlined"
@@ -102,6 +131,9 @@ function ServiceCard(props) {
             margin="dense"
             fullWidth
             id="outlined-basic"
+            value={bookingDetails.contactNum} 
+            onChange={handleBooking}
+            name="contactNum"
             label="Contact Number"
             type="contactNum"
             variant="outlined"
@@ -110,6 +142,9 @@ function ServiceCard(props) {
             autoFocus
             margin="dense"
             id="outlined-basic"
+            name="email"
+            value={bookingDetails.email} 
+            onChange={handleBooking}
             fullWidth
             label="Email Address"
             type="email"
@@ -119,7 +154,10 @@ function ServiceCard(props) {
             autoFocus
             margin="dense"
             id="outlined-basic"
+            value={bookingDetails.address} 
+            onChange={handleBooking}
             fullWidth
+            name="address"
             label="Address"
             type="address"
             multiline
@@ -129,21 +167,26 @@ function ServiceCard(props) {
           <TextField
             autoFocus
             margin="dense"
+            name="instructions"
+            value={bookingDetails.instructions} 
+            onChange={handleBooking}
             fullWidth
             id="outlined-basic"
             multiline
             rows={2}
             label="Special Instructions"
-            type="email"
+            type="instructions"
             variant="outlined"
           />
           
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} color='primary'>Add To Cart</Button>
+          <Button type="submit" align="center" variant="contained">Add To Cart</Button>
         </DialogActions>
+        </form>
       </Dialog>
+      500$
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -152,7 +195,7 @@ function ServiceCard(props) {
             aria-expanded={expanded}
             aria-label='show more'
           >
-            <ExpandMoreIcon />
+            <ExpandMoreIcon className={classes.rightAlignItem} />
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout='auto' unmountOnExit>

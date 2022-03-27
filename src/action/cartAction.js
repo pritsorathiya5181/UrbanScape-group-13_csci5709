@@ -93,7 +93,9 @@ export function getCartItems(userId) {
     }
   }
 
-  export function addCartItem(user, value) {
+  export function addCartItem(value) {
+    console.log("Cart Items Are " + JSON.stringify(value));
+    let user = '';
     return function (dispatch, getState) {
       return new Promise(async (resolve, rejects) => {
         try {
