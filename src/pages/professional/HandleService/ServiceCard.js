@@ -42,6 +42,7 @@ const ServiceCard = ({ item }) => {
         boxShadow: '6px 6px 16px 0 grey',
         borderRedius: '15px',
         overflow: 'hidden',
+        cursor: 'pointer',
       }}
     >
       <section style={{ position: 'relative' }}>
@@ -65,6 +66,7 @@ const ServiceCard = ({ item }) => {
           image={item.serviceImage[imageIndex].photoUrl}
           alt='green iguana'
           style={{ borderBottom: '2px solid #0d47a1' }}
+          onClick={() => openService(item)}
         />
         {item.serviceImage?.length - 2 > imageIndex && (
           <ChevronRight
@@ -81,12 +83,7 @@ const ServiceCard = ({ item }) => {
           />
         )}
       </section>
-      <CardContent
-        onClick={() => openService(item)}
-        sx={{
-          cursor: 'pointer',
-        }}
-      >
+      <CardContent onClick={() => openService(item)}>
         <Typography gutterBottom variant='h5' component='div'>
           {item.serviceCategory}
         </Typography>
