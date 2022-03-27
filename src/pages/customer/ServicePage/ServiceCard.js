@@ -10,7 +10,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { addCartItem } from '../../../action/cartAction';
+import * as cartAction from '../../../action/cartAction'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 import {
   Button,
@@ -66,12 +68,15 @@ function ServiceCard(props) {
     setBookingFormDetails({ ...bookingFormDetails, [name]: value });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    let bookingDetails = bookingFormDetails;
-    bookingDetails.serviceName = props.services.title;
-    addCartItem(bookingDetails);
-    handleClose();
+const handleSubmit = () => {
+
+  props.action.addCartItem(bookingFormDetails).then((res) => {
+    console.log("Result" , res)
+   })
+   .catch((err) => {
+     console.log('Add Cart Item Error', err)
+   })
+  handleClose();
 
   }
 
@@ -112,96 +117,83 @@ function ServiceCard(props) {
             Book Service
           </Button>
           <Dialog open={open} onClose={handleClose}>
-            <form onSubmit={handleSubmit}>
-              <DialogTitle>Book {props.services.title}</DialogTitle>
-              <DialogContent dividers>
-
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="outlined-basic"
-                  value={bookingFormDetails.fName}
-                  onChange={handleBooking}
-                  fullWidth
-                  name="fName"
-                  label="Full Name"
-                  type="fname"
-                  variant="outlined"
-                />
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  fullWidth
-                  id="outlined-basic"
-                  value={bookingFormDetails.contactNum}
-                  onChange={handleBooking}
-                  name="contactNum"
-                  label="Contact Number"
-                  type="contactNum"
-                  variant="outlined"
-                />
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="outlined-basic"
-                  name="email"
-                  value={bookingFormDetails.email}
-                  onChange={handleBooking}
-                  fullWidth
-                  label="Email Address"
-                  type="email"
-                  variant="outlined"
-                />
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="outlined-basic"
-                  value={bookingFormDetails.address}
-                  onChange={handleBooking}
-                  fullWidth
-                  name="address"
-                  label="Address"
-                  type="address"
-                  multiline
-                  rows={4}
-                  variant="outlined"
-                />
-                 <TextField
-                  margin="dense"
-                  fullWidth
-                  id="datetime-local"
-                  name="bookingTime"
-                  label="Book appointment"
-                  type="datetime-local"
-                  value={bookingFormDetails.bookingTime}
-                  onChange={handleBooking}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  name="instructions"
-                  value={bookingFormDetails.instructions}
-                  onChange={handleBooking}
-                  fullWidth
-                  id="outlined-basic"
-                  multiline
-                  rows={2}
-                  label="Special Instructions"
-                  type="instructions"
-                  variant="outlined"
-                />
-
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit" align="center" variant="contained">Add To Cart</Button>
-              </DialogActions>
-            </form>
-          </Dialog>
-          500$
+          <form >
+        <DialogTitle>Book {props.services.title}</DialogTitle>
+        <DialogContent dividers>
+        
+          <TextField
+            autoFocus
+            margin="dense"
+            id="outlined-basic"
+            value={bookingFormDetails.fName} 
+            onChange={handleBooking}
+            fullWidth
+            name="fName"
+            label="Full Name"
+            type="fname"
+            variant="outlined"
+          />
+           <TextField
+            autoFocus
+            margin="dense"
+            fullWidth
+            id="outlined-basic"
+            value={bookingFormDetails.contactNum} 
+            onChange={handleBooking}
+            name="contactNum"
+            label="Contact Number"
+            type="contactNum"
+            variant="outlined"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="outlined-basic"
+            name="email"
+            value={bookingFormDetails.email} 
+            onChange={handleBooking}
+            fullWidth
+            label="Email Address"
+            type="email"
+            variant="outlined"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="outlined-basic"
+            value={bookingFormDetails.address} 
+            onChange={handleBooking}
+            fullWidth
+            name="address"
+            label="Address"
+            type="address"
+            multiline
+            rows={4}
+            variant="outlined"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            name="instructions"
+            value={bookingFormDetails.instructions} 
+            onChange={handleBooking}
+            fullWidth
+            id="outlined-basic"
+            multiline
+            rows={2}
+            label="Special Instructions"
+            type="instructions"
+            variant="outlined"
+          />
+          
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button type="submit" align="center" variant="contained" onClick={() => handleSubmit()}>Add To Cart</Button>
+        </DialogActions>
+        </form>
+      </Dialog>
+      500$
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -223,4 +215,18 @@ function ServiceCard(props) {
   )
 }
 
-export default ServiceCard
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      cartData: state.cart
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(cartAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ServiceCard)
