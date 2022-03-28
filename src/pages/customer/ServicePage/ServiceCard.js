@@ -117,7 +117,6 @@ const handleSubmit = () => {
             Book Service
           </Button>
           <Dialog open={open} onClose={handleClose}>
-          <form >
         <DialogTitle>Book {props.services.serviceName}</DialogTitle>
         <DialogContent dividers>
         
@@ -172,6 +171,20 @@ const handleSubmit = () => {
             variant="outlined"
           />
           <TextField
+                  margin="dense"
+                  fullWidth
+                  id="datetime-local"
+                  name="bookingTime"
+                  label="Book appointment"
+                  type="datetime-local"
+                  value={bookingFormDetails.bookingTime}
+                  onChange={handleBooking}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
+          <TextField
             autoFocus
             margin="dense"
             name="instructions"
@@ -189,10 +202,9 @@ const handleSubmit = () => {
         </DialogContent>
         <DialogActions>
         <Button variant="outlined" onClick={handleClose}>Cancel</Button>
-                <Button type="submit" align="center" variant="contained">
+                <Button type="submit"  onClick={() => handleSubmit()} align="center" variant="contained">
             <ShoppingCartIcon sx={{ color: 'white', padding: "5px" }} fontSize="small"/>Add To Cart </Button>
         </DialogActions>
-        </form>
       </Dialog>
       <div>
       {props.services.price}
