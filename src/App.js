@@ -38,7 +38,7 @@ function App() {
           <Route path='/beautyservices' element={<BeautyService />} />
           <Route path='/carpentryservices' element={<CarpenterService />} />
           <Route path='/plumbingservices' element={<PlumbingService />} />
-          <Route path='/support' element={<ContactUs />} />
+          <Route path='/support' element={<Contact />} />
           <Route
             exact
             path='/customer/myprofile/'
