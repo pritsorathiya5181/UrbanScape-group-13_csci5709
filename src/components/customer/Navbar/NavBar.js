@@ -64,6 +64,11 @@ const NavBar = () => {
     navigate('./beautyservices')
   }
 
+  const navigateToCart = () => {
+    navigate('./customer/cartpage')
+  }
+
+
   const handleClick = (event) => {
     setServiceOption(event.currentTarget)
   }
@@ -178,7 +183,7 @@ const NavBar = () => {
         }}
       >
         <Tooltip title='Open cart'>
-          <IconButton sx={{ paddingRight: 1 }}>
+          <IconButton sx={{ paddingRight: 1 }} onClick={navigateToCart}>
             <ShoppingCartIcon fontSize='large' sx={{ color: 'white' }} />
           </IconButton>
         </Tooltip>
