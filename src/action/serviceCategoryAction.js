@@ -1,11 +1,11 @@
 import { BASE_URL } from '../utils/string'
 
-export function getServices(userId) {
+export function getServices() {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
       try {
         dispatch({
-          type: 'GET_SERVICES',
+          type: 'GET_SERVICE_CATEGORIES',
           subtype: 'loading',
         })
 
@@ -20,9 +20,9 @@ export function getServices(userId) {
           .then((result) => {
             console.log('all services==', result)
             dispatch({
-              type: 'GET_SERVICES',
+              type: 'GET_SERVICE_CATEGORIES',
               subtype: 'success',
-              serviceCategories: result.serviceCategories
+              serviceCategories: result.serviceCategories,
             })
             resolve(result)
           })
@@ -32,7 +32,7 @@ export function getServices(userId) {
           })
       } catch (error) {
         dispatch({
-          type: 'GET_SERVICES',
+          type: 'GET_SERVICE_CATEGORIES',
           error: error,
         })
       }

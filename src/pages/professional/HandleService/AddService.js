@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import './AddService.css'
@@ -19,6 +19,7 @@ import useWindowDimensions from '../../../utils/scale'
 import AddIcon from '@mui/icons-material/Add'
 import { SERVICE_CATEGORY } from '../../../utils/service'
 import * as ServiceAction from '../../../action/ServiceAction'
+import * as serviceCategoryAction from '../../../action/serviceCategoryAction'
 import * as PATH from '../../../utils/string'
 
 const AddService = (props) => {
@@ -42,6 +43,9 @@ const AddService = (props) => {
   ])
   const [isDisabled, setIsDisabled] = useState(true)
   const [serviceLoading, setServiceLoading] = useState(false)
+  const [staticServices, setStaticServices] = useState(
+    props.serviceCategories || []
+  )
 
   const useStyles = makeStyles((theme) => ({
     input: {
@@ -94,6 +98,18 @@ const AddService = (props) => {
     state?.isUpdate,
     state?.serviceData,
   ])
+
+  useEffect(() => {
+    props.serviceCatAction
+      .getServices()
+      .then((res) => {
+        console.log('Static services', res)
+        setStaticServices(res?.serviceCategories)
+      })
+      .catch((err) => {
+        console.log('Add Cart Item Error', err)
+      })
+  }, [props.serviceCatAction])
 
   const onSelectCategory = (event) => {
     setCategory(event.target.value)
@@ -270,13 +286,15 @@ const AddService = (props) => {
                   <MenuItem disabled value=''>
                     <em>Select a category...</em>
                   </MenuItem>
-                  {SERVICE_CATEGORY.map((item) => item.title).map((name) => {
-                    return (
-                      <MenuItem key={name} value={name}>
-                        {name}
-                      </MenuItem>
-                    )
-                  })}
+                  {staticServices
+                    .map((item) => item.serviceCategory)
+                    .map((name) => {
+                      return (
+                        <MenuItem key={name} value={name}>
+                          {name}
+                        </MenuItem>
+                      )
+                    })}
                 </Select>
               </FormControl>
             </section>
@@ -296,11 +314,14 @@ const AddService = (props) => {
                   <MenuItem disabled value=''>
                     <em>Select a category...</em>
                   </MenuItem>
-                  {SERVICE_CATEGORY.map((item) => {
-                    if (item.title === category) {
-                      return item.serviceList.map((name) => (
-                        <MenuItem key={name} value={name}>
-                          {name}
+                  {staticServices.map((item) => {
+                    if (item.serviceCategory === category) {
+                      return item.services.map((name) => (
+                        <MenuItem
+                          key={name.serviceName}
+                          value={name.serviceName}
+                        >
+                          {name.serviceName}
                         </MenuItem>
                       ))
                     }
@@ -526,6 +547,7 @@ function mapStateToProps(state) {
   if (state) {
     return {
       addService: state.services,
+      serviceCategories: state.serviceCategories.serviceCategories,
     }
   }
 }
@@ -533,6 +555,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     action: bindActionCreators(ServiceAction, dispatch),
+    serviceCatAction: bindActionCreators(serviceCategoryAction, dispatch),
   }
 }
 

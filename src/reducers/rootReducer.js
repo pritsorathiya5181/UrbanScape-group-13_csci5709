@@ -1,12 +1,14 @@
 import serviceReducer from './serviceReducer'
 import orderReducer from './orderReducer'
-import { combineReducers } from 'redux'
 import cartReducer from './cartReducer'
+import serviceCategoriesReducer from './serviceCategoriesReducer'
+import { combineReducers } from 'redux'
 
 const rootReducer = combineReducers({
   services: serviceReducer,
   orders: orderReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  serviceCategories: serviceCategoriesReducer,
 })
 
 export default rootReducer

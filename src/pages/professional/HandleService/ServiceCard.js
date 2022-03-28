@@ -85,7 +85,10 @@ const ServiceCard = ({ item }) => {
       </section>
       <CardContent onClick={() => openService(item)}>
         <Typography gutterBottom variant='h5' component='div'>
-          {item.serviceCategory}
+          {item?.serviceCategory}
+        </Typography>
+        <Typography variant='body2' color='black' component='div'>
+          {item?.serviceName}
         </Typography>
         <Typography
           variant='body2'
