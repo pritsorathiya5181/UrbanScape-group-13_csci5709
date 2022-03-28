@@ -38,7 +38,7 @@ const [cartItems, setCartItems] = useState(props.cartData.cartItems || [])
 
 useEffect(() => {
   function getCartItems() {
-    const user = 'Janet'
+    const user = 'aes'
     props.action
       .getCartItems(user)
       .then((res) => {
@@ -61,42 +61,25 @@ useEffect(() => {
 
 }, [])
 
-// const onAddCartItem = () => {
-//   const user = 'aes'
-//   const uniqueItemId= Date.now().toString()
 
-//   var raw = {
-//     "itemNo": uniqueItemId,
-//     "serviceCategory": "Beauty",
-//     "serviceName": "Haircut",
-//     "date": "22-March-2022",
-//     "clientAddress": "6545 Sunrise Street",
-//     "clientName": "Julia",
-//     "clientContact": "445-55-6444",
-//     "clientEmail": "julia@email.com",
-//     "servicePrice": 45.6,
-//     "professionalName": null,
-//     "orderItemStatus": "Pending",
-//     "specialInstructions": null
-//   };
-
-//   props.action
-//     .addCartItem(user, raw)
-//     .then((res) => {
-//      // navigate(`${PATH.partnerBaseUrl}/myservices`)
-//      console.log("Result" , res)
-//     })
-//     .catch((err) => {
-//       console.log('Add Cart Item Error', err)
-//     })
-// }
-
-function  removeFromCart (item) {
+function  removeFromCart (itemId, itemPrice) {
     console.log("Remove from cart!");
-    // let filteredArr = cart.filter((el) => el !== item);
-    // setCart(filteredArr);
-  
-  
+    console.log("Params: " , itemId, itemPrice)
+    
+    props.action.deleteItem(itemId, itemPrice)
+    .then((res) => {
+          console.log("Delete Item here: ")
+ 
+          console.log("Result delete item" , res)
+          })
+          .catch((err) => {
+            console.log('ACart Item delete Error', err)
+          })
+          
+        console.log("Delete cart item function")
+
+    const updatedCartItems = cartItems.filter(item => item.itemNo !== itemId)
+    setCartItems(updatedCartItems)  
   }
   
  return (
@@ -140,7 +123,7 @@ function  removeFromCart (item) {
               <TableCell>{row.date}</TableCell>
               <TableCell align="right">{row.time}</TableCell>
               <TableCell align="right">{row.servicePrice}</TableCell>
-              <TableCell align="right"><Button onClick={() => removeFromCart(row)}
+              <TableCell align="right"><Button onClick={() => removeFromCart(row.itemNo, row.servicePrice)}
                                         color = "info"
                                         sx = {{backgroundColor: "#D3DEDC"}}> Remove </Button></TableCell>
             </TableRow>
