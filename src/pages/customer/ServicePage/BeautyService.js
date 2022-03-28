@@ -40,8 +40,6 @@ function BeautyService(props) {
 
   useEffect(() => {
     props.action.getServices().then((res) => {
-      console.log("API Result" , res)
-      console.log("Beauty Services are " + JSON.stringify(res.serviceCategories.filter(serviceCategory => serviceCategory.serviceCategory === 'Beauty')))
       let servicesOffered = res.serviceCategories.filter(serviceCategory => serviceCategory.serviceCategory === 'Beauty');
       setBeautyServices(servicesOffered[0].services);
       
