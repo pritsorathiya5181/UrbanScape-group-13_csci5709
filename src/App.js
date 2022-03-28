@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import NavBar from './components/customer/Navbar/NavBar'
 import BeautyService from './pages/customer/ServicePage/BeautyService'
 import UserHomePage from './pages/customer/HomePage/UserHomePage'
-import Contact from './pages/customer/Support/Contact'
+
 import Dashboard from './pages/professional/dashboard/Dashboard'
 import AddService from './pages/professional/HandleService/AddService'
 import ServiceProfile from './pages/professional/HandleService/ServiceProfile'
@@ -38,7 +38,7 @@ function App() {
           <Route path='/beautyservices' element={<BeautyService />} />
           <Route path='/carpentryservices' element={<CarpenterService />} />
           <Route path='/plumbingservices' element={<PlumbingService />} />
-          <Route path='/support' element={<ContactUs />} />
+
           <Route
             exact
             path='/customer/myprofile/'
