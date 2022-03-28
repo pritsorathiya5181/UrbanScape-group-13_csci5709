@@ -39,6 +39,13 @@ export default function DashboardPrimary(props) {
     },
   ]
 
+  const adjustContent = (content) => {
+    if (content?.length > 60) {
+      return content.substring(0, 80) + '...'
+    }
+    return content
+  }
+
   return (
     <>
       <section
@@ -279,7 +286,7 @@ export default function DashboardPrimary(props) {
                   sx={{ color: 'white' }}
                   justifyContent='center'
                 >
-                  Description: {item.serviceDescription}
+                  Description: {adjustContent(item.serviceDescription)}
                 </Typography>
 
                 <Typography

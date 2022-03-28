@@ -23,6 +23,7 @@ import Otp from './components/UserAuthentication/Otp'
 import UpdatePassword from './components/UserAuthentication/UpdatePassword'
 import CarpenterService from './pages/customer/ServicePage/CarpenterService'
 import PlumbingService from './pages/customer/ServicePage/PlumbingService'
+import Contact from './pages/customer/Support/Contact'
 
 function App() {
   const url = window.location.pathname
@@ -38,7 +39,7 @@ function App() {
           <Route path='/beautyservices' element={<BeautyService />} />
           <Route path='/carpentryservices' element={<CarpenterService />} />
           <Route path='/plumbingservices' element={<PlumbingService />} />
-
+          <Route path='/support' element={<Contact />} />
           <Route
             exact
             path='/customer/myprofile/'
