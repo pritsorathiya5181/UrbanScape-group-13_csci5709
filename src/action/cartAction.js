@@ -1,4 +1,5 @@
 import { BASE_URL } from '../utils/string'
+import moment from 'moment'
 
 
 export function deleteItem(itemId, itemprice) {
@@ -27,12 +28,19 @@ var requestOptions = {
   redirect: 'follow'
 };
 
+
 fetch(`${BASE_URL}cart/${userName}`, requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-
-
+  .then(response => response.json())
+  .then(result => {
+    dispatch({
+      type: 'DELETE_ITEM',
+      subtype: 'success',
+    })
+    resolve(result)
+  })
+  .catch((error) => {
+    rejects(error)
+  })
       } catch (error) {
         dispatch({
           type: 'DELETE_ITEM',
@@ -87,28 +95,32 @@ export function getCartItems(userId) {
       return new Promise(async (resolve, rejects) => {
         try {
           console.log("Cart Items Are " + JSON.stringify(value));
-          console.log("Cart " + value.address);
-          let user = 'Janet';
+       
+          let user = 'aes';
+
           const uniqueItemId= Date.now().toString()
-      
+          const servicedate = moment(value.bookingTime).format("DD-MMM-YYYY")
+          const servicetime = moment(value.bookingTime).format("HH:mm")
+
 
           var raw = {
             "itemNo": uniqueItemId,
-            "serviceCategory": "Beauty",
-            "serviceName": "Haircut",
-            "date": "22-March-2022",
+            "serviceCategory": value.serviceCategory,
+            "serviceName": value.serviceName,
+            "date": servicedate,
+            "time" : servicetime,
             "clientAddress": value.address,
             "clientName": value.fName,
             "clientContact": value.contactNum,
             "clientEmail": value.address,
-            "servicePrice": 45.6,
+            "servicePrice": value.price,
             "professionalName": null,
             "orderItemStatus": "Pending",
             "specialInstructions": value.instructions
           };
 
-          console.log("CartAction Add")
-          console.log("pARAMS: ", user, raw)
+       
+          console.log("ADD CART PARAMS: ", user, raw)
           dispatch({
             type: 'ADD_CART_ITEM',
             subtype: 'loading',

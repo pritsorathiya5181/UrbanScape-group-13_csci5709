@@ -12,13 +12,15 @@ import {
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { v4 as uuidv4 } from 'uuid'
-import AddIcon from '@mui/icons-material/Add'
-import * as PATH from '../../../utils/string'
-import { SERVICE_CATEGORY } from '../../../utils/service'
-import NavBar from '../../../components/professional/NavBar/NavBar'
-import useWindowDimensions from '../../../utils/scale'
-import * as ServiceAction from '../../../action/ServiceAction'
 import { connect } from 'react-redux'
+import Loader from '../../../components/customloader/Loader'
+import NavBar from '../../../components/professional/NavBar/NavBar'
+import useWindowDimensions, { hasToken } from '../../../utils/scale'
+import AddIcon from '@mui/icons-material/Add'
+import { SERVICE_CATEGORY } from '../../../utils/service'
+import * as ServiceAction from '../../../action/ServiceAction'
+import * as serviceCategoryAction from '../../../action/serviceCategoryAction'
+import * as PATH from '../../../utils/string'
 
 const AddService = (props) => {
   const navigate = useNavigate()
@@ -28,7 +30,7 @@ const AddService = (props) => {
 
   const [category, setCategory] = useState('')
   const [serviceName, setServiceName] = useState('')
-  const [cost, setCost] = useState('')
+  // const [cost, setCost] = useState('')
   const [location, setLocation] = useState('')
   const [fromTime, setFromTime] = useState('')
   const [toTime, setToTime] = useState('')
@@ -40,6 +42,10 @@ const AddService = (props) => {
     },
   ])
   const [isDisabled, setIsDisabled] = useState(true)
+  const [serviceLoading, setServiceLoading] = useState(false)
+  const [staticServices, setStaticServices] = useState(
+    props.serviceCategories || []
+  )
 
   const useStyles = makeStyles((theme) => ({
     input: {
@@ -53,10 +59,15 @@ const AddService = (props) => {
   const classes = useStyles()
 
   useEffect(() => {
+    // if (!hasToken()) {
+    //   window.location.href = '/'
+    //   alert('Please login to continue')
+    // }
+
     if (
       category?.length > 0 &&
       serviceName?.length > 0 &&
-      cost.length > 0 &&
+      // cost.length > 0 &&
       photos.length > 1 &&
       location.length > 0 &&
       // fromTime.length > 0 &&
@@ -64,6 +75,8 @@ const AddService = (props) => {
       description.length > 0
     ) {
       setIsDisabled(false)
+    } else {
+      setIsDisabled(true)
     }
 
     if (state?.isUpdate && state?.serviceData) {
@@ -71,7 +84,7 @@ const AddService = (props) => {
 
       setCategory(category || data?.serviceCategory)
       setServiceName(serviceName || data?.serviceName)
-      setCost(cost || data?.serviceCost)
+      // setCost(cost || data?.serviceCost)
       photos.length > 1
         ? setPhotos(photos || data?.serviceImage)
         : setPhotos(data?.serviceImage)
@@ -81,7 +94,7 @@ const AddService = (props) => {
   }, [
     category,
     serviceName,
-    cost,
+    // cost,
     photos,
     location,
     fromTime,
@@ -90,6 +103,18 @@ const AddService = (props) => {
     state?.isUpdate,
     state?.serviceData,
   ])
+
+  useEffect(() => {
+    props.serviceCatAction
+      .getServices()
+      .then((res) => {
+        console.log('Static services', res)
+        setStaticServices(res?.serviceCategories)
+      })
+      .catch((err) => {
+        console.log('Add Cart Item Error', err)
+      })
+  }, [props.serviceCatAction])
 
   const onSelectCategory = (event) => {
     setCategory(event.target.value)
@@ -103,13 +128,13 @@ const AddService = (props) => {
   const handleChangeInput = (event) => {
     const value = event.target.value
     switch (event.target.id) {
-      case 'cost':
-        if (/^[0-9]*$/.test(value)) {
-          setCost(value)
-        } else {
-          setCost('')
-        }
-        break
+      // case 'cost':
+      //   if (/^[0-9]*$/.test(value)) {
+      //     setCost(value)
+      //   } else {
+      //     setCost('')
+      //   }
+      //   break
       case 'location':
         setLocation(value)
         break
@@ -165,18 +190,21 @@ const AddService = (props) => {
       serviceName: serviceName,
       serviceLocation: location,
       // serviceTime: fromTime + '-' + toTime,
-      serviceCost: cost,
+      // serviceCost: cost,
       serviceImage: photos,
       serviceDescription: description,
       userId: 'd86aa655-fe4a-40ee-af69-67718d7ec759',
     }
 
+    setServiceLoading(true)
     props.action
       .addService(serviceObj)
       .then((res) => {
+        setServiceLoading(false)
         navigate(`${PATH.partnerBaseUrl}/myservices`)
       })
       .catch((err) => {
+        setServiceLoading(false)
         console.log('add service error', err)
       })
   }
@@ -187,30 +215,37 @@ const AddService = (props) => {
       serviceCategory: category,
       serviceName: serviceName,
       serviceLocation: location,
-      serviceCost: cost,
+      // serviceCost: cost,
       serviceImage: photos,
       serviceDescription: description,
     }
 
+    setServiceLoading(true)
     props.action
       .updateService(updateServiceObj, state?.serviceData?.serviceId)
       .then((res) => {
         console.log('res', res)
+        setServiceLoading(false)
         navigate(`${PATH.partnerBaseUrl}/myservices`)
       })
       .catch((err) => {
+        setServiceLoading(false)
         console.log('update service error', err)
       })
   }
 
   const onDeleteService = () => {
+    setServiceLoading(true)
+
     props.action
       .deleteService(state?.serviceData?.serviceId)
       .then((res) => {
         console.log('res', res)
+        setServiceLoading(false)
         navigate(`${PATH.partnerBaseUrl}/myservices`)
       })
       .catch((err) => {
+        setServiceLoading(false)
         console.log('delete service error', err)
       })
   }
@@ -234,132 +269,142 @@ const AddService = (props) => {
       </section>
 
       <section className='centered-view'>
-        <div className={width >= 700 && 'form-view'}>
-          <section className='row'>
-            <p className='serviceTitle'>Category</p>
-            <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>
-              {/* <InputLabel id='demo-simple-select-helper-label'>Age</InputLabel> */}
-              <Select
-                displayEmpty
-                labelId='demo-simple-select-helper-label'
-                id='demo-simple-select-helper'
-                value={category}
-                // label='Age'
-                onChange={onSelectCategory}
-                placeholder='Select Category'
+        {serviceLoading ? (
+          <div className={'centered-loader'}>
+            <Loader />
+          </div>
+        ) : (
+          <div className={width >= 700 && 'form-view'}>
+            <section className='row'>
+              <p className='serviceTitle'>Category</p>
+              <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>
+                {/* <InputLabel id='demo-simple-select-helper-label'>Age</InputLabel> */}
+                <Select
+                  displayEmpty
+                  labelId='demo-simple-select-helper-label'
+                  id='demo-simple-select-helper'
+                  value={category}
+                  // label='Age'
+                  onChange={onSelectCategory}
+                  placeholder='Select Category'
+                >
+                  <MenuItem disabled value=''>
+                    <em>Select a category...</em>
+                  </MenuItem>
+                  {staticServices
+                    .map((item) => item.serviceCategory)
+                    .map((name) => {
+                      return (
+                        <MenuItem key={name} value={name}>
+                          {name}
+                        </MenuItem>
+                      )
+                    })}
+                </Select>
+              </FormControl>
+            </section>
+            <section className='row'>
+              <p className='serviceTitle'>Name</p>
+              <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>
+                {/* <InputLabel id='demo-simple-select-helper-label'>Age</InputLabel> */}
+                <Select
+                  displayEmpty
+                  labelId='demo-simple-select-helper-label'
+                  id='demo-simple-select-helper'
+                  value={serviceName}
+                  // label='Age'
+                  onChange={onSelectServiceName}
+                  placeholder='Select Category'
+                >
+                  <MenuItem disabled value=''>
+                    <em>Select a category...</em>
+                  </MenuItem>
+                  {staticServices.map((item) => {
+                    if (item.serviceCategory === category) {
+                      return item.services.map((name) => (
+                        <MenuItem
+                          key={name.serviceName}
+                          value={name.serviceName}
+                        >
+                          {name.serviceName}
+                        </MenuItem>
+                      ))
+                    }
+                  })}
+                </Select>
+              </FormControl>
+            </section>
+            {/* <section className='row'>
+              <p className='serviceTitle'>Cost</p>
+              <TextField
+                required
+                sx={{ width: getWidth() }}
+                id='cost'
+                type='text'
+                value={cost}
+                placeholder='Service cost (e.g. 10, 20)'
+                InputProps={{
+                  classes: {
+                    input: classes.input,
+                  },
+                }}
+                onChange={handleChangeInput}
+              />
+            </section> */}
+            <section className='row'>
+              <p className='serviceTitle'>Photos</p>
+              <div
+                style={{
+                  display: 'flex',
+                  width: width < 600 ? 320 : 420,
+                  flexWrap: 'wrap',
+                  flexDirection: 'row',
+                }}
               >
-                <MenuItem disabled value=''>
-                  <em>Select a category...</em>
-                </MenuItem>
-                {SERVICE_CATEGORY.map((item) => item.title).map((name) => {
-                  return (
-                    <MenuItem key={name} value={name}>
-                      {name}
-                    </MenuItem>
+                {photos.map((item) => {
+                  return item.isPhoto ? (
+                    <button key={item.photoId} className='addImage'>
+                      <img
+                        alt='serviceImg'
+                        className='serviceImg'
+                        src={item.photoUrl}
+                      />
+                    </button>
+                  ) : (
+                    <div
+                      key={item.photoId}
+                      style={{ flexDirection: 'column', display: 'flex' }}
+                    >
+                      <input
+                        id='car'
+                        type='file'
+                        accept='image/*'
+                        capture='camera'
+                        onChange={handleFileChange}
+                        className='fileInput'
+                      />
+                      <div key={item.photoId} className='addImage'>
+                        {/* <i className='fas fa-plus fa-lg' /> */}
+                        <AddIcon fontSize='large' />
+                      </div>
+                    </div>
                   )
                 })}
-              </Select>
-            </FormControl>
-          </section>
-          <section className='row'>
-            <p className='serviceTitle'>Name</p>
-            <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>
-              {/* <InputLabel id='demo-simple-select-helper-label'>Age</InputLabel> */}
-              <Select
-                displayEmpty
-                labelId='demo-simple-select-helper-label'
-                id='demo-simple-select-helper'
-                value={serviceName}
-                // label='Age'
-                onChange={onSelectServiceName}
-                placeholder='Select Category'
-              >
-                <MenuItem disabled value=''>
-                  <em>Select a category...</em>
-                </MenuItem>
-                {SERVICE_CATEGORY.map((item) => {
-                  if (item.title === category) {
-                    return item.serviceList.map((name) => (
-                      <MenuItem key={name} value={name}>
-                        {name}
-                      </MenuItem>
-                    ))
-                  }
-                })}
-              </Select>
-            </FormControl>
-          </section>
-          <section className='row'>
-            <p className='serviceTitle'>Cost</p>
-            <TextField
-              required
-              sx={{ width: getWidth() }}
-              id='cost'
-              type='text'
-              value={cost}
-              placeholder='Service cost (e.g. 10, 20)'
-              InputProps={{
-                classes: {
-                  input: classes.input,
-                },
-              }}
-              onChange={handleChangeInput}
-            />
-          </section>
-          <section className='row'>
-            <p className='serviceTitle'>Photos</p>
-            <div
-              style={{
-                display: 'flex',
-                width: width < 600 ? 320 : 420,
-                flexWrap: 'wrap',
-                flexDirection: 'row',
-              }}
-            >
-              {photos.map((item) => {
-                return item.isPhoto ? (
-                  <button key={item.photoId} className='addImage'>
-                    <img
-                      alt='serviceImg'
-                      className='serviceImg'
-                      src={item.photoUrl}
-                    />
-                  </button>
-                ) : (
-                  <div
-                    key={item.photoId}
-                    style={{ flexDirection: 'column', display: 'flex' }}
-                  >
-                    <input
-                      id='car'
-                      type='file'
-                      accept='image/*'
-                      capture='camera'
-                      onChange={handleFileChange}
-                      className='fileInput'
-                    />
-                    <div key={item.photoId} className='addImage'>
-                      {/* <i className='fas fa-plus fa-lg' /> */}
-                      <AddIcon fontSize='large' />
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </section>
-          <section className='row'>
-            <p className='serviceTitle'>Location</p>
-            <TextField
-              required
-              sx={{ width: getWidth() }}
-              id='location'
-              type='text'
-              value={location}
-              placeholder='Preferred Location (e.g. Quinpool Rd, Halifax)'
-              onChange={handleChangeInput}
-            />
-          </section>
-          {/* <section className='row'>
+              </div>
+            </section>
+            <section className='row'>
+              <p className='serviceTitle'>Location</p>
+              <TextField
+                required
+                sx={{ width: getWidth() }}
+                id='location'
+                type='text'
+                value={location}
+                placeholder='Preferred Location (e.g. Quinpool Rd, Halifax)'
+                onChange={handleChangeInput}
+              />
+            </section>
+            {/* <section className='row'>
             <p className='serviceTitle'>Time</p>
             <div
               style={{
@@ -392,105 +437,112 @@ const AddService = (props) => {
               </Tooltip>
             </div>
           </section> */}
-          <section className='row'>
-            <p className='serviceTitle'>Description</p>
-            <TextField
-              required
-              sx={{ width: getWidth() }}
-              multiline
-              minRows={3}
-              id='description'
-              type='text'
-              value={description}
-              placeholder='Description'
-              onChange={handleChangeInput}
-            />
-          </section>
-
-          {state?.isUpdate ? (
-            <section>
-              <Tooltip
-                title={
-                  isDisabled ? 'Please enter all the details' : 'Update service'
-                }
-              >
-                <Button
-                  // disabled={isDisabled}
-                  sx={{
-                    width: width < 600 ? 320 : 170,
-                    backgroundColor: '#1e88e5',
-                    marginTop: '20px',
-                    marginBottom: width < 600 ? 30 : 0,
-                    '&:hover': {
-                      backgroundColor: '#0d47a1',
-                      color: '#fff',
-                    },
-                  }}
-                  variant='contained'
-                  onClick={() => {
-                    onUpdateService()
-                  }}
-                >
-                  Update
-                </Button>
-              </Tooltip>
-              <Tooltip
-                title={
-                  isDisabled ? 'Please enter all the details' : 'Delete service'
-                }
-              >
-                <Button
-                  sx={{
-                    width: width < 600 ? 320 : 170,
-                    backgroundColor: '#1e88e5',
-                    marginTop: '20px',
-                    marginBottom: width < 600 ? 30 : 0,
-                    '&:hover': {
-                      backgroundColor: '#0d47a1',
-                      color: '#fff',
-                    },
-                    marginLeft: 1,
-                  }}
-                  variant='contained'
-                  onClick={() => {
-                    onDeleteService()
-                  }}
-                >
-                  Delete
-                </Button>
-              </Tooltip>
+            <section className='row'>
+              <p className='serviceTitle'>Description</p>
+              <TextField
+                required
+                sx={{ width: getWidth() }}
+                multiline
+                minRows={3}
+                id='description'
+                type='text'
+                value={description}
+                placeholder='Description'
+                onChange={handleChangeInput}
+              />
             </section>
-          ) : (
-            <Tooltip
-              title={
-                isDisabled ? 'Please enter all the details' : 'Add new service'
-              }
-            >
+
+            {state?.isUpdate ? (
               <section>
-                <Button
-                  disabled={isDisabled}
-                  sx={{
-                    width: width < 600 ? 320 : 170,
-                    backgroundColor: '#1e88e5',
-                    marginTop: '20px',
-                    marginBottom: width < 600 ? 30 : 0,
-                    '&:hover': {
-                      backgroundColor: '#0d47a1',
-                      color: '#fff',
-                    },
-                    marginLeft: 1,
-                  }}
-                  variant='contained'
-                  onClick={() => {
-                    onAddService()
-                  }}
+                <Tooltip
+                  title={
+                    isDisabled
+                      ? 'Please enter all the details'
+                      : 'Update service'
+                  }
                 >
-                  Add
-                </Button>
+                  <Button
+                    // disabled={isDisabled}
+                    sx={{
+                      width: width < 600 ? 320 : 170,
+                      backgroundColor: '#1e88e5',
+                      marginTop: '20px',
+                      marginBottom: width < 600 ? 30 : 0,
+                      '&:hover': {
+                        backgroundColor: '#0d47a1',
+                        color: '#fff',
+                      },
+                    }}
+                    variant='contained'
+                    onClick={() => {
+                      onUpdateService()
+                    }}
+                  >
+                    Update
+                  </Button>
+                </Tooltip>
+                <Tooltip
+                  title={
+                    isDisabled
+                      ? 'Please enter all the details'
+                      : 'Delete service'
+                  }
+                >
+                  <Button
+                    sx={{
+                      width: width < 600 ? 320 : 170,
+                      backgroundColor: '#1e88e5',
+                      marginTop: '20px',
+                      marginBottom: width < 600 ? 30 : 0,
+                      '&:hover': {
+                        backgroundColor: '#0d47a1',
+                        color: '#fff',
+                      },
+                      marginLeft: 1,
+                    }}
+                    variant='contained'
+                    onClick={() => {
+                      onDeleteService()
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Tooltip>
               </section>
-            </Tooltip>
-          )}
-        </div>
+            ) : (
+              <Tooltip
+                title={
+                  isDisabled
+                    ? 'Please enter all the details'
+                    : 'Add new service'
+                }
+              >
+                <section>
+                  <Button
+                    disabled={isDisabled}
+                    sx={{
+                      width: width < 600 ? 320 : 170,
+                      backgroundColor: '#1e88e5',
+                      marginTop: '20px',
+                      marginBottom: width < 600 ? 30 : 0,
+                      '&:hover': {
+                        backgroundColor: '#0d47a1',
+                        color: '#fff',
+                      },
+                      marginLeft: 1,
+                    }}
+                    variant='contained'
+                    onClick={() => {
+                      onAddService()
+                    }}
+                  >
+                    Add
+                  </Button>
+                </section>
+              </Tooltip>
+            )}
+          </div>
+        )}
       </section>
     </>
   )
@@ -500,6 +552,7 @@ function mapStateToProps(state) {
   if (state) {
     return {
       addService: state.services,
+      serviceCategories: state.serviceCategories.serviceCategories,
     }
   }
 }
@@ -507,6 +560,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     action: bindActionCreators(ServiceAction, dispatch),
+    serviceCatAction: bindActionCreators(serviceCategoryAction, dispatch),
   }
 }
 

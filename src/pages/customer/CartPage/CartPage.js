@@ -36,28 +36,31 @@ const navigate = useNavigate()
 const [cart, setCart] = useState(props.cartData || {})
 const [cartItems, setCartItems] = useState(props.cartData.cartItems || [])
 
-useEffect(() => {
-  function getCartItems() {
-    const user = 'aes'
-    props.action
-      .getCartItems(user)
-      .then((res) => {
-        console.log("Result" , res.cart)
-        let itemsList = res.cart.cartItems
-        console.log("Items" , itemsList)
-        console.log("props" , props)
-        setCart(res.cart)
-        setCartItems(res.cart.cartItems)
+function getCartItems() {
+  const user = 'aes'
+  props.action
+    .getCartItems(user)
+    .then((res) => {
+      console.log("Result" , res.cart)
+      let itemsList = res.cart.cartItems
+      console.log("Items" , itemsList)
+      console.log("props" , props)
+      setCart(res.cart)
+      setCartItems(res.cart.cartItems)
 
-      })
-      .catch((err) => {
-       // alert(err)
-         console.log('err', err)
-      })
-      console.log("p1", (props))
-    }
+    })
+    .catch((err) => {
+     // alert(err)
+       console.log('err', err)
+    })
+    console.log("p1", (props))
+  }
+
+
+useEffect(() => {
+ 
     getCartItems()
-      console.log("Number of items in cart" , props)
+    console.log("Number of items in cart" , props)
 
 }, [])
 
@@ -68,23 +71,35 @@ function  removeFromCart (itemId, itemPrice) {
     
     props.action.deleteItem(itemId, itemPrice)
     .then((res) => {
-          console.log("Delete Item here: ")
- 
-          console.log("Result delete item" , res)
+          console.log("Delete Item : ")
+          getCartItems()
+
           })
           .catch((err) => {
-            console.log('ACart Item delete Error', err)
+            console.log('Delete Item Error:', err)
+      
           })
-          
-        console.log("Delete cart item function")
-
-    const updatedCartItems = cartItems.filter(item => item.itemNo !== itemId)
-    setCartItems(updatedCartItems)  
   }
+
+  var isCartEmpty
+  const cartItemCount = cartItems.length
+
+  if(cartItemCount > 0){
+    isCartEmpty = false;
+  }
+  else{
+   isCartEmpty = true;
+  }
+ 
+
   
  return (
-    <div>
-      <Typography variant="h3" textAlign="center"> CART </Typography>
+   <div>
+  {isCartEmpty        ? 
+    <> 
+    <Typography variant="h6" textAlign="center" padding = "100px"> Your Cart is Empty! </Typography> </>
+  : <> 
+     <Typography variant="h3" textAlign="center"> CART </Typography>
       <Typography variant="h6" textAlign="center"> You have ({cartItems.length}) items in your cart</Typography>
      <div >
 
@@ -140,14 +155,15 @@ function  removeFromCart (itemId, itemPrice) {
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{cart.cartTaxAmount}</TableCell>
+            <TableCell align="right">{cart.cartTotalAmount}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
 `    </div>
-    
-    </div>
+  </>
+       }
+       </div>
 
   )
 }

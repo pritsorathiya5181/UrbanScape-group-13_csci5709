@@ -1,6 +1,19 @@
+import { hasToken } from './scale'
+
 //customer- navbar
 export const PAGES = ['Services', 'Offers', 'Reviews', 'FAQs', 'Support']
-export const PROFILE_SETTINGS = ['My Profile', 'My Order History', 'Login']
+export const PROFILE_SETTINGS_WITHOUT_TOKEN = [
+  'Login As Customer/Professional',
+  'Signup As Professional',
+  'My Profile',
+  'My Order History',
+]
+
+export const PROFILE_SETTINGS_WITH_TOKEN = [
+  'My Profile',
+  'My Order History',
+  'Logout',
+]
 
 //professional-navbar
 export const PROFESSIONAL_PAGES = ['Services', 'Schedule']

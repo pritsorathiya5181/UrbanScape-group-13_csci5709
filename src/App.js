@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 import store from './store/store'
 import { Provider } from 'react-redux'
@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import NavBar from './components/customer/Navbar/NavBar'
 import BeautyService from './pages/customer/ServicePage/BeautyService'
 import UserHomePage from './pages/customer/HomePage/UserHomePage'
+
 import Dashboard from './pages/professional/dashboard/Dashboard'
 import AddService from './pages/professional/HandleService/AddService'
 import ServiceProfile from './pages/professional/HandleService/ServiceProfile'
@@ -33,19 +34,17 @@ function App() {
 
         <Routes>
           <Route path='/' element={<UserHomePage />} />
+
           <Route path='/beautyservices' element={<BeautyService />} />
           <Route path='/carpentryservices' element={<CarpenterService />} />
           <Route path='/plumbingservices' element={<PlumbingService />} />
+
           <Route
             exact
             path='/customer/myprofile/'
             element={<CustomerProfilePage />}
           />
-          <Route
-            exact
-            path='/customer/cartpage/'
-            element={<CartPage />}
-          />
+          <Route exact path='/customer/cartpage/' element={<CartPage />} />
 
           <Route exact path='/professional' element={<Dashboard />} />
           <Route
@@ -78,11 +77,12 @@ function App() {
             path='/professional/myprofile/'
             element={<ProfessionalProfilePage />}
           />
-          <Route path='/userlogin' element={<SignInSide/>}/>
-          <Route path='/signupuser' element={<SignUpUser/>}/>
-          <Route path='/signupprofessional' element={<SignUpProfessional/>}/>
-          <Route path='/forgetpassword' element={<ForgetPassword/>}/>
-          <Route path='/otp' element={<Otp />}/>
+
+          <Route path='/userlogin' element={<SignInSide />} />
+          <Route path='/signupuser' element={<SignUpUser />} />
+          <Route path='/signupprofessional' element={<SignUpProfessional />} />
+          <Route path='/forgetpassword' element={<ForgetPassword />} />
+          <Route path='/otp' element={<Otp />} />
           <Route path='/updatepassword' element={<UpdatePassword />} />
         </Routes>
       </Router>

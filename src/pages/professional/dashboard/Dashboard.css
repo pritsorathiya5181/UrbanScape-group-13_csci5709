@@ -1,8 +1,8 @@
 .contianer {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background: url(https://huweisalon.com/wp-content/uploads/2020/04/Hair-Salon-Services.jpg)
-    no-repeat center center fixed;
+    repeat-y center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

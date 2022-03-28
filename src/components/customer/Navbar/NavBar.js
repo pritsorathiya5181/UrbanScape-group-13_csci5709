@@ -22,6 +22,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 import * as MENU from '../../../utils/constant'
 import { makeStyles } from '@mui/styles'
+import { hasToken } from '../../../utils/scale'
 
 const NavBar = () => {
   let navigate = useNavigate()
@@ -78,13 +79,36 @@ const NavBar = () => {
     navigate('./customer/cartpage')
   }
 
-
   const handleClick = (event) => {
     setServiceOption(event.currentTarget)
   }
 
   const handleClose = () => {
     setServiceOption(null)
+  }
+
+  const onProfileOptionClick = (item) => {
+    console.log(item)
+    if (item === 'Login As Customer/Professional') {
+      window.location.href = '/userlogin'
+    } else if (item === 'Signup As Professional') {
+      window.location.href = '/signupprofessional'
+    } else if (item === 'My Profile') {
+      if (localStorage.getItem('usertype') === 'professional') {
+        window.location.href = '/professional/myprofile/'
+      } else if (localStorage.getItem('usertype') === 'customer') {
+        window.location.href = '/customer/myprofile/'
+      } else {
+        alert('Please login in to continue')
+      }
+    } else if (item === 'My Order History') {
+      // window.location.href = '/professional/servicehistory/'
+    } else if (item === 'Logout') {
+      localStorage.removeItem('accesstoken')
+      localStorage.removeItem('usertype')
+      window.location.href = '/'
+    }
+    handleCloseUserMenu()
   }
 
   const openMenu = Boolean(serviceOption)
@@ -218,11 +242,23 @@ const NavBar = () => {
           open={Boolean(profileSettingOption)}
           onClose={handleCloseUserMenu}
         >
-          {MENU.PROFILE_SETTINGS.map((setting) => (
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-              <Typography textAlign='center'>{setting}</Typography>
-            </MenuItem>
-          ))}
+          {hasToken()
+            ? MENU.PROFILE_SETTINGS_WITH_TOKEN.map((setting) => (
+                <MenuItem
+                  key={setting}
+                  onClick={() => onProfileOptionClick(setting)}
+                >
+                  <Typography textAlign='center'>{setting}</Typography>
+                </MenuItem>
+              ))
+            : MENU.PROFILE_SETTINGS_WITHOUT_TOKEN.map((setting) => (
+                <MenuItem
+                  key={setting}
+                  onClick={() => onProfileOptionClick(setting)}
+                >
+                  <Typography textAlign='center'>{setting}</Typography>
+                </MenuItem>
+              ))}
         </Menu>
       </Box>
     )
@@ -240,8 +276,12 @@ const NavBar = () => {
         anchorEl={serviceOption}
       >
         <MenuItem onClick={navigateToBeautyServices}>Beauty Services</MenuItem>
-        <MenuItem onClick={navigateToPlumbingServices}>Plumbing Services</MenuItem>
-        <MenuItem onClick={navigateToCarpentryServices}>Carpentry Services</MenuItem>
+        <MenuItem onClick={navigateToPlumbingServices}>
+          Plumbing Services
+        </MenuItem>
+        <MenuItem onClick={navigateToCarpentryServices}>
+          Carpentry Services
+        </MenuItem>
       </Menu>
     )
   }

@@ -74,6 +74,7 @@ function ServiceCard(props) {
 const handleSubmit = (event) => {
   event.preventDefault();
   bookingFormDetails.serviceName = props.services.serviceName;
+  bookingFormDetails.price = props.services.price;
   bookingFormDetails.serviceCategory = props.serviceCategory;
   props.action.addCartItem(bookingFormDetails).then((res) => {
     console.log("Result" , res)
@@ -130,7 +131,6 @@ const handleSubmit = (event) => {
         <form onSubmit={handleSubmit}>
         <DialogContent dividers>
           <TextField
-            autoFocus
             margin="dense"
             required 
             id="outlined-basic"
@@ -142,7 +142,6 @@ const handleSubmit = (event) => {
             variant="outlined"
           />
            <TextField
-            autoFocus
             required 
             margin="dense"
             fullWidth
@@ -155,7 +154,6 @@ const handleSubmit = (event) => {
             variant="outlined"
           />
           <TextField
-            autoFocus
             required 
             margin="dense"
             id="outlined-basic"
@@ -168,7 +166,6 @@ const handleSubmit = (event) => {
             variant="outlined"
           />
           <TextField
-            autoFocus
             required 
             margin="dense"
             id="outlined-basic"
@@ -196,7 +193,6 @@ const handleSubmit = (event) => {
                 />
 
           <TextField
-            autoFocus
             margin="dense"
             name="instructions"
             value={bookingFormDetails.instructions} 
