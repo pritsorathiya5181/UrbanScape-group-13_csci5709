@@ -9,6 +9,8 @@ import DashboardPrimary from './DashboardPrimary'
 
 const Dashboard = (props) => {
   const [serviceLoading, setServiceLoading] = useState(false)
+  const [serviceStatsData, setServiceStatsData] = useState([])
+  const [serviceList, setServicesList] = useState(props.servicesData || [])
 
   useEffect(() => {
     function getServicesStats() {
@@ -18,6 +20,7 @@ const Dashboard = (props) => {
         .getServiceStats(userId)
         .then((res) => {
           setServiceLoading(false)
+          setServiceStatsData(res?.serviceStats)
         })
         .catch((err) => {
           console.log(err)
@@ -25,25 +28,46 @@ const Dashboard = (props) => {
         })
     }
 
+    function getServices() {
+      setServiceLoading(true)
+      const userId = 'd86aa655-fe4a-40ee-af69-67718d7ec759'
+      props.action
+        .getRecords(userId)
+        .then((res) => {
+          setServiceLoading(false)
+          setServicesList(res?.services)
+        })
+        .catch((err) => {
+          setServiceLoading(false)
+          console.log('err', err)
+        })
+    }
+
+    getServices()
     getServicesStats()
   }, [])
 
   return (
     <main className='contianer'>
       <NavBar />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '20%',
-        }}
-      >
-        {serviceLoading && <Loader />}
-      </div>
 
-      <DashboardPrimary />
-
+      {serviceLoading ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '20%',
+          }}
+        >
+          <Loader />
+        </div>
+      ) : (
+        <DashboardPrimary
+          serviceStatsData={serviceStatsData}
+          serviceList={serviceList}
+        />
+      )}
     </main>
   )
 }
