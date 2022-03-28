@@ -64,6 +64,16 @@ const NavBar = () => {
     navigate('./beautyservices')
   }
 
+  const navigateToCarpentryServices = () => {
+    handleClose()
+    navigate('./carpentryservices')
+  }
+
+  const navigateToPlumbingServices = () => {
+    handleClose()
+    navigate('./plumbingservices')
+  }
+
   const navigateToCart = () => {
     navigate('./customer/cartpage')
   }
@@ -230,7 +240,8 @@ const NavBar = () => {
         anchorEl={serviceOption}
       >
         <MenuItem onClick={navigateToBeautyServices}>Beauty Services</MenuItem>
-        <MenuItem onClick={handleClose}>Home Repair Services</MenuItem>
+        <MenuItem onClick={navigateToPlumbingServices}>Plumbing Services</MenuItem>
+        <MenuItem onClick={navigateToCarpentryServices}>Carpentry Services</MenuItem>
       </Menu>
     )
   }

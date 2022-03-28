@@ -20,6 +20,8 @@ import SignUpUser from './components/UserAuthentication/SignUpUser'
 import SignUpProfessional from './components/UserAuthentication/SignUpProfessional'
 import Otp from './components/UserAuthentication/Otp'
 import UpdatePassword from './components/UserAuthentication/UpdatePassword'
+import CarpenterService from './pages/customer/ServicePage/CarpenterService'
+import PlumbingService from './pages/customer/ServicePage/PlumbingService'
 
 function App() {
   const url = window.location.pathname
@@ -32,6 +34,8 @@ function App() {
         <Routes>
           <Route path='/' element={<UserHomePage />} />
           <Route path='/beautyservices' element={<BeautyService />} />
+          <Route path='/carpentryservices' element={<CarpenterService />} />
+          <Route path='/plumbingservices' element={<PlumbingService />} />
           <Route
             exact
             path='/customer/myprofile/'
