@@ -30,8 +30,7 @@ const ServiceProfile = (props) => {
         })
         .catch((err) => {
           setServiceLoading(false)
-          alert(err)
-          // console.log('err', err)
+          console.log('err', err)
         })
     }
 

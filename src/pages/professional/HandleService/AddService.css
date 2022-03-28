@@ -12,6 +12,13 @@
   margin-top: 20px;
 }
 
+.centered-loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .centered-view {
   /* transform: translate(-60%, -50%); */
   text-align: center;

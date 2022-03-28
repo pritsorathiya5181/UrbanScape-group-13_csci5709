@@ -1,26 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './UserHomePageStyle.css'
-import ServiceTile from './ServiceTile'
 import salonImage from '../../../asserts/images/salon.jpg'
 import plumbingImg from '../../../asserts/images/carpentry.jpg'
 import carpentryImg from '../../../asserts/images/plumbing.jpg'
-import { Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
-import { Carousel } from 'react-responsive-carousel'
 import Slider from '../../../components/Slider'
 import CategoryItem from '../../../components/CategoryItem'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import NewsLetter from '../../../components/NewsLetter'
 import Footer from '../../../components/Footer'
-
-export const mobile = (props) => {
-  return css`
-    @media only screen and (max-width: 380px) {
-      ${props}
-    }
-  `
-}
+import { mobile } from '../../../utils/scale'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as serviceCategoryAction from '../../../action/serviceCategoryAction'
 
 const useStyles = makeStyles({
   gridcontainer: {
@@ -31,8 +24,22 @@ const useStyles = makeStyles({
     paddingTop: '50px',
   },
 })
-function UserHomePage() {
-  const classes = useStyles()
+
+const UserHomePage = (props) => {
+  const [serviceCategories, setServiceCategories] = useState([])
+
+  useEffect(() => {
+    props.action
+      .getServices()
+      .then((res) => {
+        console.log('Static services', res)
+        setServiceCategories(res?.serviceCategories)
+        // setBeautyServices(servicesOffered[0].services)
+      })
+      .catch((err) => {
+        console.log('Add Cart Item Error', err)
+      })
+  }, [])
 
   let offeredServices = []
   offeredServices.push({
@@ -67,7 +74,7 @@ function UserHomePage() {
       <Typography style={{ textAlign: 'center', padding: '10px' }} variant='h4'>
         We are the one stop solution for all your worries
       </Typography> */}
-      <Slider />
+      <Slider sliderData={serviceCategories} />
 
       {/* <Carousel
         autoPlay
@@ -120,8 +127,8 @@ function UserHomePage() {
         </Grid> */}
       </div>
       <Container>
-        {offeredServices.map((item) => (
-          <CategoryItem item={item} key={item.id} />
+        {serviceCategories.map((item, index) => (
+          <CategoryItem item={item} key={index.toString()} />
         ))}
       </Container>
 
@@ -132,4 +139,18 @@ function UserHomePage() {
   )
 }
 
-export default UserHomePage
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      serviceCategories: state.serviceCategories.serviceCategories,
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(serviceCategoryAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserHomePage)
