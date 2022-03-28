@@ -59,10 +59,10 @@ const AddService = (props) => {
   const classes = useStyles()
 
   useEffect(() => {
-    if (!hasToken()) {
-      window.location.href = '/'
-      alert('Please login to continue')
-    }
+    // if (!hasToken()) {
+    //   window.location.href = '/'
+    //   alert('Please login to continue')
+    // }
 
     if (
       category?.length > 0 &&

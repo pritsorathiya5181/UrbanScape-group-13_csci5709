@@ -14,10 +14,10 @@ const Dashboard = (props) => {
   const [serviceList, setServicesList] = useState(props.servicesData || [])
 
   useEffect(() => {
-    if (!hasToken()) {
-      window.location.href = '/'
-      alert('Please login to continue')
-    }
+    // if (!hasToken()) {
+    //   window.location.href = '/'
+    //   alert('Please login to continue')
+    // }
 
     function getServicesStats() {
       setServiceLoading(true)

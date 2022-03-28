@@ -19,10 +19,10 @@ const ServiceProfile = (props) => {
   const [serviceLoading, setServiceLoading] = useState(false)
 
   useEffect(() => {
-    if (!hasToken()) {
-      window.location.href = '/'
-      alert('Please login to continue')
-    }
+    // if (!hasToken()) {
+    //   window.location.href = '/'
+    //   alert('Please login to continue')
+    // }
 
     function getServices() {
       setServiceLoading(true)

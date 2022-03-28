@@ -94,7 +94,11 @@ export default function DashboardPrimary(props) {
             marginBottom: '20px',
             cursor: 'pointer',
           }}
-          onClick={() => navigate('/professional/servicehistory')}
+          onClick={() =>
+            navigate('/professional/servicehistory', {
+              state: { requestType: 'approved' },
+            })
+          }
         >
           <CardContent>
             <Typography
@@ -130,7 +134,11 @@ export default function DashboardPrimary(props) {
             marginBottom: '20px',
             cursor: 'pointer',
           }}
-          onClick={() => navigate('/professional/servicehistory')}
+          onClick={() =>
+            navigate('/professional/servicehistory', {
+              state: { requestType: 'processed' },
+            })
+          }
         >
           <CardContent>
             <Typography
@@ -166,7 +174,11 @@ export default function DashboardPrimary(props) {
             marginBottom: '20px',
             cursor: 'pointer',
           }}
-          onClick={() => navigate('/professional/servicehistory')}
+          onClick={() =>
+            navigate('/professional/servicehistory', {
+              state: { requestType: 'cancelled' },
+            })
+          }
         >
           <CardContent>
             <Typography

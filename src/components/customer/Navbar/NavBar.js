@@ -98,6 +98,8 @@ const NavBar = () => {
         window.location.href = '/professional/myprofile/'
       } else if (localStorage.getItem('usertype') === 'customer') {
         window.location.href = '/customer/myprofile/'
+      } else {
+        alert('Please login in to continue')
       }
     } else if (item === 'My Order History') {
       // window.location.href = '/professional/servicehistory/'

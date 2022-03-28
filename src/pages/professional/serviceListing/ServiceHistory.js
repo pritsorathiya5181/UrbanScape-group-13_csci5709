@@ -8,17 +8,23 @@ import { connect } from 'react-redux'
 import * as ServiceAction from '../../../action/ServiceAction'
 import * as orderAction from '../../../action/orderAction'
 import Loader from '../../../components/customloader/Loader'
+import { useLocation } from 'react-router-dom'
 
 const ServiceHistory = (props) => {
+  const { state } = useLocation()
+
   const [isAlertOpen, setIsAlertOpen] = useState(false)
 
   const [serviceRequests, setServiceRequests] = useState(
-    props?.isCancelPage
+    state?.requestType === 'cancelled'
       ? props?.serviceStatsData?.cancelledRequests
-      : props?.serviceStatsData?.processedRequests || []
+      : state?.requestType === 'processed'
+      ? props?.serviceStatsData?.processedRequests
+      : props?.serviceStatsData?.approvedRequests || []
   )
   const [serviceLoading, setServiceLoading] = useState(false)
 
+  console.log('state', state)
   useEffect(() => {
     function getServicesStats() {
       setServiceLoading(true)
@@ -27,8 +33,11 @@ const ServiceHistory = (props) => {
         .getServiceStats(userId)
         .then((res) => {
           setServiceLoading(false)
-          if (props?.isCancelPage) {
+          // if (props?.isCancelPage) {
+          if (state?.requestType === 'cancelled') {
             setServiceRequests(res?.serviceStats?.cancelledRequests)
+          } else if (state?.requestType === 'approved') {
+            setServiceRequests(res?.serviceStats?.approvedRequests)
           } else {
             setServiceRequests(res?.serviceStats?.processedRequests)
           }
@@ -48,7 +57,11 @@ const ServiceHistory = (props) => {
 
       <header className='title-view'>
         <p className='page-title'>
-          {props?.isCancelPage ? 'Rejected Services' : 'Proceed Services'}
+          {state?.requestType === 'cancelled'
+            ? 'Rejected Services'
+            : state?.requestType === 'approved'
+            ? 'Approved Services'
+            : 'Proceed Services'}
         </p>
       </header>
 
