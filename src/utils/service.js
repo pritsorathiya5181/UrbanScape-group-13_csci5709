@@ -16,7 +16,7 @@ export const ServiceItem = [
 
 export const SERVICE_CATEGORY = [
   {
-    title: 'Beauty',
+    serviceCategory: 'Beauty',
     serviceList: [
       'Haircut',
       'Head Massage',
