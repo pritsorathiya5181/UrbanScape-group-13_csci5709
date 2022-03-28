@@ -28,12 +28,19 @@ var requestOptions = {
   redirect: 'follow'
 };
 
+
 fetch(`${BASE_URL}cart/${userName}`, requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-
-
+  .then(response => response.json())
+  .then(result => {
+    dispatch({
+      type: 'DELETE_ITEM',
+      subtype: 'success',
+    })
+    resolve(result)
+  })
+  .catch((error) => {
+    rejects(error)
+  })
       } catch (error) {
         dispatch({
           type: 'DELETE_ITEM',
