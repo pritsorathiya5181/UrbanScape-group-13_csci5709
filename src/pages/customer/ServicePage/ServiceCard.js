@@ -74,6 +74,7 @@ function ServiceCard(props) {
 const handleSubmit = (event) => {
   event.preventDefault();
   bookingFormDetails.serviceName = props.services.serviceName;
+  bookingFormDetails.price = props.services.price;
   bookingFormDetails.serviceCategory = props.serviceCategory;
   props.action.addCartItem(bookingFormDetails).then((res) => {
     console.log("Result" , res)
