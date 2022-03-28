@@ -36,6 +36,7 @@ const useStyles = makeStyles({
 function BeautyService(props) {
   const classes = useStyles()
   const [beautyServices, setBeautyServices] = useState([]);
+  const serviceCategoryName = 'Beauty';
 
   useEffect(() => {
     props.action.getServices().then((res) => {

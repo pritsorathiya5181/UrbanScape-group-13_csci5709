@@ -32,6 +32,7 @@ const useStyles = makeStyles({
 function PlumbingService(props) {
   const classes = useStyles()
   const [plumbingServices, setPlumbingServices] = useState([]);
+  const serviceCategoryName = 'Plumbing';
 
   useEffect(() => {
     props.action.getServices().then((res) => {
@@ -55,7 +56,7 @@ function PlumbingService(props) {
           return (
             <Grid item xs={12} sm={6} md={3}>
               <div>
-                <ServiceCard services={plumbingServices} />
+                <ServiceCard services={plumbingServices} serviceCategory={serviceCategoryName} />
               </div>
             </Grid>
           )
