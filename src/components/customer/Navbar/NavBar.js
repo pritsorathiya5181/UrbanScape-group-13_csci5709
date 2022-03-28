@@ -72,6 +72,13 @@ const NavBar = () => {
     setServiceOption(null)
   }
 
+  const handlePageClicks = (pages) => {
+    if(pages === 'Support') {
+      navigate("/support")
+    } 
+    handleCloseNavMenu()
+  }
+
   const openMenu = Boolean(serviceOption)
 
   const renderAppIconView = () => {
@@ -104,7 +111,7 @@ const NavBar = () => {
             <Button
               key={index.toString()}
               //   onClick={handleCloseNavMenu}
-              onClick={page === 'Services' ? handleClick : handleCloseNavMenu}
+              onClick={page === 'Services' ? handleClick : () => handlePageClicks(page)}
               sx={{
                 my: 2,
                 color: 'white',
@@ -158,7 +165,7 @@ const NavBar = () => {
           }}
         >
           {MENU.PAGES.map((page) => (
-            <MenuItem key={page} onClick={handleCloseNavMenu}>
+            <MenuItem key={page} onClick={() => handlePageClicks(page)}>
               <Typography textAlign='center'>{page}</Typography>
               {page === 'Services' && <ArrowDropDownIcon />}
             </MenuItem>

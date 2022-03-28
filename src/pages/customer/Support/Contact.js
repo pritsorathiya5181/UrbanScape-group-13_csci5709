@@ -1,74 +1,129 @@
 import "./styles.css";
+import { useState } from "react";
+import swal from "sweetalert";
 import {
   Typography,
   AppBar,
   Toolbar,
   TextField,
   Button,
-  Box
-} from "@material-ui/core";
+  Box,
+} from "@mui/material";
 import * as React from "react";
 import MenuItem from "@mui/material/MenuItem";
-import NavBar from "../../../components/customer/Navbar/NavBar";
+import { BASE_URL } from "../../../utils/string";
 export default function Contact() {
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        city: city,
+        state: state,
+        zip: zip,
+      });
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch(`${BASE_URL}support`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => {
+            swal({
+                title: 'Requested successfully!',
+                text: 'Our team will reach out to you on your e-mail soon.',
+                icon: 'success',
+                button: 'Done!',
+              })
+        })
+        .catch((error) => console.log("error", error));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="App">
-      
-      <NavBar/>
-
-      <Typography variant="h5">BASIC WITH MATERIAL UI</Typography>
-      <form>
+      <Typography variant="h5">Contact Us</Typography>
+      <form onSubmit={handleSubmit}>
         <TextField
           style={{ width: "200px", margin: "5px" }}
           type="text"
-          label="setgoal"
+          label="First Name"
           variant="outlined"
-        />
-        <br />
-        <TextField
-          style={{ width: "200px", margin: "5px" }}
-          type="text"
-          label="goal description"
-          variant="outlined"
+          name="firstname"
+          value={firstname}
+          onChange={(e) => setFirstname(e.target.value)}
         />
         <br />
         <TextField
           style={{ width: "200px", margin: "5px" }}
           type="text"
-          label="Diversity catagory"
+          label="Last Name"
           variant="outlined"
+          name="lastname"
+          value={lastname}
+          onChange={(e) => setLastname(e.target.value)}
         />
         <br />
         <TextField
           style={{ width: "200px", margin: "5px" }}
           type="text"
-          label="Attribute"
+          label="Email Address"
           variant="outlined"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <br />
         <TextField
           style={{ width: "200px", margin: "5px" }}
           type="text"
-          label="goal stage"
+          label="City"
           variant="outlined"
-        />
-        <br />
-        <TextField
-          style={{ width: "200px", margin: "5px" }}
-          type="number"
-          label="job id"
-          variant="outlined"
+          name="city"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
         />
         <br />
         <TextField
           style={{ width: "200px", margin: "5px" }}
           type="text"
-          label="job region"
+          label="State"
           variant="outlined"
+          name="state"
+          value={state}
+          onChange={(e) => setState(e.target.value)}
         />
         <br />
-        <Button variant="contained" color="primary">
-          save
+        <TextField
+          style={{ width: "200px", margin: "5px" }}
+          type="text"
+          label="ZIP"
+          variant="outlined"
+          name="zip"
+          value={zip}
+          onChange={(e) => setZip(e.target.value)}
+        />
+        <br />
+        <Button variant="contained" color="primary" type="submit">
+          Send Request
         </Button>
       </form>
     </div>
