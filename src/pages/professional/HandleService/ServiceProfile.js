@@ -6,7 +6,7 @@ import './ServiceProfile.css'
 import ServiceCard from './ServiceCard'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import AddIcon from '@mui/icons-material/Add'
-import useWindowDimensions from '../../../utils/scale'
+import useWindowDimensions, { hasToken } from '../../../utils/scale'
 import * as PATH from '../../../utils/string'
 import * as ServiceAction from '../../../action/ServiceAction'
 import Loader from '../../../components/customloader/Loader'
@@ -19,6 +19,11 @@ const ServiceProfile = (props) => {
   const [serviceLoading, setServiceLoading] = useState(false)
 
   useEffect(() => {
+    if (!hasToken()) {
+      window.location.href = '/'
+      alert('Please login to continue')
+    }
+
     function getServices() {
       setServiceLoading(true)
       const userId = 'd86aa655-fe4a-40ee-af69-67718d7ec759'
@@ -30,8 +35,7 @@ const ServiceProfile = (props) => {
         })
         .catch((err) => {
           setServiceLoading(false)
-          alert(err)
-          // console.log('err', err)
+          console.log('err', err)
         })
     }
 

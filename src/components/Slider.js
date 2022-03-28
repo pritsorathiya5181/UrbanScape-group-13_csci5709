@@ -1,5 +1,6 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { SLIDE_ITEMS } from '../utils/constant'
 import { mobile } from '../utils/scale'
@@ -80,8 +81,10 @@ const Button = styled.button`
   cursor: pointer;
 `
 
-const Slider = () => {
+const Slider = (props) => {
+  let navigate = useNavigate()
   const [slideIndex, setSlideIndex] = useState(0)
+
   const handleClick = (direction) => {
     if (direction === 'left') {
       setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2)
@@ -92,9 +95,9 @@ const Slider = () => {
 
   useEffect(() => {})
 
-  const timer = setTimeout(() => {
-    setSlideIndex((slideIndex + 1) % 3)
-  }, 5000)
+  // const timer = setTimeout(() => {
+  //   setSlideIndex((slideIndex + 1) % 3)
+  // }, 5000)
 
   return (
     <Container>
@@ -104,18 +107,21 @@ const Slider = () => {
         </Arrow>
       )}
       <Wrapper slideIndex={slideIndex}>
-        {SLIDE_ITEMS.map((item) => (
-          <Slide bg={item.bg} key={item.id}>
-            <ImgContainer>
-              <Image src={item.img} />
-            </ImgContainer>
-            <InfoContainer>
-              <Title>{item.title}</Title>
-              <Desc>{item.desc}</Desc>
-              <Button>BOOK NOW</Button>
-            </InfoContainer>
-          </Slide>
-        ))}
+        {props.sliderData?.length > 0 &&
+          props?.sliderData[0].services?.map((item, index) => (
+            <Slide bg={item.bg} key={index.toString()}>
+              <ImgContainer>
+                <Image src={item.img} />
+              </ImgContainer>
+              <InfoContainer>
+                <Title>{item.serviceName}</Title>
+                <Desc>{item.desc}</Desc>
+                <Button onClick={() => navigate('./beautyservices')}>
+                  BOOK NOW
+                </Button>
+              </InfoContainer>
+            </Slide>
+          ))}
       </Wrapper>
       {slideIndex < 2 && (
         <Arrow direction='right' onClick={() => handleClick('right')}>
