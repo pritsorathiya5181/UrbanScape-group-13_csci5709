@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from "react/cjs/react.development";
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -30,6 +31,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function UserLogin() {
+  const navigateToHome = useNavigate();
   const [errors,setErrors]= React.useState({});
   const [fnameError,setFnameError] = useState();
     const [lnameError,setLnameError] = useState();
@@ -66,7 +68,7 @@ const handlePassword=(event)=>{
  if(validatePwd(Password)){
    setPasswordError('Should have special and alphanumeric characters ');
  }
- else if(Password.length < 8){
+ else if(Password?.length < 8){
    setPasswordError('Minimum 8 characters are required');
  }
  else{
@@ -79,12 +81,12 @@ const handlePassword=(event)=>{
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     
-   if(emailError.length >0){
+   if(emailError?.length >0){
      alert("Error in Email");
      return;
    }
    
-   if(passwordError.length >0){
+   if(passwordError?.length >0){
      alert("Error in Password");
      return;
    }
@@ -102,13 +104,27 @@ var requestOptions = {
 
 fetch(`http://localhost:5000/api/auth/users/${email}/${password}`, requestOptions)
   .then(response => response.text())
-  .then(result => console.log(result))
+  //.then(result=> console.log(result))
+  .then(result => {
+    if(result === "User not registered"){
+      console.log("user not registered");
+      alert("You need to register")
+    }
+    else if(result === "Wrong password"){
+      console.log("Invalid Password");
+      alert("Invalid Password")
+    }
+    else{
+       alert("!!Welcome to Urbanscape!!")
+        navigateToHome('/')
+    }
+  })
   .catch(error => console.log('error', error));
 
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
   };
 
   return (
@@ -153,7 +169,6 @@ fetch(`http://localhost:5000/api/auth/users/${email}/${password}`, requestOption
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
                 onChange={(e)=> handleEmail(e)}
               />
               {/* <p style={{color:"red"}}>{emailError}</p> */}
@@ -188,9 +203,17 @@ fetch(`http://localhost:5000/api/auth/users/${email}/${password}`, requestOption
                     Forgot password?
                   </Link>
                 </Grid>
+                <Grid item xs={5}>
+                  
+                  <Link href="/signupprofessional" variant="body2">
+                  New professional?
+                  </Link>
+                </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    {"New User? Sign Up"}
+                
+                  <Link href="/signupuser" variant="body2">
+                    
+                    {"New User?"}
                   </Link>
                 </Grid>
               </Grid>

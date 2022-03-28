@@ -224,12 +224,11 @@ export default function SignUpUser() {
                 margin='normal'
                 required
                 fullWidth
-                id='firstname'
-                label='Firstname'
-                name='firstname'
-                autoComplete='firstname'
-                autoFocus
-                onChange={(e) => handleFName(e)}
+                id="firstname"
+                label="Firstname"
+                name="firstname"
+                autoComplete="firstname"
+                onChange={(e)=> handleFName(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {fnameError}
@@ -238,12 +237,11 @@ export default function SignUpUser() {
                 margin='normal'
                 required
                 fullWidth
-                id='lastname'
-                label='LastName'
-                name='lastname'
-                autoComplete='lastname'
-                autoFocus
-                onChange={(e) => handleLName(e)}
+                id="lastname"
+                label="LastName"
+                name="lastname"
+                autoComplete="lastname"
+                onChange={(e)=> handleLName(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {lnameError}
@@ -252,13 +250,12 @@ export default function SignUpUser() {
                 margin='normal'
                 required
                 fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
-                autoComplete='email'
-                type='email'
-                autoFocus
-                onChange={(e) => handleEmail(e)}
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                type="email"
+                onChange={(e)=> handleEmail(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {emailError}
@@ -267,13 +264,12 @@ export default function SignUpUser() {
                 margin='normal'
                 required
                 fullWidth
-                name='phoneno'
-                label='PhoneNo'
-                type='phoneno'
-                id='phoneno'
-                autoComplete='phoneno'
-                autoFocus
-                onChange={(e) => handlePhone(e)}
+                name="phoneno"
+                label="PhoneNo"
+                type="phoneno"
+                id="phoneno"
+                autoComplete="phoneno"
+                onChange={(e)=>handlePhone(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {phonenoError}
@@ -316,8 +312,8 @@ export default function SignUpUser() {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href='#' variant='body2'>
-                    {'Already a user? Login'}
+                  <Link href="/userlogin" variant="body2">
+                    {"Already a user? Login"}
                   </Link>
                 </Grid>
               </Grid>
