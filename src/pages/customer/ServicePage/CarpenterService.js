@@ -56,7 +56,7 @@ function CarpenterService(props) {
           return (
             <Grid item xs={12} sm={6} md={3}>
               <div>
-                <ServiceCard services={carpentryService} />
+                <ServiceCard services={carpentryService} serviceCategory={serviceCategoryName}/>
               </div>
             </Grid>
           )
