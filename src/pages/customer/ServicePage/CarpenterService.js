@@ -32,6 +32,7 @@ const useStyles = makeStyles({
 function CarpenterService(props) {
   const classes = useStyles()
   const [carpentryServices, setCarpentryServices] = useState([]);
+  const serviceCategoryName = 'Carpentry';
 
   useEffect(() => {
     props.action.getServices().then((res) => {
