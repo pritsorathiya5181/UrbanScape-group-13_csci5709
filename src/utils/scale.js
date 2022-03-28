@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { css } from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window
@@ -32,4 +33,8 @@ export const mobile = (props) => {
       ${props}
     }
   `
+}
+
+export const hasToken = () => {
+  return localStorage.getItem('accesstoken')
 }

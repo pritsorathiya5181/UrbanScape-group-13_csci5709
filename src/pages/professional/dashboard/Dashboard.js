@@ -5,6 +5,7 @@ import './Dashboard.css'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Loader from '../../../components/customloader/Loader'
+import DashboardPrimary from './DashboardPrimary'
 
 const Dashboard = (props) => {
   const [serviceLoading, setServiceLoading] = useState(false)
@@ -35,11 +36,14 @@ const Dashboard = (props) => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '80%',
+          height: '20%',
         }}
       >
         {serviceLoading && <Loader />}
       </div>
+
+      <DashboardPrimary />
+
     </main>
   )
 }

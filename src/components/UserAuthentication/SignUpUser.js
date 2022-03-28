@@ -16,6 +16,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useState } from 'react/cjs/react.development'
+import { BASE_URL } from '../../utils/string'
 
 function Copyright(props) {
   return (
@@ -121,6 +122,7 @@ export default function SignUpUser() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
     const data = new FormData(event.currentTarget)
     // eslint-disable-next-line no-console
     if (fnameError.length > 0) {
@@ -167,18 +169,16 @@ export default function SignUpUser() {
       redirect: 'follow',
     }
 
-    fetch('http://localhost:5000/api/auth/usersignup', requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
+    fetch(`${BASE_URL}auth/usersignup`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.success) {
+          window.location.href = '/userlogin'
+        } else {
+          alert(result.message)
+        }
+      })
       .catch((error) => console.log('error', error))
-
-    console.log({
-      firstname: data.get('firstname'),
-      lastname: data.get('lastname'),
-      email: data.get('email'),
-      phoneno: data.get('phoneno'),
-      password: data.get('password'),
-    })
   }
 
   return (
@@ -212,7 +212,7 @@ export default function SignUpUser() {
             }}
           >
             <Typography component='h1' variant='h5'>
-              Sign in
+              Sign up
             </Typography>
             <Box
               component='form'
@@ -224,11 +224,11 @@ export default function SignUpUser() {
                 margin='normal'
                 required
                 fullWidth
-                id="firstname"
-                label="Firstname"
-                name="firstname"
-                autoComplete="firstname"
-                onChange={(e)=> handleFName(e)}
+                id='firstname'
+                label='Firstname'
+                name='firstname'
+                autoComplete='firstname'
+                onChange={(e) => handleFName(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {fnameError}
@@ -237,11 +237,11 @@ export default function SignUpUser() {
                 margin='normal'
                 required
                 fullWidth
-                id="lastname"
-                label="LastName"
-                name="lastname"
-                autoComplete="lastname"
-                onChange={(e)=> handleLName(e)}
+                id='lastname'
+                label='LastName'
+                name='lastname'
+                autoComplete='lastname'
+                onChange={(e) => handleLName(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {lnameError}
@@ -250,12 +250,12 @@ export default function SignUpUser() {
                 margin='normal'
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                type="email"
-                onChange={(e)=> handleEmail(e)}
+                id='email'
+                label='Email Address'
+                name='email'
+                autoComplete='email'
+                type='email'
+                onChange={(e) => handleEmail(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {emailError}
@@ -264,12 +264,12 @@ export default function SignUpUser() {
                 margin='normal'
                 required
                 fullWidth
-                name="phoneno"
-                label="PhoneNo"
-                type="phoneno"
-                id="phoneno"
-                autoComplete="phoneno"
-                onChange={(e)=>handlePhone(e)}
+                name='phoneno'
+                label='PhoneNo'
+                type='phoneno'
+                id='phoneno'
+                autoComplete='phoneno'
+                onChange={(e) => handlePhone(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {phonenoError}
@@ -308,12 +308,12 @@ export default function SignUpUser() {
                 variant='contained'
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Sign up
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="/userlogin" variant="body2">
-                    {"Already a user? Login"}
+                  <Link href='/userlogin' variant='body2'>
+                    {'Already a user? Login'}
                   </Link>
                 </Grid>
               </Grid>
