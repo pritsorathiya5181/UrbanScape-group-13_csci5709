@@ -1,3 +1,5 @@
+// Author: Prit Ajaykumar Sorathiya - B00890175
+
 import React, { useState } from 'react'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -13,30 +15,9 @@ import { Button } from '@mui/material'
 export default function CustomTable(props) {
   const columns = props?.headerData
 
-  function createData(
-    serviceNo,
-    // serviceCategory,
-    // serviceName,
-    // clientName,
-    // clientAddress,
-    // clientContact,
-    // clientEmail,
-    // serviceTime,
-    // date,
-    // specialInstructions
-    service
-  ) {
+  function createData(serviceNo, service) {
     return {
       serviceNo,
-      // serviceCategory,
-      // serviceName,
-      // clientName,
-      // clientAddress,
-      // clientContact,
-      // clientEmail,
-      // serviceTime,
-      // date,
-      // specialInstructions,
       ...service,
     }
   }
@@ -44,21 +25,7 @@ export default function CustomTable(props) {
   const rows = []
 
   props?.serviceData?.forEach((service, index) => {
-    rows.push(
-      createData(
-        index + 1,
-        // service.serviceCategory,
-        // service.serviceName,
-        // service.clientName,
-        // service.clientAddress,
-        // service.clientContact,
-        // service.clientEmail,
-        // service.serviceTime,
-        // service.date,
-        // service.specialInstructions
-        service
-      )
-    )
+    rows.push(createData(index + 1, service))
   })
 
   const [page, setPage] = useState(0)

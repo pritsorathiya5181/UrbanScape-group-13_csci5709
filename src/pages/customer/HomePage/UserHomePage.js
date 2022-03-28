@@ -1,3 +1,5 @@
+// Author: Prit Ajaykumar Sorathiya - B00890175
+
 import React, { useEffect, useState } from 'react'
 import './UserHomePageStyle.css'
 import salonImage from '../../../asserts/images/salon.jpg'
@@ -68,64 +70,7 @@ const UserHomePage = (props) => {
 
   return (
     <div>
-      {/* <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h2'>
-        Welcome Home !
-      </Typography>
-      <Typography style={{ textAlign: 'center', padding: '10px' }} variant='h4'>
-        We are the one stop solution for all your worries
-      </Typography> */}
       <Slider sliderData={serviceCategories} />
-
-      {/* <Carousel
-        autoPlay
-        infiniteLoop
-        showArrows={false}
-        showThumbs={false}
-        renderIndicator={(onClickHandler, isSelected, index, label) => {
-          const defStyle = { marginLeft: 20, color: 'white', cursor: 'pointer' }
-          const style = isSelected
-            ? { ...defStyle, color: 'red' }
-            : { ...defStyle }
-          return (
-            <span
-              style={style}
-              onClick={onClickHandler}
-              onKeyDown={onClickHandler}
-              value={index}
-              key={index}
-              role='button'
-              tabIndex={0}
-              aria-label={`${label} ${index + 1}`}
-            >
-              {'cust ' + index}
-            </span>
-          )
-        }}
-      >
-        <div>
-          <img src={carpentryImg} />
-        </div>
-        <div>
-          <img src={salonImage} />
-        </div>
-        <div>
-          <img src={plumbingImg} />
-        </div>
-      </Carousel> */}
-
-      <div>
-        {/* <Grid container spacing={3} className={classes.gridcontainer}>
-          {offeredServices.map((service, index) => {
-            return (
-              <Grid key={index.toString()} item xs={12} sm={6} md={3}>
-                <div>
-                  <ServiceTile service={service} />
-                </div>
-              </Grid>
-            )
-          })}
-        </Grid> */}
-      </div>
       <Container>
         {serviceCategories.map((item, index) => (
           <CategoryItem item={item} key={index.toString()} />
