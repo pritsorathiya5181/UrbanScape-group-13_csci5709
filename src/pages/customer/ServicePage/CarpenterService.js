@@ -48,7 +48,7 @@ function CarpenterService(props) {
   return (
     <div className={classes.header}>
       <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h3'>
-        Beauty Services
+        Carpentry Services
       </Typography>
       <Grid container spacing={1} className={classes.gridcontainer}>
         {carpentryServices.map((carpentryService) => {
