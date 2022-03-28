@@ -1,3 +1,5 @@
+/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+
 import React, { useEffect, useState } from 'react'
 import './CustomerProfilePage.css'
 import NavBar from '../../../components/professional/NavBar/NavBar'
