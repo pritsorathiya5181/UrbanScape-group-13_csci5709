@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ServiceCard(props) {
   const classes = useStyles()
-  const defaultFormValues = { fName: "", contactNum: null, email: "", address: "", bookingTime: "2017-05-24T10:30", instructions: "" };
+  const defaultFormValues = { fName: "", contactNum: undefined, email: "", address: "", bookingTime: "2017-05-24T10:30", instructions: "" };
   const [bookingFormDetails, setBookingFormDetails] = useState(defaultFormValues);
   const [expanded, setExpanded] = React.useState(false)
 
@@ -71,7 +71,8 @@ function ServiceCard(props) {
     setBookingFormDetails({ ...bookingFormDetails, [name]: value });
   };
 
-const handleSubmit = () => {
+const handleSubmit = (event) => {
+  event.preventDefault();
   bookingFormDetails.serviceName = props.services.serviceName;
   bookingFormDetails.serviceCategory = props.serviceCategory;
   props.action.addCartItem(bookingFormDetails).then((res) => {
@@ -126,22 +127,23 @@ const handleSubmit = () => {
           </Button>
           <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Book {props.services.serviceName}</DialogTitle>
+        <form onSubmit={handleSubmit}>
         <DialogContent dividers>
-        
           <TextField
             autoFocus
             margin="dense"
+            required 
             id="outlined-basic"
             value={bookingFormDetails.fName} 
             onChange={handleBooking}
             fullWidth
             name="fName"
             label="Full Name"
-            type="fname"
             variant="outlined"
           />
            <TextField
             autoFocus
+            required 
             margin="dense"
             fullWidth
             id="outlined-basic"
@@ -149,11 +151,12 @@ const handleSubmit = () => {
             onChange={handleBooking}
             name="contactNum"
             label="Contact Number"
-            type="contactNum"
+            type="number"
             variant="outlined"
           />
           <TextField
             autoFocus
+            required 
             margin="dense"
             id="outlined-basic"
             name="email"
@@ -166,6 +169,7 @@ const handleSubmit = () => {
           />
           <TextField
             autoFocus
+            required 
             margin="dense"
             id="outlined-basic"
             value={bookingFormDetails.address} 
@@ -173,7 +177,6 @@ const handleSubmit = () => {
             fullWidth
             name="address"
             label="Address"
-            type="address"
             multiline
             rows={4}
             variant="outlined"
@@ -203,16 +206,16 @@ const handleSubmit = () => {
             multiline
             rows={2}
             label="Special Instructions"
-            type="instructions"
             variant="outlined"
           />
-          
         </DialogContent>
         <DialogActions>
         <Button variant="outlined" onClick={handleClose}>Cancel</Button>
-                <Button type="submit"  onClick={() => handleSubmit()} align="center" variant="contained">
+        <Button type="submit" align="center" variant="contained">
             <ShoppingCartIcon sx={{ color: 'white', padding: "5px" }} fontSize="small"/>Add To Cart </Button>
+            
         </DialogActions>
+        </form>
       </Dialog>
       
           <IconButton
