@@ -30,14 +30,17 @@ import { red } from '@mui/material/colors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    margin: '15px'
   },
   media: {
-    height: 0,
+    height: '200px',
     paddingTop: '56.25%', // 16:9
   },
   cardAction: {
-    display: "flex"
+    display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  marginTop: '16px'
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -106,15 +109,19 @@ const handleSubmit = () => {
         />
         <CardMedia className={classes.media} image={props.services.img} />
         <CardContent>
+        <Typography align='left' variant='overline' color='textSecondary' gutterBottom component='p'>
+          <b>Base price: ${props.services.price}*</b>
+          </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
             {props.services.title}
           </Typography>
+          
         </CardContent>
-        <CardActions disableSpacing>
+        <CardActions className={classes.cardAction} disableSpacing>
           {/* <IconButton aria-label='add to cart'>
             <ShoppingCartIcon />
           </IconButton> */}
-          <Button variant='text' onClick={handleClickOpenDialog} sx={{ textDecoration: 'underline' }}>
+          <Button size="small" variant='text' onClick={handleClickOpenDialog} sx={{ textDecoration: 'underline' }}>
             Book Service
           </Button>
           <Dialog open={open} onClose={handleClose}>
@@ -207,24 +214,22 @@ const handleSubmit = () => {
             <ShoppingCartIcon sx={{ color: 'white', padding: "5px" }} fontSize="small"/>Add To Cart </Button>
         </DialogActions>
       </Dialog>
-      <div>
-      {props.services.price}
-      </div>
       
           <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
+            className={clsx(classes.expand,classes.rightAlignItem, {
+              [classes.expandOpen]: expanded
+            }) } 
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label='show more'
           >
-            <ExpandMoreIcon className={classes.rightAlignItem} />
+            <ExpandMoreIcon />
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout='auto' unmountOnExit>
           <CardContent>
             <Typography paragraph>{props.services.desc}</Typography>
+            <Typography variant='caption'>* Base price indicates the starting prices for the service, exact amount will be quoted by the service professionals on-site after assessing the required effort.</Typography>
           </CardContent>
         </Collapse>
       </Card>

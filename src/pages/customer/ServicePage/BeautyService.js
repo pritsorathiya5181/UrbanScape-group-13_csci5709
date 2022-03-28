@@ -50,29 +50,6 @@ function BeautyService(props) {
        console.log('Add Cart Item Error', err)
      })
 }, [])
-
-  // beautyServices.push({
-  //   title: 'Head Massage',
-  //   img: headMassageImage,
-  //   content: 'Book our relaxing head massage to recharge your energy',
-  //   description:
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  // })
-  // beautyServices.push({
-  //   title: 'Hair Cut',
-  //   img: haircutImage,
-  //   content:
-  //     'Pamper yourself with a new look with our professional hair cutting experience',
-  //   description:
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  // })
-  // beautyServices.push({
-  //   title: 'Facial',
-  //   img: facialImage,
-  //   content: 'Relax your facial muscles with our rejuvenating facial',
-  //   description:
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  // })
   return (
     <div className={classes.header}>
       <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h3'>
@@ -83,7 +60,7 @@ function BeautyService(props) {
           return (
             <Grid item xs={12} sm={6} md={3}>
               <div>
-                <ServiceCard services={beautyService} />
+                <ServiceCard services={beautyService} serviceCategory={serviceCategoryName} />
               </div>
             </Grid>
           )
