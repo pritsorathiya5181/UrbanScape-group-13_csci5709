@@ -14,6 +14,14 @@ import CustomerProfilePage from './pages/customer/profile/CustomerProfilePage'
 import ServiceRequests from './pages/professional/serviceListing/ServiceRequests'
 import ServiceHistory from './pages/professional/serviceListing/ServiceHistory'
 import CartPage from './pages/customer/CartPage/CartPage'
+import ForgetPassword from './components/UserAuthentication/ForgetPassword'
+import SignInSide from './components/UserAuthentication/UserLogin'
+import SignUpUser from './components/UserAuthentication/SignUpUser'
+import SignUpProfessional from './components/UserAuthentication/SignUpProfessional'
+import Otp from './components/UserAuthentication/Otp'
+import UpdatePassword from './components/UserAuthentication/UpdatePassword'
+import CarpenterService from './pages/customer/ServicePage/CarpenterService'
+import PlumbingService from './pages/customer/ServicePage/PlumbingService'
 
 function App() {
   const url = window.location.pathname
@@ -26,6 +34,8 @@ function App() {
         <Routes>
           <Route path='/' element={<UserHomePage />} />
           <Route path='/beautyservices' element={<BeautyService />} />
+          <Route path='/carpentryservices' element={<CarpenterService />} />
+          <Route path='/plumbingservices' element={<PlumbingService />} />
           <Route
             exact
             path='/customer/myprofile/'
@@ -68,6 +78,12 @@ function App() {
             path='/professional/myprofile/'
             element={<ProfessionalProfilePage />}
           />
+          <Route path='/userlogin' element={<SignInSide/>}/>
+          <Route path='/signupuser' element={<SignUpUser/>}/>
+          <Route path='/signupprofessional' element={<SignUpProfessional/>}/>
+          <Route path='/forgetpassword' element={<ForgetPassword/>}/>
+          <Route path='/otp' element={<Otp />}/>
+          <Route path='/updatepassword' element={<UpdatePassword />} />
         </Routes>
       </Router>
     </Provider>

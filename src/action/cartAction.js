@@ -1,59 +1,48 @@
 import { BASE_URL } from '../utils/string'
 
-export function removeCartItemRequest(serviceItem) {
+
+export function deleteItem(itemId, itemprice) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
       try {
         dispatch({
-          type: 'REMOVE_ITEM',
+          type: 'DELETE_ITEM',
           subtype: 'loading',
         })
 
-        var myHeaders = new Headers()
-        myHeaders.append('Content-Type', 'application/json')
+        const userName = 'aes'
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-          itemNo: serviceItem?.itemNo,
-          clientName: serviceItem?.clientName,
-          //   clientEmail: serviceItem?.clientEmail,
-          clientEmail: 'prit.sorathiya@gmail.com',
-          serviceCategory: serviceItem?.serviceCategory,
-          serviceName: serviceItem?.serviceName,
-          professionalName: 'Mike',
-        })
+         "servicePrice": itemprice,
+           "itemId": itemId
+        });
 
-        var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow',
-        }
+var requestOptions = {
+  method: 'DELETE',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
 
-        const orderId = serviceItem?.orderId || '123'
+fetch(`${BASE_URL}cart/${userName}`, requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 
-        fetch(`${BASE_URL}order/approve/${orderId}`, requestOptions)
-          .then((response) => response.json())
-          .then((result) => {
-            console.log('apprve services response==', result)
-            dispatch({
-              type: 'APPROVE_SERVICE_REQUEST',
-              subtype: 'success',
-            })
-            resolve(result)
-          })
-          .catch((error) => {
-            console.log('approve service error', error)
-            rejects(error)
-          })
+
       } catch (error) {
         dispatch({
-          type: 'APPROVE_SERVICE_REQUEST',
+          type: 'DELETE_ITEM',
           error: error,
         })
       }
     })
   }
 }
+
 
 export function getCartItems(userId) {
     return function (dispatch, getState) {

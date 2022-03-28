@@ -64,6 +64,21 @@ const NavBar = () => {
     navigate('./beautyservices')
   }
 
+  const navigateToCarpentryServices = () => {
+    handleClose()
+    navigate('./carpentryservices')
+  }
+
+  const navigateToPlumbingServices = () => {
+    handleClose()
+    navigate('./plumbingservices')
+  }
+
+  const navigateToCart = () => {
+    navigate('./customer/cartpage')
+  }
+
+
   const handleClick = (event) => {
     setServiceOption(event.currentTarget)
   }
@@ -178,7 +193,7 @@ const NavBar = () => {
         }}
       >
         <Tooltip title='Open cart'>
-          <IconButton sx={{ paddingRight: 1 }}>
+          <IconButton sx={{ paddingRight: 1 }} onClick={navigateToCart}>
             <ShoppingCartIcon fontSize='large' sx={{ color: 'white' }} />
           </IconButton>
         </Tooltip>
@@ -225,7 +240,8 @@ const NavBar = () => {
         anchorEl={serviceOption}
       >
         <MenuItem onClick={navigateToBeautyServices}>Beauty Services</MenuItem>
-        <MenuItem onClick={handleClose}>Home Repair Services</MenuItem>
+        <MenuItem onClick={navigateToPlumbingServices}>Plumbing Services</MenuItem>
+        <MenuItem onClick={navigateToCarpentryServices}>Carpentry Services</MenuItem>
       </Menu>
     )
   }

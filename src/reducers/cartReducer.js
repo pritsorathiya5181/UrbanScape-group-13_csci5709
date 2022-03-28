@@ -2,7 +2,7 @@ const initialState = []
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'REMOVE_ITEM':
+    case 'DELETE_ITEM':
       return {
         ...state,
         removeServiceError: action.error ? action.error : null,

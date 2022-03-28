@@ -30,14 +30,17 @@ import { red } from '@mui/material/colors'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    margin: '15px'
   },
   media: {
-    height: 0,
+    height: '200px',
     paddingTop: '56.25%', // 16:9
   },
   cardAction: {
-    display: "flex"
+    display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  marginTop: '16px'
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -59,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ServiceCard(props) {
   const classes = useStyles()
-  const defaultFormValues = { fName: "", contactNum: null, email: "", address: "", bookingTime: "2017-05-24T10:30", instructions: "" };
+  const defaultFormValues = { fName: "", contactNum: undefined, email: "", address: "", bookingTime: "2017-05-24T10:30", instructions: "" };
   const [bookingFormDetails, setBookingFormDetails] = useState(defaultFormValues);
   const [expanded, setExpanded] = React.useState(false)
 
@@ -68,8 +71,10 @@ function ServiceCard(props) {
     setBookingFormDetails({ ...bookingFormDetails, [name]: value });
   };
 
-const handleSubmit = () => {
-
+const handleSubmit = (event) => {
+  event.preventDefault();
+  bookingFormDetails.serviceName = props.services.serviceName;
+  bookingFormDetails.serviceCategory = props.serviceCategory;
   props.action.addCartItem(bookingFormDetails).then((res) => {
     console.log("Result" , res)
    })
@@ -99,42 +104,46 @@ const handleSubmit = () => {
     <section>
       <Card className={classes.root}>
         <CardHeader
-          title={props.services.title}
+          title={props.services.serviceName}
           subheader={props.services.subheader}
           sx={{ textAlign: 'start' }}
         />
         <CardMedia className={classes.media} image={props.services.img} />
         <CardContent>
-          <Typography variant='body2' color='textSecondary' component='p'>
-            {props.services.content}
+        <Typography align='left' variant='overline' color='textSecondary' gutterBottom component='p'>
+          <b>Base price: ${props.services.price}*</b>
           </Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            {props.services.title}
+          </Typography>
+          
         </CardContent>
-        <CardActions disableSpacing>
+        <CardActions className={classes.cardAction} disableSpacing>
           {/* <IconButton aria-label='add to cart'>
             <ShoppingCartIcon />
           </IconButton> */}
-          <Button variant='text' onClick={handleClickOpenDialog} sx={{ textDecoration: 'underline' }}>
+          <Button size="small" variant='text' onClick={handleClickOpenDialog} sx={{ textDecoration: 'underline' }}>
             Book Service
           </Button>
           <Dialog open={open} onClose={handleClose}>
-          <form >
-        <DialogTitle>Book {props.services.title}</DialogTitle>
+        <DialogTitle>Book {props.services.serviceName}</DialogTitle>
+        <form onSubmit={handleSubmit}>
         <DialogContent dividers>
-        
           <TextField
             autoFocus
             margin="dense"
+            required 
             id="outlined-basic"
             value={bookingFormDetails.fName} 
             onChange={handleBooking}
             fullWidth
             name="fName"
             label="Full Name"
-            type="fname"
             variant="outlined"
           />
            <TextField
             autoFocus
+            required 
             margin="dense"
             fullWidth
             id="outlined-basic"
@@ -142,11 +151,12 @@ const handleSubmit = () => {
             onChange={handleBooking}
             name="contactNum"
             label="Contact Number"
-            type="contactNum"
+            type="number"
             variant="outlined"
           />
           <TextField
             autoFocus
+            required 
             margin="dense"
             id="outlined-basic"
             name="email"
@@ -159,6 +169,7 @@ const handleSubmit = () => {
           />
           <TextField
             autoFocus
+            required 
             margin="dense"
             id="outlined-basic"
             value={bookingFormDetails.address} 
@@ -166,11 +177,24 @@ const handleSubmit = () => {
             fullWidth
             name="address"
             label="Address"
-            type="address"
             multiline
             rows={4}
             variant="outlined"
           />
+          <TextField
+                  margin="dense"
+                  fullWidth
+                  id="datetime-local"
+                  name="bookingTime"
+                  label="Book appointment"
+                  type="datetime-local"
+                  value={bookingFormDetails.bookingTime}
+                  onChange={handleBooking}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
           <TextField
             autoFocus
             margin="dense"
@@ -182,32 +206,33 @@ const handleSubmit = () => {
             multiline
             rows={2}
             label="Special Instructions"
-            type="instructions"
             variant="outlined"
           />
-          
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit" align="center" variant="contained" onClick={() => handleSubmit()}>Add To Cart</Button>
+        <Button variant="outlined" onClick={handleClose}>Cancel</Button>
+        <Button type="submit" align="center" variant="contained">
+            <ShoppingCartIcon sx={{ color: 'white', padding: "5px" }} fontSize="small"/>Add To Cart </Button>
+            
         </DialogActions>
         </form>
       </Dialog>
-      500$
+      
           <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
+            className={clsx(classes.expand,classes.rightAlignItem, {
+              [classes.expandOpen]: expanded
+            }) } 
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label='show more'
           >
-            <ExpandMoreIcon className={classes.rightAlignItem} />
+            <ExpandMoreIcon />
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout='auto' unmountOnExit>
           <CardContent>
-            <Typography paragraph>{props.services.description}</Typography>
+            <Typography paragraph>{props.services.desc}</Typography>
+            <Typography variant='caption'>* Base price indicates the starting prices for the service, exact amount will be quoted by the service professionals on-site after assessing the required effort.</Typography>
           </CardContent>
         </Collapse>
       </Card>
