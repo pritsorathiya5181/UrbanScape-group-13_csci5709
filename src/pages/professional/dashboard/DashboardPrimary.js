@@ -5,9 +5,6 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-
-// import "./ServiceCard.css";
-
 import useWindowDimensions from "../../../utils/scale";
 import ServiceCardDetails from "./ServiceCardDetails";
 
@@ -44,11 +41,12 @@ export default function DashboardPrimary({ item }) {
 
   return (
     <>
-      <Grid container spacing={1} justifyContent="center" alignItems="center">
+      <Grid container spacing={0.25} sx={{margin: "0px 40px", display: "flex", justifyContent: "center", alignItems: "center"}} >
         <Grid item xs>
           <Card
             sx={{
               maxWidth: "275px",
+            //   m: 4
             }}
             style={{ backgroundColor: "black" }}
           >
@@ -56,17 +54,16 @@ export default function DashboardPrimary({ item }) {
               <Typography
                 variant="h5"
                 component="div"
-                style={{ color: "white" }}
-                justifyContent="center"
-                alignItems="center"
+                sx={{ color: "white", display: "flex", alignContent:"center",
+                justifyContent:"center"}}
               >
                 Pending Requests
               </Typography>
               <Typography
                 variant="h1"
                 component="div"
-                style={{ color: "white" }}
-                justifyContent="center"
+                sx={{ color: "white", display: "flex", alignContent:"center",
+                justifyContent:"center" }}
               >
                 12
               </Typography>
@@ -84,16 +81,16 @@ export default function DashboardPrimary({ item }) {
               <Typography
                 variant="h5"
                 component="div"
-                style={{ color: "white" }}
-                justifyContent="center"
+                sx={{ color: "white", display: "flex", alignContent:"center",
+                justifyContent:"center" }}
               >
                 Approved Requests
               </Typography>
               <Typography
                 variant="h1"
                 component="div"
-                style={{ color: "white" }}
-                justifyContent="center"
+                sx={{ color: "white", display: "flex", alignContent:"center",
+                justifyContent:"center" }}
               >
                 4
               </Typography>
@@ -111,16 +108,16 @@ export default function DashboardPrimary({ item }) {
               <Typography
                 variant="h5"
                 component="div"
-                style={{ color: "white" }}
-                justifyContent="center"
+                sx={{ color: "white", display: "flex", alignContent:"center",
+                justifyContent:"center" }}
               >
                 Processed Requests
               </Typography>
               <Typography
                 variant="h1"
                 component="div"
-                style={{ color: "white" }}
-                justifyContent="center"
+                sx={{ color: "white", display: "flex", alignContent:"center",
+                justifyContent:"center" }}
               >
                 123
               </Typography>
@@ -138,16 +135,16 @@ export default function DashboardPrimary({ item }) {
               <Typography
                 variant="h5"
                 component="div"
-                style={{ color: "white" }}
-                justifyContent="center"
+                sx={{ color: "white", display: "flex", alignContent:"center",
+                justifyContent:"center" }}
               >
                 Cancelled Requests
               </Typography>
               <Typography
                 variant="h1"
                 component="div"
-                style={{ color: "white" }}
-                justifyContent="center"
+                sx={{ color: "white", display: "flex", alignContent:"center",
+                justifyContent:"center" }}
               >
                 45
               </Typography>

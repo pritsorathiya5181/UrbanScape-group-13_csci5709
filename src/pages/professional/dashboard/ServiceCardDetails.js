@@ -13,33 +13,33 @@ const ServiceCardDetails = (props) => {
           <Card
             sx={{
               maxWidth: "275px",
+              m: 1
             }}
             style={{ backgroundColor: "black" }}
           >
             <CardContent>
               <Typography
-                variant="h3"
+                variant="h5"
                 component="div"
-                style={{ color: "white" }}
-                justifyContent="center"
+                sx={{ color: "white", display: "flex", alignContent:"center",
+                justifyContent:"center", borderBottom: 1, borderColor: "white"}}
               >
                 {props.item.name}
               </Typography>
               <Typography
-                variant="h5"
+                variant="h6"
                 component="div"
-                style={{ color: "white" }}
-                justifyContent="center"
+                sx={{ color: "white" }}
               >
-                {props.item.charge}
+                Charges per visit: {props.item.charge}$/hour
               </Typography>
               <Typography
-                variant="h5"
+                variant="h6"
                 component="div"
-                style={{ color: "white" }}
+                sx={{ color: "white" }}
                 justifyContent="center"
               >
-                {props.item.locations}
+                Locations Served: {props.item.locations}
               </Typography>
             </CardContent>
           </Card>
