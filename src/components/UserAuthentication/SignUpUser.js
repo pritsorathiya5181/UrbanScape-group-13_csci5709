@@ -39,6 +39,7 @@ function Copyright(props) {
 const theme = createTheme()
 
 export default function SignUpUser() {
+  const bgImage = require("../../asserts/images/app-bg.jpg")
   const [fnameError, setFnameError] = useState()
   const [lnameError, setLnameError] = useState()
   const [emailError, setEmailError] = useState()
@@ -191,7 +192,7 @@ export default function SignUpUser() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${bgImage})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light'
@@ -225,10 +226,10 @@ export default function SignUpUser() {
                 required
                 fullWidth
                 id='firstname'
-                label='Firstname'
+                label='First Name'
                 name='firstname'
                 autoComplete='firstname'
-                onChange={(e) => handleFName(e)}
+                onBlur={(e) => handleFName(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {fnameError}
@@ -238,10 +239,10 @@ export default function SignUpUser() {
                 required
                 fullWidth
                 id='lastname'
-                label='LastName'
+                label='Last Name'
                 name='lastname'
                 autoComplete='lastname'
-                onChange={(e) => handleLName(e)}
+                onBlur={(e) => handleLName(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {lnameError}
@@ -255,7 +256,7 @@ export default function SignUpUser() {
                 name='email'
                 autoComplete='email'
                 type='email'
-                onChange={(e) => handleEmail(e)}
+                onBlur={(e) => handleEmail(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {emailError}
@@ -265,11 +266,11 @@ export default function SignUpUser() {
                 required
                 fullWidth
                 name='phoneno'
-                label='PhoneNo'
+                label='Phone No'
                 type='phoneno'
                 id='phoneno'
                 autoComplete='phoneno'
-                onChange={(e) => handlePhone(e)}
+                onBlur={(e) => handlePhone(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {phonenoError}
@@ -283,7 +284,7 @@ export default function SignUpUser() {
                 type='password'
                 id='password'
                 autoComplete='current-password'
-                onChange={(e) => handlePassword(e)}
+                onBlur={(e) => handlePassword(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {passwordError}
@@ -297,7 +298,7 @@ export default function SignUpUser() {
                 type='password'
                 id='cpassword'
                 autoComplete='current-password'
-                onChange={(e) => handleConfirmPassword(e)}
+                onBlur={(e) => handleConfirmPassword(e)}
               />
               <Typography style={{ color: 'red', width: '500px' }}>
                 {confirmPasswordError}

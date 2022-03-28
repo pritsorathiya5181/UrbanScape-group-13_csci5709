@@ -37,6 +37,7 @@ function Copyright(props) {
 const theme = createTheme()
 
 export default function UserLogin() {
+  const bgImage = require("../../asserts/images/app-bg.jpg")
   const navigateToHome = useNavigate()
   const [errors, setErrors] = React.useState({})
   const [fnameError, setFnameError] = useState()
@@ -62,7 +63,7 @@ export default function UserLogin() {
     const Email = event.target.value
     localStorage.setItem('email', 'Email')
     if (!validateEmail(Email)) {
-      setEmailError('Invalid email foramt')
+      setEmailError('Invalid email format')
     } else {
       setEmailError('')
     }
@@ -145,7 +146,7 @@ export default function UserLogin() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${bgImage})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light'
@@ -183,7 +184,7 @@ export default function UserLogin() {
                 label='Email Address'
                 name='email'
                 autoComplete='email'
-                onChange={(e) => handleEmail(e)}
+                onBlur={(e) => handleEmail(e)}
               />
               {/* <p style={{color:"red"}}>{emailError}</p> */}
               <Typography style={{ color: 'red', width: '500px' }}>
@@ -199,7 +200,7 @@ export default function UserLogin() {
                 type='password'
                 id='password'
                 autoComplete='current-password'
-                onChange={(e) => handlePassword(e)}
+                onBlur={(e) => handlePassword(e)}
               />
               {/* <p style={{color:"red"}}>{passwordError}</p> */}
 

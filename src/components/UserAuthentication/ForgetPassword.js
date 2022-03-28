@@ -33,14 +33,15 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function ForgetPassword() {
+  const bgImage = require("../../asserts/images/app-bg.jpg")
   const navigateOtp = useNavigate();
   const navigateForgetPass = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    <Otp></Otp>
     var email = data.get('email');
+    // navigateOtp('/otp?user='+email)
     var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
@@ -56,7 +57,7 @@ fetch(`http://localhost:5000/api/auth/forgetpassword/${email}`, requestOptions)
   .then(response => response.text())
   .then(result =>{
     if(result == "email sent"){
-      navigateOtp('/otp');
+      navigateOtp('/otp?user='+email);
     }
     else{
       console.log("Enter registered email address");
@@ -77,7 +78,7 @@ fetch(`http://localhost:5000/api/auth/forgetpassword/${email}`, requestOptions)
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${bgImage})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -116,7 +117,7 @@ fetch(`http://localhost:5000/api/auth/forgetpassword/${email}`, requestOptions)
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Send Link
+                Send OTP
               </Button>
               <Grid container>
                 <Grid style={{color:'red'}}item xs>
