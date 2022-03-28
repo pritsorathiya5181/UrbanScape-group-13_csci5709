@@ -36,8 +36,6 @@ function PlumbingService(props) {
 
   useEffect(() => {
     props.action.getServices().then((res) => {
-      console.log("API Result" , res)
-      console.log("Beauty Services are " + JSON.stringify(res.serviceCategories.filter(serviceCategory => serviceCategory.serviceCategory === 'Plumbing')))
       let servicesOffered = res.serviceCategories.filter(serviceCategory => serviceCategory.serviceCategory === 'Plumbing');
       setPlumbingServices(servicesOffered[0].services);
       
