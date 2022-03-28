@@ -52,6 +52,10 @@ const NavBar = () => {
   const navigateToProfileSettings = (setting) => {
     if (setting === 'My Profile') {
       navigate('/professional/myprofile')
+    } else if (setting === 'Logout') {
+      localStorage.removeItem('accesstoken')
+      localStorage.removeItem('usertype')
+      window.location.href = '/'
     }
     setProfileSettingOption(null)
   }
