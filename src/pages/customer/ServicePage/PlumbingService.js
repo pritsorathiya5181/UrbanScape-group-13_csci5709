@@ -1,9 +1,5 @@
 import React from 'react'
 import ServiceCard from './ServiceCard'
-import headMassageImage from '../../../asserts/images/head-massage.jpg'
-import facialImage from '../../../asserts/images/facial.jpg'
-import haircutImage from '../../../asserts/images/haircut.jpg'
-import Calendar from '../../../components/customer/DateTimePicker/Calendar'
 import * as serviceCategoryAction from '../../../action/serviceCategoryAction'
 import { Button, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
@@ -33,17 +29,17 @@ const useStyles = makeStyles({
   },
 })
 
-function BeautyService(props) {
+function PlumbingService(props) {
   const classes = useStyles()
-  const [beautyServices, setBeautyServices] = useState([]);
-  const serviceCategoryName = 'Beauty';
+  const [plumbingServices, setPlumbingServices] = useState([]);
+  const serviceCategoryName = 'Plumbing';
 
   useEffect(() => {
     props.action.getServices().then((res) => {
       console.log("API Result" , res)
-      console.log("Beauty Services are " + JSON.stringify(res.serviceCategories.filter(serviceCategory => serviceCategory.serviceCategory === 'Beauty')))
-      let servicesOffered = res.serviceCategories.filter(serviceCategory => serviceCategory.serviceCategory === 'Beauty');
-      setBeautyServices(servicesOffered[0].services);
+      console.log("Beauty Services are " + JSON.stringify(res.serviceCategories.filter(serviceCategory => serviceCategory.serviceCategory === 'Plumbing')))
+      let servicesOffered = res.serviceCategories.filter(serviceCategory => serviceCategory.serviceCategory === 'Plumbing');
+      setPlumbingServices(servicesOffered[0].services);
       
      })
      .catch((err) => {
@@ -53,14 +49,14 @@ function BeautyService(props) {
   return (
     <div className={classes.header}>
       <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h3'>
-        Beauty Services
+        Plumbing Services
       </Typography>
       <Grid container spacing={1} className={classes.gridcontainer}>
-        {beautyServices.map((beautyService) => {
+        {plumbingServices.map((plumbingServices) => {
           return (
             <Grid item xs={12} sm={6} md={3}>
               <div>
-                <ServiceCard services={beautyService} serviceCategory={serviceCategoryName} />
+                <ServiceCard services={plumbingServices} serviceCategory={serviceCategoryName} />
               </div>
             </Grid>
           )
@@ -88,4 +84,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BeautyService)
+export default connect(mapStateToProps, mapDispatchToProps)(PlumbingService)
