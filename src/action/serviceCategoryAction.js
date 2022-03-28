@@ -18,7 +18,6 @@ export function getServices() {
         fetch(`${BASE_URL}services/serviceCategories`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
-            console.log('all services==', result)
             dispatch({
               type: 'GET_SERVICE_CATEGORIES',
               subtype: 'success',
@@ -27,7 +26,6 @@ export function getServices() {
             resolve(result)
           })
           .catch((error) => {
-            console.log('all service error', error)
             rejects(error)
           })
       } catch (error) {
