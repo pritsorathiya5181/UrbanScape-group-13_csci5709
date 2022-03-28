@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import './AddService.css'
@@ -30,7 +30,7 @@ const AddService = (props) => {
 
   const [category, setCategory] = useState('')
   const [serviceName, setServiceName] = useState('')
-  const [cost, setCost] = useState('')
+  // const [cost, setCost] = useState('')
   const [location, setLocation] = useState('')
   const [fromTime, setFromTime] = useState('')
   const [toTime, setToTime] = useState('')
@@ -62,7 +62,7 @@ const AddService = (props) => {
     if (
       category?.length > 0 &&
       serviceName?.length > 0 &&
-      cost.length > 0 &&
+      // cost.length > 0 &&
       photos.length > 1 &&
       location.length > 0 &&
       // fromTime.length > 0 &&
@@ -79,7 +79,7 @@ const AddService = (props) => {
 
       setCategory(category || data?.serviceCategory)
       setServiceName(serviceName || data?.serviceName)
-      setCost(cost || data?.serviceCost)
+      // setCost(cost || data?.serviceCost)
       photos.length > 1
         ? setPhotos(photos || data?.serviceImage)
         : setPhotos(data?.serviceImage)
@@ -89,7 +89,7 @@ const AddService = (props) => {
   }, [
     category,
     serviceName,
-    cost,
+    // cost,
     photos,
     location,
     fromTime,
@@ -123,13 +123,13 @@ const AddService = (props) => {
   const handleChangeInput = (event) => {
     const value = event.target.value
     switch (event.target.id) {
-      case 'cost':
-        if (/^[0-9]*$/.test(value)) {
-          setCost(value)
-        } else {
-          setCost('')
-        }
-        break
+      // case 'cost':
+      //   if (/^[0-9]*$/.test(value)) {
+      //     setCost(value)
+      //   } else {
+      //     setCost('')
+      //   }
+      //   break
       case 'location':
         setLocation(value)
         break
@@ -185,7 +185,7 @@ const AddService = (props) => {
       serviceName: serviceName,
       serviceLocation: location,
       // serviceTime: fromTime + '-' + toTime,
-      serviceCost: cost,
+      // serviceCost: cost,
       serviceImage: photos,
       serviceDescription: description,
       userId: 'd86aa655-fe4a-40ee-af69-67718d7ec759',
@@ -210,7 +210,7 @@ const AddService = (props) => {
       serviceCategory: category,
       serviceName: serviceName,
       serviceLocation: location,
-      serviceCost: cost,
+      // serviceCost: cost,
       serviceImage: photos,
       serviceDescription: description,
     }
@@ -329,7 +329,7 @@ const AddService = (props) => {
                 </Select>
               </FormControl>
             </section>
-            <section className='row'>
+            {/* <section className='row'>
               <p className='serviceTitle'>Cost</p>
               <TextField
                 required
@@ -345,7 +345,7 @@ const AddService = (props) => {
                 }}
                 onChange={handleChangeInput}
               />
-            </section>
+            </section> */}
             <section className='row'>
               <p className='serviceTitle'>Photos</p>
               <div
