@@ -1,45 +1,45 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+
 import { useState } from "react";
 
 const ContactUs = () => {
 
-    const [firstname, setFirstName] = useState("");
-    const [lastname, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [zip, setZip] = useState("");
+    // const [firstname, setFirstName] = useState("");
+    // const [lastname, setLastName] = useState("");
+    // const [email, setEmail] = useState("");
+    // const [city, setCity] = useState("");
+    // const [state, setState] = useState("");
+    // const [zip, setZip] = useState("");
   
-    let handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-        let res = await fetch("https://httpbin.org/post", {
-          method: "POST",
-          body: JSON.stringify({
-            firstname: firstname,
-            lastname: lastname,
-            email: email,
-            city: city,
-            state: state,
-            zip: zip
-          }),
-        });
-        let resJson = await res.json();
-        // if (res.status === 200) {
-        //   setName("");
-        //   setEmail("");
-        //   setMessage("User created successfully");
-        // } else {
-        //   setMessage("Some error occured");
-        // }
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    // let handleSubmit = async (e) => {
+    //   e.preventDefault();
+    //   try {
+    //     let res = await fetch("https://httpbin.org/post", {
+    //       method: "POST",
+    //       body: JSON.stringify({
+    //         firstname: firstname,
+    //         lastname: lastname,
+    //         email: email,
+    //         city: city,
+    //         state: state,
+    //         zip: zip
+    //       }),
+    //     });
+    //     let resJson = await res.json();
+    //     // if (res.status === 200) {
+    //     //   setName("");
+    //     //   setEmail("");
+    //     //   setMessage("User created successfully");
+    //     // } else {
+    //     //   setMessage("Some error occured");
+    //     // }
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
 
   return (
     <div className="container">
-      <form method="post" action="localhost:8080/" onSubmit={this.handleSubmit}>
+      {/* <form method="post" action="localhost:8080/" onSubmit={this.handleSubmit}>
         <div className="form-row">
           <div className="form-group col-md-6 mt-3">
             <label for="inputEmail4">Email</label>
@@ -96,7 +96,7 @@ const ContactUs = () => {
         <button type="submit" className="btn btn-primary mt-3">
           Send Request
         </button>
-      </form>
+      </form> */}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import NavBar from './components/customer/Navbar/NavBar'
 import BeautyService from './pages/customer/ServicePage/BeautyService'
 import UserHomePage from './pages/customer/HomePage/UserHomePage'
-import ContactUs from './pages/customer/Support/ContactUs'
+import Contact from './pages/customer/Support/Contact'
 import Dashboard from './pages/professional/dashboard/Dashboard'
 import AddService from './pages/professional/HandleService/AddService'
 import ServiceProfile from './pages/professional/HandleService/ServiceProfile'
@@ -14,7 +14,6 @@ import ProfessionalProfilePage from './pages/professional/profile/ProfessionalPr
 import CustomerProfilePage from './pages/customer/profile/CustomerProfilePage'
 import ServiceRequests from './pages/professional/serviceListing/ServiceRequests'
 import ServiceHistory from './pages/professional/serviceListing/ServiceHistory'
-import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const url = window.location.pathname
@@ -27,7 +26,7 @@ function App() {
         <Routes>
           <Route path='/' element={<UserHomePage />} />
           <Route path='/beautyservices' element={<BeautyService />} />
-          <Route path='/support' element={<ContactUs />} />
+          <Route path='/support' element={<Contact />} />
           <Route
             exact
             path='/customer/myprofile/'
