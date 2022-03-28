@@ -1,3 +1,5 @@
+//Author: Rikin Pineshkumar Patel
+
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -10,34 +12,6 @@ import { useNavigate } from 'react-router-dom'
 export default function DashboardPrimary(props) {
   const { width } = useWindowDimensions()
   let navigate = useNavigate()
-
-  const serviceList = [
-    {
-      name: 'Plumbing',
-      charge: '30',
-      locations: 'Halifax, Dartmouth',
-    },
-    {
-      name: 'Carpenting',
-      charge: '40',
-      locations: 'Halifax South-End',
-    },
-    {
-      name: 'Carpenting',
-      charge: '40',
-      locations: 'Halifax South-End',
-    },
-    {
-      name: 'Carpenting',
-      charge: '40',
-      locations: 'Halifax South-End',
-    },
-    {
-      name: 'Carpenting',
-      charge: '40',
-      locations: 'Halifax South-End',
-    },
-  ]
 
   const adjustContent = (content) => {
     if (content?.length > 60) {

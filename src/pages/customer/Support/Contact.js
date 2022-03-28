@@ -1,3 +1,5 @@
+//Author: Rikin Pineshkumar Patel
+
 import "./styles.css";
 import { useState } from "react";
 import swal from "sweetalert";
