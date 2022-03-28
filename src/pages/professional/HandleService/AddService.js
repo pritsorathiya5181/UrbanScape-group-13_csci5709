@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { connect } from 'react-redux'
 import Loader from '../../../components/customloader/Loader'
 import NavBar from '../../../components/professional/NavBar/NavBar'
-import useWindowDimensions from '../../../utils/scale'
+import useWindowDimensions, { hasToken } from '../../../utils/scale'
 import AddIcon from '@mui/icons-material/Add'
 import { SERVICE_CATEGORY } from '../../../utils/service'
 import * as ServiceAction from '../../../action/ServiceAction'
@@ -59,6 +59,11 @@ const AddService = (props) => {
   const classes = useStyles()
 
   useEffect(() => {
+    if (!hasToken()) {
+      window.location.href = '/'
+      alert('Please login to continue')
+    }
+
     if (
       category?.length > 0 &&
       serviceName?.length > 0 &&

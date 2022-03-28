@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './ProfessionalProfilePage.css'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import { Button, FormControl, TextField } from '@mui/material'
-import useWindowDimensions from '../../../utils/scale'
+import useWindowDimensions, { hasToken } from '../../../utils/scale'
 import { makeStyles } from '@mui/styles'
 import DialogAlert from '../../../components/DialogAlert'
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos'
@@ -23,6 +23,11 @@ const ProfessionalProfilePage = () => {
   const [address, setAddress] = useState('')
 
   useEffect(() => {
+    if (!hasToken()) {
+      window.location.href = '/'
+      alert('Please login to continue')
+    }
+
     if (width > 800) {
       setisProfileMenuOpen(false)
     }

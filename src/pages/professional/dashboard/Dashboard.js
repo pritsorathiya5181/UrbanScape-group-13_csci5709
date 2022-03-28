@@ -6,13 +6,19 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Loader from '../../../components/customloader/Loader'
 import DashboardPrimary from './DashboardPrimary'
+import { hasToken } from '../../../utils/scale'
 
 const Dashboard = (props) => {
   const [serviceLoading, setServiceLoading] = useState(false)
-  const [serviceStatsData, setServiceStatsData] = useState([])
+  const [serviceStatsData, setServiceStatsData] = useState()
   const [serviceList, setServicesList] = useState(props.servicesData || [])
 
   useEffect(() => {
+    if (!hasToken()) {
+      window.location.href = '/'
+      alert('Please login to continue')
+    }
+
     function getServicesStats() {
       setServiceLoading(true)
       const userId = 'd86aa655-fe4a-40ee-af69-67718d7ec759'
@@ -20,7 +26,7 @@ const Dashboard = (props) => {
         .getServiceStats(userId)
         .then((res) => {
           setServiceLoading(false)
-          setServiceStatsData(res?.serviceStats)
+          setServiceStatsData(res.serviceStats)
         })
         .catch((err) => {
           console.log(err)
@@ -43,8 +49,8 @@ const Dashboard = (props) => {
         })
     }
 
-    getServices()
     getServicesStats()
+    getServices()
   }, [])
 
   return (
@@ -63,10 +69,12 @@ const Dashboard = (props) => {
           <Loader />
         </div>
       ) : (
-        <DashboardPrimary
-          serviceStatsData={serviceStatsData}
-          serviceList={serviceList}
-        />
+        serviceStatsData && (
+          <DashboardPrimary
+            serviceStatsData={serviceStatsData}
+            serviceList={serviceList}
+          />
+        )
       )}
     </main>
   )
