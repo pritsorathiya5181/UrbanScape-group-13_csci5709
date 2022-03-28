@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Title = styled.h1`
@@ -22,8 +23,19 @@ const Text = styled.p`
   text-align: center;
   font-weight: bold;
 `
-
 const CategoryItem = ({ item }) => {
+  let navigate = useNavigate()
+
+  const handleClick = (serviceCategory) => {
+    if (serviceCategory === 'Beauty') {
+      navigate('./beautyservices')
+    } else if (serviceCategory === 'Plumbing') {
+      navigate('./plumbingservices')
+    } else if (serviceCategory === 'Carpentry') {
+      navigate('./carpentryservices')
+    }
+  }
+
   return (
     <div
       style={{
@@ -32,9 +44,10 @@ const CategoryItem = ({ item }) => {
         heigth: '140px',
         position: 'relative',
       }}
+      onClick={() => handleClick(item.serviceCategory)}
     >
       <img
-        src={item.image}
+        src={item?.categoryImg}
         alt=''
         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
       />
@@ -51,8 +64,8 @@ const CategoryItem = ({ item }) => {
           flexDirection: 'column',
         }}
       >
-        <Title>{item.name}</Title>
-        <Text>{item.description}</Text>
+        <Title>{item?.serviceCategory}</Title>
+        <Text>{item?.categoryDesc}</Text>
         <Button>BOOK NOW</Button>
       </div>
     </div>
