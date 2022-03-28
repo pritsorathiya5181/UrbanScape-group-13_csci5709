@@ -46,7 +46,7 @@ export default function UpdatePassword() {
     if(validatePwd(Password)){
       setPasswordError('Should have special and alphanumeric characters ');
     }
-    else if(Password.length < 8){
+    else if(Password?.length < 8){
       setPasswordError('Minimum 8 characters are required');
     }
     else{
@@ -62,7 +62,7 @@ export default function UpdatePassword() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    if(passwordError.length >0){
+    if(passwordError?.length >0){
       alert("Error in Password");
       return;
     }
@@ -133,7 +133,6 @@ export default function UpdatePassword() {
                 name="username"
                 autoComplete="username"
                 type="email"
-                autoFocus
               />
              
               <TextField
@@ -145,7 +144,6 @@ export default function UpdatePassword() {
                 name="password"
                 autoComplete="password"
                 type="password"
-                autoFocus
                 onChange={(e)=> handlePassword(e)}
               />
               <Typography style={{color:"red",width:"100%"}}>

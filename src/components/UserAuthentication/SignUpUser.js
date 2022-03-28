@@ -94,7 +94,7 @@ const handleEmail=(event)=>{
 
 const handlePhone = (event)=>{
   const PhoneNo = event.target.value;
-  if(PhoneNo.length == 10){
+  if(PhoneNo?.length == 10){
     setPhoneNo('')
   }
   else{
@@ -107,7 +107,7 @@ const handlePassword=(event)=>{
  if(validatePwd(Password)){
    setPasswordError('Should have special and alphanumeric characters ');
  }
- else if(Password.length < 8){
+ else if(Password?.length < 8){
    setPasswordError('Minimum 8 characters are required');
  }
  else{
@@ -133,28 +133,28 @@ const handleConfirmPassword=(event)=>{
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    if(fnameError.length >0){
+    if(fnameError?.length >0){
       alert("Error in FirstName");
       return;
     }
     
-    if(lnameError.length >0){
+    if(lnameError?.length >0){
      alert("Error in LastName");
      return;
    }
-   if(emailError.length >0){
+   if(emailError?.length >0){
      alert("Error in Email");
      return;
    }
-   if(phonenoError.length>0){
+   if(phonenoError?.length>0){
      alert("Invalid phone Number");
      return;
    }
-   if(passwordError.length >0){
+   if(passwordError?.length >0){
      alert("Error in Password");
      return;
    }
-   if(confirmPasswordError.length >0){
+   if(confirmPasswordError?.length >0){
      alert("Error in Confirm Password");
      return;
    }
@@ -242,7 +242,6 @@ const handleConfirmPassword=(event)=>{
                 label="Firstname"
                 name="firstname"
                 autoComplete="firstname"
-                autoFocus
                 onChange={(e)=> handleFName(e)}
               />
               <Typography style={{color:"red",width:"500px"}}>
@@ -256,7 +255,6 @@ const handleConfirmPassword=(event)=>{
                 label="LastName"
                 name="lastname"
                 autoComplete="lastname"
-                autoFocus
                 onChange={(e)=> handleLName(e)}
               />
               <Typography style={{color:"red",width:"500px"}}>
@@ -271,7 +269,6 @@ const handleConfirmPassword=(event)=>{
                 name="email"
                 autoComplete="email"
                 type="email"
-                autoFocus
                 onChange={(e)=> handleEmail(e)}
               />
               <Typography style={{color:"red",width:"500px"}}>
@@ -286,7 +283,6 @@ const handleConfirmPassword=(event)=>{
                 type="phoneno"
                 id="phoneno"
                 autoComplete="phoneno"
-                autoFocus
                 onChange={(e)=>handlePhone(e)}
               />
               <Typography style={{color:"red",width:"500px"}}>
@@ -331,7 +327,7 @@ const handleConfirmPassword=(event)=>{
               <Grid container>
                 
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/userlogin" variant="body2">
                     {"Already a user? Login"}
                   </Link>
                 </Grid>
