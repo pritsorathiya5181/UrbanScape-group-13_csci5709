@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 import store from './store/store'
 import { Provider } from 'react-redux'
@@ -33,6 +33,7 @@ function App() {
 
         <Routes>
           <Route path='/' element={<UserHomePage />} />
+
           <Route path='/beautyservices' element={<BeautyService />} />
           <Route path='/carpentryservices' element={<CarpenterService />} />
           <Route path='/plumbingservices' element={<PlumbingService />} />
@@ -41,11 +42,7 @@ function App() {
             path='/customer/myprofile/'
             element={<CustomerProfilePage />}
           />
-          <Route
-            exact
-            path='/customer/cartpage/'
-            element={<CartPage />}
-          />
+          <Route exact path='/customer/cartpage/' element={<CartPage />} />
 
           <Route exact path='/professional' element={<Dashboard />} />
           <Route
@@ -78,11 +75,12 @@ function App() {
             path='/professional/myprofile/'
             element={<ProfessionalProfilePage />}
           />
-          <Route path='/userlogin' element={<SignInSide/>}/>
-          <Route path='/signupuser' element={<SignUpUser/>}/>
-          <Route path='/signupprofessional' element={<SignUpProfessional/>}/>
-          <Route path='/forgetpassword' element={<ForgetPassword/>}/>
-          <Route path='/otp' element={<Otp />}/>
+
+          <Route path='/userlogin' element={<SignInSide />} />
+          <Route path='/signupuser' element={<SignUpUser />} />
+          <Route path='/signupprofessional' element={<SignUpProfessional />} />
+          <Route path='/forgetpassword' element={<ForgetPassword />} />
+          <Route path='/otp' element={<Otp />} />
           <Route path='/updatepassword' element={<UpdatePassword />} />
         </Routes>
       </Router>
