@@ -131,29 +131,28 @@ const handleConfirmPassword=(event)=>{
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    if(fnameError.length >0){
+    if(fnameError?.length >0){
       alert("Error in FirstName");
       return;
     }
     
-    if(lnameError.length >0){
+    if(lnameError?.length >0){
      alert("Error in LastName");
      return;
    }
-   if(emailError.length >0){
+   if(emailError?.length >0){
      alert("Error in Email");
      return;
    }
-   if(phonenoError.length>0){
+   if(phonenoError?.length>0){
      alert("Invalid phone Number");
      return;
    }
-   if(passwordError.length >0){
+   if(passwordError?.length >0){
      alert("Error in Password");
      return;
    }
-   if(confirmPasswordError.length >0){
+   if(confirmPasswordError?.length >0){
      alert("Error in Confirm Password");
      return;
    }
@@ -245,7 +244,6 @@ const handleConfirmPassword=(event)=>{
                 label="Firstname"
                 name="firstname"
                 autoComplete="firstname"
-                autoFocus
                 onChange={(e)=> handleFName(e)}
               />
               <Typography style={{color:"red"}}>
@@ -259,7 +257,6 @@ const handleConfirmPassword=(event)=>{
                 label="LastName"
                 name="lastname"
                 autoComplete="lastname"
-                autoFocus
                 onChange={(e)=> handleLName(e)}
               />
                 <Typography style={{color:"red",width:"100%"}}>
@@ -274,7 +271,6 @@ const handleConfirmPassword=(event)=>{
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
                 onChange={(e)=> handleEmail(e)}
               />
               <Typography style={{color:"red",width:"100%"}}>
@@ -290,7 +286,6 @@ const handleConfirmPassword=(event)=>{
                 type="phoneno"
                 id="phoneno"
                 autoComplete="phoneno"
-                autoFocus
               onChange={(e)=>handlePhone(e)}
               />
               <Typography style={{color:"red",width:"100%"}}>
@@ -336,7 +331,6 @@ const handleConfirmPassword=(event)=>{
                 label="Experience"
                 name="experience"
                 autoComplete="experience"
-                autoFocus
               />
               <TextField
                 margin="normal"
@@ -346,7 +340,6 @@ const handleConfirmPassword=(event)=>{
                 label="Working hours"
                 name="workinghours"
                 autoComplete="workinghours"
-                autoFocus
               />
               <TextField
                 margin="normal"
@@ -356,7 +349,6 @@ const handleConfirmPassword=(event)=>{
                 label="Preferred Service"
                 name="preferredservice"
                 autoComplete="preferredservice"
-                autoFocus
               />
               <TextField
                 margin="normal"
@@ -366,7 +358,6 @@ const handleConfirmPassword=(event)=>{
                 label="Preferred Location"
                 name="preferredlocation"
                 autoComplete="preferredlocation"
-                autoFocus
               />
               <Button
                 type="submit"
@@ -379,7 +370,7 @@ const handleConfirmPassword=(event)=>{
               <Grid container>
                 
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/userlogin" variant="body2">
                     {"Already a user? Login"}
                   </Link>
                 </Grid>

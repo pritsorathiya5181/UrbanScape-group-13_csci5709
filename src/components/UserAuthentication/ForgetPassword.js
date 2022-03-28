@@ -108,7 +108,6 @@ fetch(`http://localhost:5000/api/auth/forgetpassword/${email}`, requestOptions)
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
               />
               
               <Button

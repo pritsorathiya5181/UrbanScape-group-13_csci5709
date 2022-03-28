@@ -104,7 +104,6 @@ export default function ForgetPassword() {
                 label="Enter OTP"
                 name="otp"
                 autoComplete="otp"
-                autoFocus
               />
               
               <Button
