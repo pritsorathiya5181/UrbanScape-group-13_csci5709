@@ -10,12 +10,7 @@ import {
   Tooltip,
   Typography
 } from '@mui/material'
-import { makeStyles } from '@mui/styles'
-import { v4 as uuidv4 } from 'uuid'
-import AddIcon from '@mui/icons-material/Add'
-import * as PATH from '../../../utils/string'
-import { SERVICE_CATEGORY } from '../../../utils/service'
-import useWindowDimensions from '../../../utils/scale'
+
 
 import { connect } from 'react-redux'
 import Table from '@mui/material/Table';
@@ -91,81 +86,119 @@ function  removeFromCart (itemId, itemPrice) {
    isCartEmpty = true;
   }
  
+  const cartTable = () => {
+    return (
+      <div>
+    <TableContainer component={Paper}>
+    <Table sx={{ 
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      width: "max-content" ,
+      border: "1px solid rgba(0,0,0,0.2)",
+      padding: 2
+    }} 
+      aria-label="spanning table">
+      <TableHead>
+        <TableRow>
+          <TableCell align="center" colSpan={3}>
+            Service Details
+          </TableCell>
+          <TableCell align="right">Booking Details</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>Service Category</TableCell>
+          <TableCell>Service Name</TableCell>
+          <TableCell>Client Name</TableCell>
+          <TableCell>Date</TableCell>
+          <TableCell align="right">Time</TableCell>
+          <TableCell align="right">Price</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {/* {cart.cartItems.length} */}
+        {cartItems.map((row, idx) => (
+          <TableRow key={idx}>  
+            <TableCell>{row.serviceCategory}</TableCell>
+            <TableCell>{row.serviceName}</TableCell>
+            <TableCell>{row.clientName}</TableCell>
+            <TableCell>{row.date}</TableCell>
+            <TableCell align="right">{row.time}</TableCell>
+            <TableCell align="right">{row.servicePrice}</TableCell>
+            <TableCell align="right"><Button onClick={() => removeFromCart(row.itemNo, row.servicePrice)}
+                                      color = "info"
+                                      sx = {{backgroundColor: "#D3DEDC"}}> Remove </Button></TableCell>
+          </TableRow>
+        ))}
+
+        <TableRow>
+          <TableCell rowSpan={3} ></TableCell>
+          <TableCell colSpan={2}>Subtotal</TableCell>
+          <TableCell align="right">{cart.cartTotalAmount}</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell colSpan={2}>Discount</TableCell>
+          <TableCell align="right">{cart.cartDiscountAmount}</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell colSpan={2}>Total</TableCell>
+          <TableCell align="right">{cart.cartTotalAmount}</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  </TableContainer>
+
+  </div>
+    )
+  }
+
+  const checkout = () => {
+    return (
+    
+<div>
+  <div  style={{ display: "flex" , justifyContent: "center"}}>
+  <TextField id="filled-basic" label="Enter coupon code" variant="filled" / >
+  <Button disabled variant="contained"  sx = {{backgroundColor: "#D3DEDC"}}   >
+  APPLY
+  </Button>
+  </div>
+
+  <div style={{ display: "flex" , justifyContent: "center" , padding: 50}}>
+  <Button disabled variant="contained"  sx = {{backgroundColor: "#D3DEDC" , p:1}}  >
+    CHECKOUT
+  </Button>
+  </div>
+ 
+</div>
+    )
+  }
+  
+
+  const emptyCart = () => {
+    return (
+      <Typography variant="h6" textAlign="center" padding = "100px"> Your Cart is Empty! </Typography>
+    )
+  }
 
   
- return (
-   <div>
-  {isCartEmpty        ? 
-    <> 
-    <Typography variant="h6" textAlign="center" padding = "100px"> Your Cart is Empty! </Typography> </>
-  : <> 
-     <Typography variant="h3" textAlign="center"> CART </Typography>
+  return (
+    <div>
+    {isCartEmpty        ? 
+      <> {emptyCart()}
+      </>
+    : <> 
+      <Typography variant="h3" textAlign="center"> CART </Typography>
       <Typography variant="h6" textAlign="center"> You have ({cartItems.length}) items in your cart</Typography>
-     <div >
+      <div >
+      {cartTable()}
+  `    </div>
 
-    <TableContainer component={Paper}>
-      <Table sx={{ 
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        width: "max-content" ,
-        border: "1px solid rgba(0,0,0,0.2)",
-        padding: 2
-      }} 
-        aria-label="spanning table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="center" colSpan={3}>
-              Details
-            </TableCell>
-            <TableCell align="right">Price Details</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Service Category</TableCell>
-            <TableCell>Service Name</TableCell>
-            <TableCell>Client Name</TableCell>
-            <TableCell>Date</TableCell>
-            <TableCell align="right">Time</TableCell>
-            <TableCell align="right">Price</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {/* {cart.cartItems.length} */}
-          {cartItems.map((row, idx) => (
-            <TableRow key={idx}>  
-              <TableCell>{row.serviceCategory}</TableCell>
-              <TableCell>{row.serviceName}</TableCell>
-              <TableCell>{row.clientName}</TableCell>
-              <TableCell>{row.date}</TableCell>
-              <TableCell align="right">{row.time}</TableCell>
-              <TableCell align="right">{row.servicePrice}</TableCell>
-              <TableCell align="right"><Button onClick={() => removeFromCart(row.itemNo, row.servicePrice)}
-                                        color = "info"
-                                        sx = {{backgroundColor: "#D3DEDC"}}> Remove </Button></TableCell>
-            </TableRow>
-          ))}
+    {checkout()}
 
-          <TableRow>
-            <TableCell rowSpan={3} ></TableCell>
-            <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{cart.cartTotalAmount}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={2}>Discount</TableCell>
-            <TableCell align="right">{cart.cartDiscountAmount}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{cart.cartTotalAmount}</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
-`    </div>
-  </>
-       }
-       </div>
+    </>
+        }
+        </div>
 
-  )
+    )
 }
 
 
