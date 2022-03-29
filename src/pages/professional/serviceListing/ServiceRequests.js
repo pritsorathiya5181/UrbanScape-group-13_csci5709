@@ -1,3 +1,5 @@
+/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+
 import React, { useEffect, useState } from 'react'
 import swal from 'sweetalert'
 import NavBar from '../../../components/professional/NavBar/NavBar'
@@ -9,6 +11,7 @@ import { bindActionCreators } from 'redux'
 import * as ServiceAction from '../../../action/ServiceAction'
 import * as orderAction from '../../../action/orderAction'
 import Loader from '../../../components/customloader/Loader'
+import { hasToken } from '../../../utils/scale'
 
 const ServiceRequests = (props) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false)
@@ -20,6 +23,11 @@ const ServiceRequests = (props) => {
   const [serviceLoading, setServiceLoading] = useState(false)
 
   useEffect(() => {
+    if (!hasToken()) {
+      alert('Please login to continue')
+      window.location.href = '/'
+    }
+
     getServicesStats()
   }, [])
 

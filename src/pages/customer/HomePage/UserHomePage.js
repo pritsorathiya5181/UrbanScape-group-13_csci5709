@@ -1,3 +1,5 @@
+// Author: Prit Ajaykumar Sorathiya - B00890175
+
 import React, { useEffect, useState } from 'react'
 import './UserHomePageStyle.css'
 import salonImage from '../../../asserts/images/salon.jpg'
@@ -12,7 +14,9 @@ import NewsLetter from '../../../components/NewsLetter'
 import Footer from '../../../components/Footer'
 import { mobile } from '../../../utils/scale'
 import { bindActionCreators } from 'redux'
+import ServiceTile from './ServiceTile'
 import { connect } from 'react-redux'
+import Grid from '@mui/material/Grid'
 import * as serviceCategoryAction from '../../../action/serviceCategoryAction'
 
 const useStyles = makeStyles({
@@ -27,6 +31,7 @@ const useStyles = makeStyles({
 
 const UserHomePage = (props) => {
   const [serviceCategories, setServiceCategories] = useState([])
+  const classes = useStyles()
 
   useEffect(() => {
     props.action
@@ -68,12 +73,6 @@ const UserHomePage = (props) => {
 
   return (
     <div>
-      {/* <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h2'>
-        Welcome Home !
-      </Typography>
-      <Typography style={{ textAlign: 'center', padding: '10px' }} variant='h4'>
-        We are the one stop solution for all your worries
-      </Typography> */}
       <Slider sliderData={serviceCategories} />
 
       {/* <Carousel
@@ -114,23 +113,23 @@ const UserHomePage = (props) => {
       </Carousel> */}
 
       <div>
-        {/* <Grid container spacing={3} className={classes.gridcontainer}>
-          {offeredServices.map((service, index) => {
+        <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 1 }} >
+          {serviceCategories.map((service, index) => {
             return (
-              <Grid key={index.toString()} item xs={12} sm={6} md={3}>
-                <div>
+              <Grid container spacing={0} key={index.toString()} item xs={12} sm={6} md={4}>
+                <div style={{width: "100%"}}>
                   <ServiceTile service={service} />
                 </div>
               </Grid>
             )
           })}
-        </Grid> */}
+        </Grid>
       </div>
-      <Container>
+      {/* <Container>
         {serviceCategories.map((item, index) => (
           <CategoryItem item={item} key={index.toString()} />
         ))}
-      </Container>
+      </Container> */}
 
       <NewsLetter />
 

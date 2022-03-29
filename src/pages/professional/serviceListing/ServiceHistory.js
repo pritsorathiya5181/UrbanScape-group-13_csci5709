@@ -1,3 +1,5 @@
+/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+
 import React, { useEffect, useState } from 'react'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import * as HEADERS from '../../../utils/constant'
@@ -9,6 +11,7 @@ import * as ServiceAction from '../../../action/ServiceAction'
 import * as orderAction from '../../../action/orderAction'
 import Loader from '../../../components/customloader/Loader'
 import { useLocation } from 'react-router-dom'
+import { hasToken } from '../../../utils/scale'
 
 const ServiceHistory = (props) => {
   const { state } = useLocation()
@@ -26,6 +29,11 @@ const ServiceHistory = (props) => {
 
   console.log('state', state)
   useEffect(() => {
+    if (!hasToken()) {
+      alert('Please login to continue')
+      window.location.href = '/'
+    }
+
     function getServicesStats() {
       setServiceLoading(true)
       const userId = 'd86aa655-fe4a-40ee-af69-67718d7ec759'

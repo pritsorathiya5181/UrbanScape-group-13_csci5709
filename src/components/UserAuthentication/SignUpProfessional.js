@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -15,7 +15,6 @@ import { Select } from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useState } from 'react/cjs/react.development'
 import { useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../../utils/string'
 
@@ -40,6 +39,7 @@ function Copyright(props) {
 const theme = createTheme()
 
 export default function SignUpProfessional() {
+  const bgImage = require('../../asserts/images/app-bg.jpg')
   const navigate = useNavigate()
 
   const [fnameError, setFnameError] = useState()
@@ -48,6 +48,10 @@ export default function SignUpProfessional() {
   const [phonenoError, setPhoneNo] = useState()
   const [passwordError, setPasswordError] = useState()
   const [confirmPasswordError, setConfirmPasswordError] = useState()
+  const [workingHoursFrom, setWorkingHoursFrom] = useState()
+  const [workingHoursTo, setWorkingHoursTo] = useState()
+  const [preferredService, setPreferredService] = useState()
+  const [preferredLocation, setPreferredLocation] = useState()
   const validateFName = (name) => {
     var re = /[^a-zA-Z]/
     return re.test(name)
@@ -110,6 +114,19 @@ export default function SignUpProfessional() {
     }
   }
 
+  const handleWorkingHours = (event) => {
+    let fromHours = document.getElementById('workinghoursfrom').value
+    let toHours = document.getElementById('workinghoursto').value
+    console.log(fromHours + ' ' + toHours)
+    let fromHrs = new Date('01/01/2000 ' + fromHours)
+    let toHrs = new Date('01/01/2000 ' + toHours)
+    if (fromHours && toHours) {
+      if (fromHrs?.getTime() > toHrs?.getTime()) {
+        setWorkingHoursFrom('From time should be before to time')
+      }
+    }
+  }
+
   const handleConfirmPassword = (event) => {
     const pass = document.getElementById('password').value
     console.log(pass)
@@ -151,6 +168,10 @@ export default function SignUpProfessional() {
       alert('Error in Confirm Password')
       return
     }
+    if (document.getElementById('experience').value < 0) {
+      alert('Invalid experience')
+    }
+
     var myHeaders = new Headers()
     myHeaders.append('Content-Type', 'application/json')
 
@@ -161,7 +182,8 @@ export default function SignUpProfessional() {
       phoneno: data.get('phoneno'),
       password: data.get('password'),
       experience: data.get('experience'),
-      workinghours: data.get('workinghours'),
+      workinghours:
+        data.get('workinghoursfrom') + '-' + data.get('workinghoursto'),
       preferredservice: data.get('preferredservice'),
       preferredlocation: data.get('preferredlocation'),
     })
@@ -191,7 +213,7 @@ export default function SignUpProfessional() {
       phoneno: data.get('phoneno'),
       password: data.get('password'),
       experience: data.get('experience'),
-      workinghours: data.get('workinghours'),
+      workinghours: data.get('workinghoursto'),
       prefferedservice: data.get('preferredservice'),
       preferredlocation: data.get('preferredlocation'),
     })
@@ -207,7 +229,7 @@ export default function SignUpProfessional() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${bgImage})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light'
@@ -241,10 +263,10 @@ export default function SignUpProfessional() {
                 required
                 fullWidth
                 id='firstname'
-                label='Firstname'
+                label='First Name'
                 name='firstname'
                 autoComplete='firstname'
-                onChange={(e) => handleFName(e)}
+                onBlur={(e) => handleFName(e)}
               />
               <Typography style={{ color: 'red' }}>{fnameError}</Typography>
               <TextField
@@ -252,10 +274,10 @@ export default function SignUpProfessional() {
                 required
                 fullWidth
                 id='lastname'
-                label='LastName'
+                label='Last Name'
                 name='lastname'
                 autoComplete='lastname'
-                onChange={(e) => handleLName(e)}
+                onBlur={(e) => handleLName(e)}
               />
               <Typography style={{ color: 'red', width: '100%' }}>
                 {lnameError}
@@ -269,7 +291,7 @@ export default function SignUpProfessional() {
                 label='Email Address'
                 name='email'
                 autoComplete='email'
-                onChange={(e) => handleEmail(e)}
+                onBlur={(e) => handleEmail(e)}
               />
               <Typography style={{ color: 'red', width: '100%' }}>
                 {emailError}
@@ -280,11 +302,11 @@ export default function SignUpProfessional() {
                 required
                 fullWidth
                 name='phoneno'
-                label='PhoneNo'
+                label='Phone No'
                 type='phoneno'
                 id='phoneno'
                 autoComplete='phoneno'
-                onChange={(e) => handlePhone(e)}
+                onBlur={(e) => handlePhone(e)}
               />
               <Typography style={{ color: 'red', width: '100%' }}>
                 {phonenoError}
@@ -299,7 +321,7 @@ export default function SignUpProfessional() {
                 type='password'
                 id='password'
                 autoComplete='current-password'
-                onChange={(e) => handlePassword(e)}
+                onBlur={(e) => handlePassword(e)}
               />
               <Typography style={{ color: 'red', width: '100%' }}>
                 {passwordError}
@@ -314,7 +336,7 @@ export default function SignUpProfessional() {
                 type='password'
                 id='cpassword'
                 autoComplete='current-password'
-                onChange={(e) => handleConfirmPassword(e)}
+                onBlur={(e) => handleConfirmPassword(e)}
               />
               <Typography style={{ color: 'red', width: '100%' }}>
                 {confirmPasswordError}
@@ -325,18 +347,35 @@ export default function SignUpProfessional() {
                 required
                 fullWidth
                 id='experience'
-                label='Experience'
+                label='Experience(in months)'
                 name='experience'
                 autoComplete='experience'
+                type='number'
               />
               <TextField
                 margin='normal'
                 required
                 fullWidth
-                id='workinghours'
-                label='Working hours'
-                name='workinghours'
-                autoComplete='workinghours'
+                id='workinghoursfrom'
+                label='Working hours From'
+                name='workinghoursfrom'
+                autoComplete='workinghoursfrom'
+                type='time'
+                onBlur={(e) => handleWorkingHours(e)}
+              />
+              <Typography style={{ color: 'red' }}>
+                {workingHoursFrom}
+              </Typography>
+              <TextField
+                margin='normal'
+                required
+                fullWidth
+                id='workinghoursto'
+                label='Working hours To'
+                name='workinghoursto'
+                autoComplete='workinghoursto'
+                type='time'
+                onBlur={(e) => handleWorkingHours(e)}
               />
               <TextField
                 margin='normal'

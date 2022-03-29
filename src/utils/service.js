@@ -1,3 +1,5 @@
+/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+
 import * as PATH from './string'
 
 export const ServiceItem = [

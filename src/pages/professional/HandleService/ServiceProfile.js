@@ -1,3 +1,5 @@
+/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -19,10 +21,10 @@ const ServiceProfile = (props) => {
   const [serviceLoading, setServiceLoading] = useState(false)
 
   useEffect(() => {
-    // if (!hasToken()) {
-    //   window.location.href = '/'
-    //   alert('Please login to continue')
-    // }
+    if (!hasToken()) {
+      window.location.href = '/'
+      alert('Please login to continue')
+    }
 
     function getServices() {
       setServiceLoading(true)

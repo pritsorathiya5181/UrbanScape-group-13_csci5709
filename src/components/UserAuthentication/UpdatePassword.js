@@ -12,8 +12,10 @@ import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react/cjs/react.development'
+import { useNavigate, useRoutes } from 'react-router-dom'
+import { useState } from 'react'
+// import { useRoutes } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
 import { BASE_URL } from '../../utils/string'
 
 function Copyright(props) {
@@ -37,9 +39,13 @@ function Copyright(props) {
 const theme = createTheme()
 
 export default function UpdatePassword() {
+  const bgImage = require('../../asserts/images/app-bg.jpg')
   const [passwordError, setPasswordError] = useState()
   const navigateLogin = useNavigate()
-
+  // let route = useRoutes();
+  const location = useLocation()
+  console.log(location)
+  // console.log(route);
   const validatePwd = (password) => {
     var re = /^[A-Z]*$/
     return re.test(password)
@@ -64,7 +70,7 @@ export default function UpdatePassword() {
       alert('Error in Password')
       return
     }
-    var username = data.get('username')
+    var username = location.state
     var password = data.get('password')
     var myHeaders = new Headers()
     myHeaders.append('Content-Type', 'application/json')
@@ -100,7 +106,7 @@ export default function UpdatePassword() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${bgImage})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light'
@@ -129,16 +135,16 @@ export default function UpdatePassword() {
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
-              <TextField
-                margin='normal'
+              {/* <TextField
+                margin="normal"
                 required
                 fullWidth
-                id='username'
-                label='Enter Username'
-                name='username'
-                autoComplete='username'
-                type='email'
-              />
+                id="username"
+                label="Enter Username"
+                name="username"
+                autoComplete="username"
+                type="email"
+              /> */}
 
               <TextField
                 margin='normal'
@@ -149,7 +155,7 @@ export default function UpdatePassword() {
                 name='password'
                 autoComplete='password'
                 type='password'
-                onChange={(e) => handlePassword(e)}
+                onBlur={(e) => handlePassword(e)}
               />
               <Typography style={{ color: 'red', width: '100%' }}>
                 {passwordError}

@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { useNavigate } from 'react-router-dom'
-
+import { useState } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { BASE_URL } from '../../utils/string'
 
@@ -36,8 +36,10 @@ function Copyright(props) {
 
 const theme = createTheme()
 
-export default function ForgetPassword() {
+export default function Otp(props) {
+  const bgImage = require('../../asserts/images/app-bg.jpg')
   const navigateupdate = useNavigate()
+  const [currentUser, setCurrentUser] = useState()
   const handleSubmit = (event) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
@@ -52,12 +54,14 @@ export default function ForgetPassword() {
       headers: myHeaders,
       redirect: 'follow',
     }
-
-    fetch(`${BASE_URL}auth/verifyotp/${otp}`, requestOptions)
+    let params = new URL(document.location).searchParams
+    let currUser = params.get('user')
+    // setCurrentUser(currUser);
+    fetch(`${BASE_URL}auth/verifyotp/${otp}/${currUser}`, requestOptions)
       .then((response) => response.text())
       .then((result) => {
         if (result === 'otp matched') {
-          navigateupdate('/updatepassword')
+          navigateupdate('/updatepassword', { state: currUser })
         } else {
           alert('Enter valid otp')
         }
@@ -75,7 +79,7 @@ export default function ForgetPassword() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${bgImage})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light'
