@@ -94,7 +94,7 @@ export default function UserLogin() {
           // alert('You need to register')
         } else if (result === 'Wrong password') {
           console.log('Invalid Password')
-          setPasswordError(result)
+          setPasswordError("Invalid Email/Password")
           // alert('Invalid Password')
         } else if (result.message === 'Welcome Professional') {
           localStorage.setItem('accesstoken', result.accessToken)
