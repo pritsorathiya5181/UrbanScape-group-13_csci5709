@@ -1,3 +1,4 @@
+// Author: Aeshna Verma - B00880776
 const initialState = []
 
 const cartReducer = (state = initialState, action) => {
