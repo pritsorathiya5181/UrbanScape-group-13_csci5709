@@ -18,8 +18,6 @@ import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { BASE_URL } from '../../utils/string'
 
-
-
 export default function UpdatePassword() {
   const bgImage = require('../../asserts/images/app-bg.jpg')
   const [passwordError, setPasswordError] = useState()
@@ -37,7 +35,9 @@ export default function UpdatePassword() {
   const handlePassword = (event) => {
     const Password = event.target.value
     if (!validatePwd(Password)) {
-      setPasswordError('Should have alphanumeric characters and atleast one special character')
+      setPasswordError(
+        'Should have alphanumeric characters and atleast one special character'
+      )
     } else if (Password?.length < 8) {
       setPasswordError('Minimum 8 characters are required')
     } else {
@@ -66,7 +66,7 @@ export default function UpdatePassword() {
       alert(passwordError)
       return
     }
-    
+
     if (confirmPasswordError?.length > 0) {
       alert(confirmPasswordError)
       return
@@ -98,7 +98,9 @@ export default function UpdatePassword() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider
+    // theme={theme}
+    >
       <Grid container component='main' sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
