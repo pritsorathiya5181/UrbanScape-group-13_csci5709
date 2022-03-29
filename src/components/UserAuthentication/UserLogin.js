@@ -94,7 +94,7 @@ export default function UserLogin() {
         if (result === 'User not registered') {
           console.log('user not registered')
           alert('You need to register')
-        } else if (result=== 'Wrong password') {
+        } else if (result === 'Wrong password') {
           console.log('Invalid Password')
           alert('Invalid Password')
         } else if (result.message === 'Welcome Professional') {
