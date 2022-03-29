@@ -36,28 +36,31 @@ const navigate = useNavigate()
 const [cart, setCart] = useState(props.cartData || {})
 const [cartItems, setCartItems] = useState(props.cartData.cartItems || [])
 
-useEffect(() => {
-  function getCartItems() {
-    const user = 'aes'
-    props.action
-      .getCartItems(user)
-      .then((res) => {
-        console.log("Result" , res.cart)
-        let itemsList = res.cart.cartItems
-        console.log("Items" , itemsList)
-        console.log("props" , props)
-        setCart(res.cart)
-        setCartItems(res.cart.cartItems)
+function getCartItems() {
+  const user = 'aes'
+  props.action
+    .getCartItems(user)
+    .then((res) => {
+      console.log("Result" , res.cart)
+      let itemsList = res.cart.cartItems
+      console.log("Items" , itemsList)
+      console.log("props" , props)
+      setCart(res.cart)
+      setCartItems(res.cart.cartItems)
 
-      })
-      .catch((err) => {
-       // alert(err)
-         console.log('err', err)
-      })
-      console.log("p1", (props))
-    }
+    })
+    .catch((err) => {
+     // alert(err)
+       console.log('err', err)
+    })
+    console.log("p1", (props))
+  }
+
+
+useEffect(() => {
+ 
     getCartItems()
-      console.log("Number of items in cart" , props)
+    console.log("Number of items in cart" , props)
 
 }, [])
 
@@ -68,18 +71,14 @@ function  removeFromCart (itemId, itemPrice) {
     
     props.action.deleteItem(itemId, itemPrice)
     .then((res) => {
-          console.log("Delete Item here: ")
- 
-          console.log("Result delete item" , res)
+          console.log("Delete Item : ")
+          getCartItems()
+
           })
           .catch((err) => {
-            console.log('ACart Item delete Error', err)
+            console.log('Delete Item Error:', err)
+      
           })
-          
-        console.log("Delete cart item function")
-
-    const updatedCartItems = cartItems.filter(item => item.itemNo !== itemId)
-    setCartItems(updatedCartItems)  
   }
 
   var isCartEmpty
@@ -97,7 +96,8 @@ function  removeFromCart (itemId, itemPrice) {
  return (
    <div>
   {isCartEmpty        ? 
-    <> <h1> Your cart is empty! </h1> </>
+    <> 
+    <Typography variant="h6" textAlign="center" padding = "100px"> Your Cart is Empty! </Typography> </>
   : <> 
      <Typography variant="h3" textAlign="center"> CART </Typography>
       <Typography variant="h6" textAlign="center"> You have ({cartItems.length}) items in your cart</Typography>
@@ -155,7 +155,7 @@ function  removeFromCart (itemId, itemPrice) {
           </TableRow>
           <TableRow>
             <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{cart.cartTaxAmount}</TableCell>
+            <TableCell align="right">{cart.cartTotalAmount}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -164,72 +164,6 @@ function  removeFromCart (itemId, itemPrice) {
   </>
        }
        </div>
-
-//     <div>
-//       <Typography variant="h3" textAlign="center"> CART </Typography>
-//       <Typography variant="h6" textAlign="center"> You have ({cartItems.length}) items in your cart</Typography>
-//      <div >
-
-//     <TableContainer component={Paper}>
-//       <Table sx={{ 
-//         marginLeft: 'auto',
-//         marginRight: 'auto',
-//         width: "max-content" ,
-//         border: "1px solid rgba(0,0,0,0.2)",
-//         padding: 2
-//       }} 
-//         aria-label="spanning table">
-//         <TableHead>
-//           <TableRow>
-//             <TableCell align="center" colSpan={3}>
-//               Details
-//             </TableCell>
-//             <TableCell align="right">Price Details</TableCell>
-//           </TableRow>
-//           <TableRow>
-//             <TableCell>Service Category</TableCell>
-//             <TableCell>Service Name</TableCell>
-//             <TableCell>Client Name</TableCell>
-//             <TableCell>Date</TableCell>
-//             <TableCell align="right">Time</TableCell>
-//             <TableCell align="right">Price</TableCell>
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {/* {cart.cartItems.length} */}
-//           {cartItems.map((row, idx) => (
-//             <TableRow key={idx}>  
-//               <TableCell>{row.serviceCategory}</TableCell>
-//               <TableCell>{row.serviceName}</TableCell>
-//               <TableCell>{row.clientName}</TableCell>
-//               <TableCell>{row.date}</TableCell>
-//               <TableCell align="right">{row.time}</TableCell>
-//               <TableCell align="right">{row.servicePrice}</TableCell>
-//               <TableCell align="right"><Button onClick={() => removeFromCart(row.itemNo, row.servicePrice)}
-//                                         color = "info"
-//                                         sx = {{backgroundColor: "#D3DEDC"}}> Remove </Button></TableCell>
-//             </TableRow>
-//           ))}
-
-//           <TableRow>
-//             <TableCell rowSpan={3} ></TableCell>
-//             <TableCell colSpan={2}>Subtotal</TableCell>
-//             <TableCell align="right">{cart.cartTotalAmount}</TableCell>
-//           </TableRow>
-//           <TableRow>
-//             <TableCell colSpan={2}>Discount</TableCell>
-//             <TableCell align="right">{cart.cartDiscountAmount}</TableCell>
-//           </TableRow>
-//           <TableRow>
-//             <TableCell colSpan={2}>Total</TableCell>
-//             <TableCell align="right">{cart.cartTaxAmount}</TableCell>
-//           </TableRow>
-//         </TableBody>
-//       </Table>
-//     </TableContainer>
-// `    </div>
-    
-//     </div>
 
   )
 }

@@ -131,7 +131,6 @@ const handleSubmit = (event) => {
         <form onSubmit={handleSubmit}>
         <DialogContent dividers>
           <TextField
-            autoFocus
             margin="dense"
             required 
             id="outlined-basic"
@@ -143,7 +142,6 @@ const handleSubmit = (event) => {
             variant="outlined"
           />
            <TextField
-            autoFocus
             required 
             margin="dense"
             fullWidth
@@ -156,7 +154,6 @@ const handleSubmit = (event) => {
             variant="outlined"
           />
           <TextField
-            autoFocus
             required 
             margin="dense"
             id="outlined-basic"
@@ -169,7 +166,6 @@ const handleSubmit = (event) => {
             variant="outlined"
           />
           <TextField
-            autoFocus
             required 
             margin="dense"
             id="outlined-basic"
@@ -197,7 +193,6 @@ const handleSubmit = (event) => {
                 />
 
           <TextField
-            autoFocus
             margin="dense"
             name="instructions"
             value={bookingFormDetails.instructions} 
