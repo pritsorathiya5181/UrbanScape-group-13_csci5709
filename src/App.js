@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './App.css'
 import store from './store/store'
 import { Provider } from 'react-redux'
@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import NavBar from './components/customer/Navbar/NavBar'
 import BeautyService from './pages/customer/ServicePage/BeautyService'
 import UserHomePage from './pages/customer/HomePage/UserHomePage'
-import ContactUs from './pages/customer/Support/ContactUs'
+
 import Dashboard from './pages/professional/dashboard/Dashboard'
 import AddService from './pages/professional/HandleService/AddService'
 import ServiceProfile from './pages/professional/HandleService/ServiceProfile'
@@ -23,6 +23,7 @@ import Otp from './components/UserAuthentication/Otp'
 import UpdatePassword from './components/UserAuthentication/UpdatePassword'
 import CarpenterService from './pages/customer/ServicePage/CarpenterService'
 import PlumbingService from './pages/customer/ServicePage/PlumbingService'
+import Contact from './pages/customer/Support/Contact'
 
 function App() {
   const url = window.location.pathname
@@ -38,7 +39,7 @@ function App() {
           <Route path='/beautyservices' element={<BeautyService />} />
           <Route path='/carpentryservices' element={<CarpenterService />} />
           <Route path='/plumbingservices' element={<PlumbingService />} />
-          <Route path='/support' element={<ContactUs />} />
+          <Route path='/support' element={<Contact />} />
           <Route
             exact
             path='/customer/myprofile/'

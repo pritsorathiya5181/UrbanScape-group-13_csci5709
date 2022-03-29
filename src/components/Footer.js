@@ -1,12 +1,6 @@
-import {
-  Facebook,
-  Instagram,
-  MailOutline,
-  Phone,
-  Pinterest,
-  Room,
-  Twitter,
-} from '@mui/icons-material'
+// Author: Prit Ajaykumar Sorathiya - B00890175
+
+import { MailOutline, Phone, Room } from '@mui/icons-material'
 import styled from 'styled-components'
 import { mobile } from '../utils/scale'
 

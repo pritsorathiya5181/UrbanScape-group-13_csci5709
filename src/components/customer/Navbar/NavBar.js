@@ -19,6 +19,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import HouseIcon from '@mui/icons-material/House'
 import PersonIcon from '@mui/icons-material/Person'
 import MenuIcon from '@mui/icons-material/Menu'
+import Badge from '@mui/material/Badge'
 
 import * as MENU from '../../../utils/constant'
 import { makeStyles } from '@mui/styles'
@@ -87,6 +88,14 @@ const NavBar = () => {
     setServiceOption(null)
   }
 
+  const handlePageClicks = (pages) => {
+    if(pages === 'Support') {
+      navigate("/support")
+    } 
+    handleCloseNavMenu()
+  }
+
+  
   const onProfileOptionClick = (item) => {
     console.log(item)
     if (item === 'Login As Customer/Professional') {
@@ -98,6 +107,8 @@ const NavBar = () => {
         window.location.href = '/professional/myprofile/'
       } else if (localStorage.getItem('usertype') === 'customer') {
         window.location.href = '/customer/myprofile/'
+      } else {
+        alert('Please login in to continue')
       }
     } else if (item === 'My Order History') {
       // window.location.href = '/professional/servicehistory/'
@@ -109,6 +120,7 @@ const NavBar = () => {
     handleCloseUserMenu()
   }
 
+  
   const openMenu = Boolean(serviceOption)
 
   const renderAppIconView = () => {
@@ -141,7 +153,7 @@ const NavBar = () => {
             <Button
               key={index.toString()}
               //   onClick={handleCloseNavMenu}
-              onClick={page === 'Services' ? handleClick : handleCloseNavMenu}
+              onClick={page === 'Services' ? handleClick : () => handlePageClicks(page)}
               sx={{
                 my: 2,
                 color: 'white',
@@ -195,7 +207,7 @@ const NavBar = () => {
           }}
         >
           {MENU.PAGES.map((page) => (
-            <MenuItem key={page} onClick={handleCloseNavMenu}>
+            <MenuItem key={page} onClick={() => handlePageClicks(page)}>
               <Typography textAlign='center'>{page}</Typography>
               {page === 'Services' && <ArrowDropDownIcon />}
             </MenuItem>
@@ -216,7 +228,9 @@ const NavBar = () => {
       >
         <Tooltip title='Open cart'>
           <IconButton sx={{ paddingRight: 1 }} onClick={navigateToCart}>
-            <ShoppingCartIcon fontSize='large' sx={{ color: 'white' }} />
+          <Badge color="secondary" badgeContent={0}>
+            <ShoppingCartIcon fontSize='large' sx={{ color: 'white' } } />
+            </Badge>
           </IconButton>
         </Tooltip>
         <Tooltip title='Open settings'>

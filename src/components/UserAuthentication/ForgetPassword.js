@@ -1,62 +1,60 @@
-import * as React from 'react';
-import { useNavigate } from "react-router-dom";
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import Link from '@mui/material/Link'
+import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Typography from '@mui/material/Typography'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Otp from './Otp'
-
+import { BASE_URL } from '../../utils/string'
 
 const theme = createTheme();
 
 export default function ForgetPassword() {
-  const bgImage = require("../../asserts/images/app-bg.jpg")
-  const navigateOtp = useNavigate();
-  const navigateForgetPass = useNavigate();
+  const bgImage = require('../../asserts/images/app-bg.jpg')
+  const navigateOtp = useNavigate()
+  const navigateForgetPass = useNavigate()
   const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
     // eslint-disable-next-line no-console
-    var email = data.get('email');
+    var email = data.get('email')
     // navigateOtp('/otp?user='+email)
-    var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
+    var myHeaders = new Headers()
+    myHeaders.append('Content-Type', 'application/json')
 
-var raw = "";
+    var raw = ''
 
-var requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-  redirect: 'follow'
-};
-
-fetch(`http://localhost:5000/api/auth/forgetpassword/${email}`, requestOptions)
-  .then(response => response.text())
-  .then(result =>{
-    if(result == "email sent"){
-      navigateOtp('/otp?user='+email);
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow',
     }
-    else{
-      console.log("Enter registered email address");
-      navigateForgetPass('/forgetpassword')
-    }
-  })
-  .catch(error => console.log('error', error));
-  };
- 
+
+    fetch(`${BASE_URL}auth/forgetpassword/${email}`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => {
+        if (result == 'email sent') {
+          navigateOtp('/otp?user=' + email)
+        } else {
+          console.log('Enter registered email address')
+          navigateForgetPass('/forgetpassword')
+        }
+      })
+      .catch((error) => console.log('error', error))
+  }
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component='main' sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
           item
@@ -67,7 +65,9 @@ fetch(`http://localhost:5000/api/auth/forgetpassword/${email}`, requestOptions)
             backgroundImage: `url(${bgImage})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+              t.palette.mode === 'light'
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -82,42 +82,43 @@ fetch(`http://localhost:5000/api/auth/forgetpassword/${email}`, requestOptions)
               alignItems: 'center',
             }}
           >
-            
-            <Typography component="h1" variant="h5">
+            <Typography component='h1' variant='h5'>
               Forget Password
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component='form'
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
-                margin="normal"
+                margin='normal'
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id='email'
+                label='Email Address'
+                name='email'
+                autoComplete='email'
               />
-              
+
               <Button
-                type="submit"
+                type='submit'
                 fullWidth
-                variant="contained"
+                variant='contained'
                 sx={{ mt: 3, mb: 2 }}
               >
                 Send OTP
               </Button>
               <Grid container>
-                <Grid style={{color:'red'}}item xs>
-                 *Enter email associated with your account 
+                <Grid style={{ color: 'red' }} item xs>
+                  *Enter email associated with your account
                 </Grid>
-                <Grid item>
-                  
-                </Grid>
+                <Grid item></Grid>
               </Grid>
-              
             </Box>
           </Box>
         </Grid>
       </Grid>
     </ThemeProvider>
-  );
+  )
 }

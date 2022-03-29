@@ -21,7 +21,7 @@ import { BASE_URL } from '../../utils/string'
 const theme = createTheme()
 
 export default function SignUpUser() {
-  const bgImage = require("../../asserts/images/app-bg.jpg")
+  const bgImage = require('../../asserts/images/app-bg.jpg')
   const [fnameError, setFnameError] = useState()
   const [lnameError, setLnameError] = useState()
   const [emailError, setEmailError] = useState()
@@ -155,6 +155,7 @@ export default function SignUpUser() {
     fetch(`${BASE_URL}auth/usersignup`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
+        console.log(result)
         if (result.success) {
           window.location.href = '/userlogin'
         } else {
