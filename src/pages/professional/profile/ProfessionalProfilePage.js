@@ -25,10 +25,10 @@ const ProfessionalProfilePage = () => {
   const [address, setAddress] = useState('')
 
   useEffect(() => {
-    // if (!hasToken()) {
-    //   window.location.href = '/'
-    //   alert('Please login to continue')
-    // }
+    if (!hasToken()) {
+      window.location.href = '/'
+      alert('Please login to continue')
+    }
 
     if (width > 800) {
       setisProfileMenuOpen(false)
