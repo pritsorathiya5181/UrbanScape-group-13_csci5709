@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -15,7 +15,6 @@ import { Select } from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useState } from 'react/cjs/react.development'
 import { useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../../utils/string'
 
@@ -40,7 +39,7 @@ function Copyright(props) {
 const theme = createTheme()
 
 export default function SignUpProfessional() {
-  const bgImage = require("../../asserts/images/app-bg.jpg")
+  const bgImage = require('../../asserts/images/app-bg.jpg')
   const navigate = useNavigate()
 
   const [fnameError, setFnameError] = useState()
@@ -49,10 +48,10 @@ export default function SignUpProfessional() {
   const [phonenoError, setPhoneNo] = useState()
   const [passwordError, setPasswordError] = useState()
   const [confirmPasswordError, setConfirmPasswordError] = useState()
-  const [workingHoursFrom,setWorkingHoursFrom] = useState()
-  const [workingHoursTo,setWorkingHoursTo] = useState()
-  const [preferredService,setPreferredService] = useState()
-  const [preferredLocation,setPreferredLocation] = useState()
+  const [workingHoursFrom, setWorkingHoursFrom] = useState()
+  const [workingHoursTo, setWorkingHoursTo] = useState()
+  const [preferredService, setPreferredService] = useState()
+  const [preferredLocation, setPreferredLocation] = useState()
   const validateFName = (name) => {
     var re = /[^a-zA-Z]/
     return re.test(name)
@@ -116,14 +115,14 @@ export default function SignUpProfessional() {
   }
 
   const handleWorkingHours = (event) => {
-    let fromHours = document.getElementById("workinghoursfrom").value;
-    let toHours = document.getElementById("workinghoursto").value;
-    console.log(fromHours+" "+toHours);
-    let fromHrs = new Date("01/01/2000 "+fromHours);
-    let toHrs = new Date("01/01/2000 "+toHours);
-    if(fromHours && toHours) {
-      if(fromHrs?.getTime() > toHrs?.getTime()) {
-        setWorkingHoursFrom("From time should be before to time")
+    let fromHours = document.getElementById('workinghoursfrom').value
+    let toHours = document.getElementById('workinghoursto').value
+    console.log(fromHours + ' ' + toHours)
+    let fromHrs = new Date('01/01/2000 ' + fromHours)
+    let toHrs = new Date('01/01/2000 ' + toHours)
+    if (fromHours && toHours) {
+      if (fromHrs?.getTime() > toHrs?.getTime()) {
+        setWorkingHoursFrom('From time should be before to time')
       }
     }
   }
@@ -169,10 +168,10 @@ export default function SignUpProfessional() {
       alert('Error in Confirm Password')
       return
     }
-    if (document.getElementById('experience').value < 0){
+    if (document.getElementById('experience').value < 0) {
       alert('Invalid experience')
     }
-    
+
     var myHeaders = new Headers()
     myHeaders.append('Content-Type', 'application/json')
 
@@ -183,7 +182,8 @@ export default function SignUpProfessional() {
       phoneno: data.get('phoneno'),
       password: data.get('password'),
       experience: data.get('experience'),
-      workinghours: data.get('workinghoursfrom') + '-' + data.get('workinghoursto'),
+      workinghours:
+        data.get('workinghoursfrom') + '-' + data.get('workinghoursto'),
       preferredservice: data.get('preferredservice'),
       preferredlocation: data.get('preferredlocation'),
     })
@@ -363,7 +363,9 @@ export default function SignUpProfessional() {
                 type='time'
                 onBlur={(e) => handleWorkingHours(e)}
               />
-              <Typography style={{ color: 'red' }}>{workingHoursFrom}</Typography>
+              <Typography style={{ color: 'red' }}>
+                {workingHoursFrom}
+              </Typography>
               <TextField
                 margin='normal'
                 required
