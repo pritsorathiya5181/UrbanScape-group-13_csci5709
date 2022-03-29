@@ -30,7 +30,7 @@ const NavBar = () => {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     toolbar: {
       height: '50px',
@@ -299,7 +299,7 @@ const NavBar = () => {
   }
 
   return (
-    <AppBar position='static'>
+    <AppBar position='static' style={{backgroundColor: "#2a2a2a"}}>
       <Container maxWidth='100%'>
         <Toolbar disableGutters className={classes.toolbar}>
           <Box
