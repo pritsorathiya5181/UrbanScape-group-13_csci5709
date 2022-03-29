@@ -19,10 +19,10 @@ import Loader from '../../../components/customloader/Loader'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import useWindowDimensions, { hasToken } from '../../../utils/scale'
 import AddIcon from '@mui/icons-material/Add'
-import { SERVICE_CATEGORY } from '../../../utils/service'
 import * as ServiceAction from '../../../action/ServiceAction'
 import * as serviceCategoryAction from '../../../action/serviceCategoryAction'
 import * as PATH from '../../../utils/string'
+import { SERVICE_CATEGORY } from '../../../utils/service'
 
 const AddService = (props) => {
   const navigate = useNavigate()
