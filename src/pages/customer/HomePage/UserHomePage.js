@@ -14,7 +14,9 @@ import NewsLetter from '../../../components/NewsLetter'
 import Footer from '../../../components/Footer'
 import { mobile } from '../../../utils/scale'
 import { bindActionCreators } from 'redux'
+import ServiceTile from './ServiceTile'
 import { connect } from 'react-redux'
+import Grid from '@mui/material/Grid'
 import * as serviceCategoryAction from '../../../action/serviceCategoryAction'
 
 const useStyles = makeStyles({
@@ -29,6 +31,7 @@ const useStyles = makeStyles({
 
 const UserHomePage = (props) => {
   const [serviceCategories, setServiceCategories] = useState([])
+  const classes = useStyles()
 
   useEffect(() => {
     props.action
@@ -71,11 +74,62 @@ const UserHomePage = (props) => {
   return (
     <div>
       <Slider sliderData={serviceCategories} />
-      <Container>
+
+      {/* <Carousel
+        autoPlay
+        infiniteLoop
+        showArrows={false}
+        showThumbs={false}
+        renderIndicator={(onClickHandler, isSelected, index, label) => {
+          const defStyle = { marginLeft: 20, color: 'white', cursor: 'pointer' }
+          const style = isSelected
+            ? { ...defStyle, color: 'red' }
+            : { ...defStyle }
+          return (
+            <span
+              style={style}
+              onClick={onClickHandler}
+              onKeyDown={onClickHandler}
+              value={index}
+              key={index}
+              role='button'
+              tabIndex={0}
+              aria-label={`${label} ${index + 1}`}
+            >
+              {'cust ' + index}
+            </span>
+          )
+        }}
+      >
+        <div>
+          <img src={carpentryImg} />
+        </div>
+        <div>
+          <img src={salonImage} />
+        </div>
+        <div>
+          <img src={plumbingImg} />
+        </div>
+      </Carousel> */}
+
+      <div>
+        <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 1 }} >
+          {serviceCategories.map((service, index) => {
+            return (
+              <Grid container spacing={0} key={index.toString()} item xs={12} sm={6} md={4}>
+                <div style={{width: "100%"}}>
+                  <ServiceTile service={service} />
+                </div>
+              </Grid>
+            )
+          })}
+        </Grid>
+      </div>
+      {/* <Container>
         {serviceCategories.map((item, index) => (
           <CategoryItem item={item} key={index.toString()} />
         ))}
-      </Container>
+      </Container> */}
 
       <NewsLetter />
 
