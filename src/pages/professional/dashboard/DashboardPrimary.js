@@ -1,3 +1,5 @@
+//Author: Rikin Pineshkumar Patel
+
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -11,33 +13,12 @@ export default function DashboardPrimary(props) {
   const { width } = useWindowDimensions()
   let navigate = useNavigate()
 
-  const serviceList = [
-    {
-      name: 'Plumbing',
-      charge: '30',
-      locations: 'Halifax, Dartmouth',
-    },
-    {
-      name: 'Carpenting',
-      charge: '40',
-      locations: 'Halifax South-End',
-    },
-    {
-      name: 'Carpenting',
-      charge: '40',
-      locations: 'Halifax South-End',
-    },
-    {
-      name: 'Carpenting',
-      charge: '40',
-      locations: 'Halifax South-End',
-    },
-    {
-      name: 'Carpenting',
-      charge: '40',
-      locations: 'Halifax South-End',
-    },
-  ]
+  const adjustContent = (content) => {
+    if (content?.length > 60) {
+      return content.substring(0, 80) + '...'
+    }
+    return content
+  }
 
   return (
     <>
@@ -94,7 +75,11 @@ export default function DashboardPrimary(props) {
             marginBottom: '20px',
             cursor: 'pointer',
           }}
-          onClick={() => navigate('/professional/servicehistory')}
+          onClick={() =>
+            navigate('/professional/servicehistory', {
+              state: { requestType: 'approved' },
+            })
+          }
         >
           <CardContent>
             <Typography
@@ -130,7 +115,11 @@ export default function DashboardPrimary(props) {
             marginBottom: '20px',
             cursor: 'pointer',
           }}
-          onClick={() => navigate('/professional/servicehistory')}
+          onClick={() =>
+            navigate('/professional/servicehistory', {
+              state: { requestType: 'processed' },
+            })
+          }
         >
           <CardContent>
             <Typography
@@ -166,7 +155,11 @@ export default function DashboardPrimary(props) {
             marginBottom: '20px',
             cursor: 'pointer',
           }}
-          onClick={() => navigate('/professional/servicehistory')}
+          onClick={() =>
+            navigate('/professional/servicehistory', {
+              state: { requestType: 'cancelled' },
+            })
+          }
         >
           <CardContent>
             <Typography
@@ -267,7 +260,7 @@ export default function DashboardPrimary(props) {
                   sx={{ color: 'white' }}
                   justifyContent='center'
                 >
-                  Description: {item.serviceDescription}
+                  Description: {adjustContent(item.serviceDescription)}
                 </Typography>
 
                 <Typography

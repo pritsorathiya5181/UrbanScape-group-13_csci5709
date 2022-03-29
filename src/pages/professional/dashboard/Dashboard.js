@@ -1,3 +1,5 @@
+//Author: Rikin Pineshkumar Patel
+
 import React, { useEffect, useState } from 'react'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import * as ServiceAction from '../../../action/ServiceAction'
@@ -14,10 +16,10 @@ const Dashboard = (props) => {
   const [serviceList, setServicesList] = useState(props.servicesData || [])
 
   useEffect(() => {
-    if (!hasToken()) {
-      window.location.href = '/'
-      alert('Please login to continue')
-    }
+    // if (!hasToken()) {
+    //   window.location.href = '/'
+    //   alert('Please login to continue')
+    // }
 
     function getServicesStats() {
       setServiceLoading(true)

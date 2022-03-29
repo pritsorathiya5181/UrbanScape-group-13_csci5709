@@ -1,4 +1,4 @@
-import { hasToken } from './scale'
+/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
 
 //customer- navbar
 export const PAGES = ['Services', 'Offers', 'Reviews', 'FAQs', 'Support']

@@ -1,3 +1,5 @@
+/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
@@ -59,10 +61,10 @@ const AddService = (props) => {
   const classes = useStyles()
 
   useEffect(() => {
-    if (!hasToken()) {
-      window.location.href = '/'
-      alert('Please login to continue')
-    }
+    // if (!hasToken()) {
+    //   window.location.href = '/'
+    //   alert('Please login to continue')
+    // }
 
     if (
       category?.length > 0 &&

@@ -1,6 +1,7 @@
+/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+
 import { useState, useEffect } from 'react'
 import { css } from 'styled-components'
-import { useNavigate } from 'react-router-dom'
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window
