@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -12,14 +12,13 @@ import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useState } from 'react/cjs/react.development'
 import { useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../../utils/string'
 
 const theme = createTheme()
 
 export default function UserLogin() {
-  const bgImage = require("../../asserts/images/app-bg.jpg")
+  const bgImage = require('../../asserts/images/app-bg.jpg')
   const navigateToHome = useNavigate()
   const [errors, setErrors] = React.useState({})
   const [fnameError, setFnameError] = useState()
