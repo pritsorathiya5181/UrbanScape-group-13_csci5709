@@ -16,24 +16,6 @@ import { useState } from 'react/cjs/react.development'
 import { useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../../utils/string'
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
-
 const theme = createTheme()
 
 export default function UserLogin() {
@@ -46,10 +28,7 @@ export default function UserLogin() {
   const [phonenoError, setPhoneNo] = useState()
   const [passwordError, setPasswordError] = useState()
   const [confirmPasswordError, setConfirmPasswordError] = useState()
-  const validateFName = (name) => {
-    var re = /[^a-zA-Z]/
-    return re.test(name)
-  }
+  
   const validateEmail = (email) => {
     var re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -94,7 +73,6 @@ export default function UserLogin() {
       return
     }
 
-    // eslint-disable-next-line no-console
     var email = data.get('email')
     var password = data.get('password')
 
@@ -130,10 +108,6 @@ export default function UserLogin() {
       })
       .catch((error) => console.log('error', error))
 
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
   }
 
   return (
