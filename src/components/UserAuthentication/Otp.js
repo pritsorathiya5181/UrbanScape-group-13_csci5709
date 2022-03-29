@@ -16,7 +16,8 @@ import { useState } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { BASE_URL } from '../../utils/string'
 
-const theme = createTheme();
+
+const theme = createTheme()
 
 export default function Otp(props) {
   const bgImage = require('../../asserts/images/app-bg.jpg')

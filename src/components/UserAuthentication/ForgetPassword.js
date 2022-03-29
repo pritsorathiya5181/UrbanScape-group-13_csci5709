@@ -16,7 +16,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Otp from './Otp'
 import { BASE_URL } from '../../utils/string'
 
-const theme = createTheme();
+
+const theme = createTheme()
 
 export default function ForgetPassword() {
   const bgImage = require('../../asserts/images/app-bg.jpg')
