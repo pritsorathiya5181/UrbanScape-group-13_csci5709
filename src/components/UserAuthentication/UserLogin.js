@@ -15,23 +15,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../../utils/string'
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
 
 const theme = createTheme()
 
@@ -108,10 +91,10 @@ export default function UserLogin() {
       .then((response) => response.json())
       .then((result) => {
         console.log(result)
-        if (result.message === 'User not registered') {
+        if (result === 'User not registered') {
           console.log('user not registered')
           alert('You need to register')
-        } else if (result.message === 'Wrong password') {
+        } else if (result=== 'Wrong password') {
           console.log('Invalid Password')
           alert('Invalid Password')
         } else if (result.message === 'Welcome Professional') {
