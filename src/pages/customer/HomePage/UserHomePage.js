@@ -1,3 +1,5 @@
+// Author: Prit Ajaykumar Sorathiya - B00890175
+
 import React, { useEffect, useState } from 'react'
 import './UserHomePageStyle.css'
 import salonImage from '../../../asserts/images/salon.jpg'
@@ -71,12 +73,6 @@ const UserHomePage = (props) => {
 
   return (
     <div>
-      {/* <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h2'>
-        Welcome Home !
-      </Typography>
-      <Typography style={{ textAlign: 'center', padding: '10px' }} variant='h4'>
-        We are the one stop solution for all your worries
-      </Typography> */}
       <Slider sliderData={serviceCategories} />
 
       {/* <Carousel

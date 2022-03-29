@@ -1,3 +1,5 @@
+/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+
 import React, { useEffect, useState } from 'react'
 import './ProfessionalProfilePage.css'
 import NavBar from '../../../components/professional/NavBar/NavBar'
@@ -23,10 +25,10 @@ const ProfessionalProfilePage = () => {
   const [address, setAddress] = useState('')
 
   useEffect(() => {
-    if (!hasToken()) {
-      window.location.href = '/'
-      alert('Please login to continue')
-    }
+    // if (!hasToken()) {
+    //   window.location.href = '/'
+    //   alert('Please login to continue')
+    // }
 
     if (width > 800) {
       setisProfileMenuOpen(false)
