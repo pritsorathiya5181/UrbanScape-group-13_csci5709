@@ -5,7 +5,7 @@ import './CustomerProfilePage.css'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import PersonIcon from '@mui/icons-material/Person'
 import { Button, FormControl, TextField } from '@mui/material'
-import useWindowDimensions from '../../../utils/scale'
+import useWindowDimensions, { hasToken } from '../../../utils/scale'
 import { makeStyles } from '@mui/styles'
 import DialogAlert from '../../../components/DialogAlert'
 import swal from 'sweetalert'
@@ -23,6 +23,11 @@ const CustomerProfilePage = () => {
   const [address, setAddress] = useState('')
 
   useEffect(() => {
+    if (!hasToken()) {
+      alert('Please login to continue')
+      window.location.href = '/'
+    }
+
     if (width > 800) {
       setisProfileMenuOpen(false)
     }
