@@ -62,7 +62,20 @@ const useStyles = makeStyles((theme) => ({
 
 function ServiceCard(props) {
   const classes = useStyles()
-  const defaultFormValues = { fName: "", contactNum: undefined, email: "", address: "", bookingTime: "2017-05-24T10:30", instructions: "" };
+  let newDate = new Date()
+
+  function addZero(i) {
+    if (i < 10) {i = "0" + i}
+    return i;
+  }
+  
+  let h = addZero(newDate.getHours());
+  let m = addZero(newDate.getMinutes());
+
+   let defaultBookingDate = newDate.getFullYear() + "-0" + (newDate.getMonth() + 1) + "-" + (newDate.getDate() + 1) + 'T' + h + ':' + m;
+   defaultBookingDate = defaultBookingDate.toString();
+
+  const defaultFormValues = { fName: "", contactNum: undefined, email: "", address: "", bookingTime: defaultBookingDate, instructions: "" };
   const [bookingFormDetails, setBookingFormDetails] = useState(defaultFormValues);
   const [expanded, setExpanded] = React.useState(false)
 
@@ -185,6 +198,7 @@ const handleSubmit = (event) => {
                   name="bookingTime"
                   label="Book appointment"
                   type="datetime-local"
+                  InputProps={{inputProps: { min: defaultBookingDate} }}
                   value={bookingFormDetails.bookingTime}
                   onChange={handleBooking}
                   InputLabelProps={{
