@@ -35,7 +35,7 @@ export default function UserLogin() {
     return re.test(email)
   }
   const validatePwd = (password) => {
-    var re = /^[A-Z]*$/
+    var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
     return re.test(password)
   }
   const handleEmail = (event) => {
@@ -50,8 +50,8 @@ export default function UserLogin() {
 
   const handlePassword = (event) => {
     const Password = event.target.value
-    if (validatePwd(Password)) {
-      setPasswordError('Should have special and alphanumeric characters ')
+    if (!validatePwd(Password)) {
+      setPasswordError('Should have alphanumeric characters and atleast one special character')
     } else if (Password?.length < 8) {
       setPasswordError('Minimum 8 characters are required')
     } else {
@@ -60,16 +60,18 @@ export default function UserLogin() {
   }
 
   const handleSubmit = (event) => {
+    setEmailError('');
+    setPasswordError('');
     event.preventDefault()
     const data = new FormData(event.currentTarget)
 
     if (emailError?.length > 0) {
-      alert('Error in Email')
+      alert(emailError);
       return
     }
 
     if (passwordError?.length > 0) {
-      alert('Error in Password')
+      alert(passwordError)
       return
     }
 
@@ -87,22 +89,24 @@ export default function UserLogin() {
       .then((response) => response.json())
       .then((result) => {
         console.log(result)
-        if (result.message === 'User not registered') {
+        if (result === 'User not registered') {
           console.log('user not registered')
-          alert('You need to register')
-        } else if (result.message === 'Wrong password') {
+          setEmailError(result)
+          // alert('You need to register')
+        } else if (result === 'Wrong password') {
           console.log('Invalid Password')
-          alert('Invalid Password')
+          setPasswordError(result)
+          // alert('Invalid Password')
         } else if (result.message === 'Welcome Professional') {
           localStorage.setItem('accesstoken', result.accessToken)
           localStorage.setItem('usertype', 'professional')
           localStorage.setItem('user', result.user)
-          alert('!!Welcome to Urbanscape!!')
+          console.log('!!Welcome to Urbanscape!!')
           window.location.href = '/professional'
         } else {
           localStorage.setItem('accesstoken', result.accessToken)
           localStorage.setItem('usertype', 'customer')
-          alert('!!Welcome to Urbanscape!!')
+          console.log('!!Welcome to Urbanscape!!')
           window.location.href = '/'
         }
       })
@@ -177,7 +181,9 @@ export default function UserLogin() {
                 onBlur={(e) => handlePassword(e)}
               />
               {/* <p style={{color:"red"}}>{passwordError}</p> */}
-
+              <Typography style={{ color: 'red', width: '500px' }}>
+                {passwordError}
+              </Typography>
               <Button
                 type='submit'
                 fullWidth
