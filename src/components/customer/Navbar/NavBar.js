@@ -19,6 +19,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import HouseIcon from '@mui/icons-material/House'
 import PersonIcon from '@mui/icons-material/Person'
 import MenuIcon from '@mui/icons-material/Menu'
+import Badge from '@mui/material/Badge'
 
 import * as MENU from '../../../utils/constant'
 import { makeStyles } from '@mui/styles'
@@ -227,7 +228,9 @@ const NavBar = () => {
       >
         <Tooltip title='Open cart'>
           <IconButton sx={{ paddingRight: 1 }} onClick={navigateToCart}>
-            <ShoppingCartIcon fontSize='large' sx={{ color: 'white' }} />
+          <Badge color="secondary" badgeContent={0}>
+            <ShoppingCartIcon fontSize='large' sx={{ color: 'white' } } />
+            </Badge>
           </IconButton>
         </Tooltip>
         <Tooltip title='Open settings'>

@@ -13,52 +13,66 @@ import { useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
-    minWidth: 200,
+    maxWidth: "inherit",
+    minWidth: "inherit"
   },
 
   media: {
-    height: 140,
+    height: "inherit"
   },
 })
 
 function ServiceTile(props) {
   const classes = useStyles()
-
   let navigate = useNavigate()
 
-  const navigateToBeautyServices = () => {
-    if (props.service.name === 'Book Salon Service') {
+  const navigateToServicePage = () => {
+    if (props.service.serviceCategory === "Beauty") {
       navigate('./beautyservices')
+    } else if (props.service.serviceCategory === "Plumbing") {
+      navigate('./plumbingservices')
+    } else if (props.service.serviceCategory === "Carpentry") {
+      navigate('./carpentryservices')
     }
   }
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia className={classes.media} image={props.service.image} />
+     <div
+        style={{
+          flex: 1,
+          heigth: '140px',
+          position: 'relative',
+          maxWidth: "inherit",
+    minWidth: "inherit"
+        }}
+      >
+      <CardMedia style={{ height: "700px", width: "100%", paddingTop: "2%" }} component="img" image={props.service.categoryImg} title={props.service.serviceCategory}/> 
+      <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          color: 'white',
+          margin: '80px',
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}>
+          <Typography variant='h4'>{props.service.serviceCategory}</Typography>
+          <Typography variant='h6'>{props.service.categoryDesc}</Typography>
 
-        <CardContent>
-          <Typography gutterBottom variant='h5' component='h2'>
-            {props.service.name}
-          </Typography>
-
-          <Typography variant='body2' color='textSecondary' component='p'>
-            {props.service.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-
-      <CardActions>
-        <Button
-          disabled={props.service.name === 'Book Salon Service' ? false : true}
+         <Button
           size='small'
+          variant="contained"
           color='primary'
-          onClick={navigateToBeautyServices}
+          onClick={navigateToServicePage}
         >
-          View
+          Book Now
         </Button>
-      </CardActions>
+         </div>
+  </div>
     </Card>
   )
 }
