@@ -1,54 +1,22 @@
-// Author: Prit Ajaykumar Sorathiya - B00890175
+// Author: Prits Sri Pandey - B00877337
 
 import { MailOutline, Phone, Room } from '@mui/icons-material'
 import styled from 'styled-components'
-import { mobile } from '../utils/scale'
+import {
+  Grid,
+  Link
+} from '@mui/material'
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 
-const Container = styled.div`
-  display: flex;
-  ${mobile({ flexDirection: 'column' })}
-`
-
-const Left = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-`
-
-const Logo = styled.h1``
 
 const Desc = styled.p`
   margin: 20px 0px;
 `
 
-const Center = styled.div`
-  flex: 1;
-  padding: 20px;
-  ${mobile({ display: 'none' })}
-`
-
 const Title = styled.h3`
   margin-bottom: 30px;
-`
-
-const List = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-`
-
-const ListItem = styled.li`
-  width: 50%;
-  margin-bottom: 10px;
-`
-
-const Right = styled.div`
-  flex: 1;
-  padding: 20px;
-  ${mobile({ backgroundColor: '#fff8f8' })}
 `
 
 const ContactItem = styled.div`
@@ -63,41 +31,91 @@ const Payment = styled.img`
 
 const Footer = () => {
   return (
-    <Container>
-      <Left>
-        <Logo>URBANSCAPE</Logo>
+
+
+
+
+    <Grid sx={{ padding: "50px" }} container spacing={3}>
+      <Grid item xs={6}>
+        <Title>About Us</Title>
         <Desc>
-          There are many variations of passages of Lorem Ipsum available, but
-          the majority have suffered alteration in some form, by injected
-          humour, or randomised words which don’t look even slightly believable.
+          We understand that your time is precious and finding time for everyday chores in your busy schedule is challenging.
+          That's why we are here to ease your workload.
+          We provide beauty services like salon at home and home care services like plumbing and carpentry, all at your doorstep.
+          Our professionals are well articulated in their profession and they undergo rigorous training.
+          Your satisfaction means the world to us.
         </Desc>
-      </Left>
-      <Center>
+        <Desc>
+          We at Urbanscape, believe in excellence! All our certified professionals are trained to deliver expert services that will surpass your expectations.
+        </Desc>
+        <Desc>
+
+          We love mother nature and all the products used for our beauty services are organic and certified cruelty free.
+
+        </Desc>
+      </Grid>
+      <Grid item xs>
+
         <Title>Useful Links</Title>
         <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Facial Message</ListItem>
-          <ListItem>Offers</ListItem>
-          <ListItem>Reviews</ListItem>
-          <ListItem>FAQs</ListItem>
-          <ListItem>Support</ListItem>
+          <ListItem disablePadding>
+
+
+            <Link href="./beautyservices" color="inherit">
+              <ListItemText primary="Beauty Services" />
+            </Link>
+
+          </ListItem>
+          <ListItem disablePadding>
+
+            <Link href="./carpentryservices" color="inherit">
+              <ListItemText primary="Carpentry Services" />
+            </Link>
+
+          </ListItem>
+          <ListItem disablePadding>
+            <Link href="./plumbingservices" color="inherit">
+              <ListItemText primary="Plumbing Services" />
+            </Link>
+
+          </ListItem>
+          <ListItem disablePadding>
+
+            <Link href="./" color="inherit">
+              <ListItemText primary="Offers" />
+            </Link>
+
+          </ListItem>
+          <ListItem disablePadding>
+            <Link href="./" color="inherit">
+              <ListItemText primary="FAQs" />
+            </Link>
+
+          </ListItem>
+          <ListItem disablePadding>
+            <Link href="./" color="inherit">
+              <ListItemText primary="Reviews" />
+            </Link>
+          </ListItem>
         </List>
-      </Center>
-      <Right>
+
+      </Grid>
+      <Grid item xs>
         <Title>Contact</Title>
         <ContactItem>
           <Room style={{ marginRight: '10px' }} /> 6299 South St, Halifax, NS
           B3H 4R2
         </ContactItem>
         <ContactItem>
-          <Phone style={{ marginRight: '10px' }} /> +1 234 56 78
+          <Phone style={{ marginRight: '10px' }} /> +1 234 56 789
         </ContactItem>
         <ContactItem>
-          <MailOutline style={{ marginRight: '10px' }} /> contact@lama.dev
+          <MailOutline style={{ marginRight: '10px' }} /> contact@urbanscapeteam.dev
         </ContactItem>
         <Payment src='https://i.ibb.co/Qfvn4z6/payment.png' />
-      </Right>
-    </Container>
+      </Grid>
+    </Grid>
+
   )
 }
 
