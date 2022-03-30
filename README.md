@@ -489,3 +489,11 @@ The code above was created by adapting the code in [Card component - MUI](https:
 - <!---What---> The code in [Card component - MUI](https://mui.com/components/cards/#complex-interaction) was implemented by using various material ui components to design cards for service tiles that are reused in the website for different services.
 - <!---Why---> [Card component - MUI](https://mui.com/components/cards/#complex-interaction)'s code was used because, material ui card components provides attractive, and customizable styling options. Also these are easy to reuse.
 - <!---How---> [Card component - MUI](https://mui.com/components/cards/#complex-interaction)'s code was modified by customizing css styling, and adding dialogs for card action.
+
+## Images Used
+
+```
+All images used are taken from www.unsplash.com (https://unsplash.com/) which are licensed to be downloaded and used as per -  (https://unsplash.com/license)
+
+```
+
