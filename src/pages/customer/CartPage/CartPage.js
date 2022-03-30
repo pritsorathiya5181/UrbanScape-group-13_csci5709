@@ -60,7 +60,7 @@ useEffect(() => {
   if (!hasToken()) {
     window.location.href = '/customer/unauthenticated/'
   }
-  setTimeout(() => { getCartItems() }, 1000);
+   getCartItems() 
 }, [])
 
 
