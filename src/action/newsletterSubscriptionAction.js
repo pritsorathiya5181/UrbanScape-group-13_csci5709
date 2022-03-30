@@ -3,6 +3,11 @@
  */
 import { BASE_URL } from '../utils/string'
 
+/**
+ * 
+ * @param {*} emailId - subscribed email address
+ * subscribeToNewsletter() makes a POST call to Nodejs backend api to save the subscribed email address to the MongoDB database
+ */
 export function subscribeToNewsletter(emailId) {
     return function (dispatch, getState) {
       return new Promise(async (resolve, rejects) => {

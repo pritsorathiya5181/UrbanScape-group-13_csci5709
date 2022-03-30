@@ -12,6 +12,9 @@ import {
     Grid
 } from '@mui/material'
 
+/**
+ * ServiceCarousel takes in a list of service categories as props, and shows the list of services in the first category as a sliding carousel
+ */
 const ServiceCarousel = (props) => {
     let navigate = useNavigate();
     return (
