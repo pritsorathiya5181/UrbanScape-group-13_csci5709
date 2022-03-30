@@ -1,3 +1,6 @@
+/**
+ * Author: Priti Sri Pandey - B00877337
+ */
 import { BASE_URL } from '../utils/string'
 
 export function subscribeToNewsletter(emailId) {

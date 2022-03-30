@@ -1,3 +1,7 @@
+/**
+ * Author: Priti Sri Pandey - B00877337
+ */
+
 const initialState = []
 
 const serviceCategoriesReducer = (state = initialState, action) => {

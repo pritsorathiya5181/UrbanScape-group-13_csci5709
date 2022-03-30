@@ -1,3 +1,6 @@
+/**
+ * Author: Priti Sri Pandey - B00877337
+ */
 import React from 'react'
 import ServiceCard from './ServiceCard'
 import headMassageImage from '../../../asserts/images/head-massage.jpg'

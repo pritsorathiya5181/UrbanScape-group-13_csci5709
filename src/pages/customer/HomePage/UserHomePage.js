@@ -1,4 +1,6 @@
-// Author: Priti Sri Pandey - B00877337
+/**
+ * Author: Priti Sri Pandey - B00877337
+ */
 
 import React, { useEffect, useState } from 'react'
 import ServiceCarousel from './ServiceCarousel'
