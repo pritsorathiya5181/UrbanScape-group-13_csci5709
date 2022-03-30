@@ -58,13 +58,9 @@ function getCartItems() {
 useEffect(() => {
 
   if (!hasToken()) {
-    alert('Please login to continue')
-    window.location.href = '/userlogin'
+    window.location.href = '/customer/notloggedin/'
   }
- 
-    getCartItems()
-    console.log("Number of items in cart" , props)
-
+  setTimeout(() => { getCartItems() }, 1000);
 }, [])
 
 
