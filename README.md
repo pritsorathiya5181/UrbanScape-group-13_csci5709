@@ -3,7 +3,7 @@
 # Project: UrbanScape
 
 - _Date Created_: 2 Feb 2022
-- _Last Modification Date_: 23 Feb 2022
+- _Last Modification Date_: 29 Mar 2022
 - _Heroku deployed URL_: <https://g13-urbanscape.herokuapp.com/>
 - _Group repository git URL_: <https://git.cs.dal.ca/ppandey/group-13_csci5709>
 
@@ -15,8 +15,6 @@
 - [Prit Ajaykumar Sorathiya] - _(B00890175)_
 - [Priti Sri Pandey] - _(B00877337)_
 - [Rikin Pineshkumar Patel] - _(B00864960)_
-
-## Team Work
 
 ## Team Work
 
