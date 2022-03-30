@@ -39,3 +39,16 @@ export const mobile = (props) => {
 export const hasToken = () => {
   return localStorage.getItem('accesstoken')
 }
+
+export const getUserType = () => {
+  return localStorage.getItem('usertype')
+}
+
+export const getProfessionalUser = () => {
+  const userType = localStorage.getItem('usertype')
+  if (hasToken() && userType === 'professional') {
+    return localStorage.getItem('professional')
+  } else {
+    return null
+  }
+}

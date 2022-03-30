@@ -4,7 +4,10 @@ import React, { useEffect, useState } from 'react'
 import './ProfessionalProfilePage.css'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import { Button, FormControl, TextField } from '@mui/material'
-import useWindowDimensions, { hasToken } from '../../../utils/scale'
+import useWindowDimensions, {
+  getUserType,
+  hasToken,
+} from '../../../utils/scale'
 import { makeStyles } from '@mui/styles'
 import DialogAlert from '../../../components/DialogAlert'
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos'
@@ -25,9 +28,10 @@ const ProfessionalProfilePage = () => {
   const [address, setAddress] = useState('')
 
   useEffect(() => {
-    if (!hasToken()) {
-      window.location.href = '/'
+    if (!hasToken() || getUserType() !== 'professional') {
       alert('Please login to continue')
+      window.location.href = '/'
+    } else {
     }
 
     if (width > 800) {

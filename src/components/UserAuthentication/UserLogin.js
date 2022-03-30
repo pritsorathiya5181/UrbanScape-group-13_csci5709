@@ -14,11 +14,13 @@ import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../../utils/string'
-
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as userAction from '../../action/userAction'
 
 const theme = createTheme()
 
-export default function UserLogin() {
+const UserLogin = (props) => {
   const bgImage = require('../../asserts/images/app-bg.jpg')
   const navigateToHome = useNavigate()
   const [errors, setErrors] = React.useState({})
@@ -28,7 +30,7 @@ export default function UserLogin() {
   const [phonenoError, setPhoneNo] = useState()
   const [passwordError, setPasswordError] = useState()
   const [confirmPasswordError, setConfirmPasswordError] = useState()
-  
+
   const validateEmail = (email) => {
     var re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -51,7 +53,9 @@ export default function UserLogin() {
   const handlePassword = (event) => {
     const Password = event.target.value
     if (!validatePwd(Password)) {
-      setPasswordError('Should have alphanumeric characters and atleast one special character')
+      setPasswordError(
+        'Should have alphanumeric characters and atleast one special character'
+      )
     } else if (Password?.length < 8) {
       setPasswordError('Minimum 8 characters are required')
     } else {
@@ -60,13 +64,13 @@ export default function UserLogin() {
   }
 
   const handleSubmit = (event) => {
-    setEmailError('');
-    setPasswordError('');
+    setEmailError('')
+    setPasswordError('')
     event.preventDefault()
     const data = new FormData(event.currentTarget)
 
     if (emailError?.length > 0) {
-      alert(emailError);
+      alert(emailError)
       return
     }
 
@@ -78,29 +82,26 @@ export default function UserLogin() {
     var email = data.get('email')
     var password = data.get('password')
 
-    var raw = ''
+    // var raw = ''
 
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    }
+    // var requestOptions = {
+    //   method: 'GET',
+    //   redirect: 'follow',
+    // }
 
-    fetch(`${BASE_URL}auth/users/${email}/${password}`, requestOptions)
-      .then((response) => response.json())
+    props.action
+      .userLogin(email, password)
       .then((result) => {
-        console.log(result)
-        if (result === 'User not registered') {
+        if (result.message === 'User not registered') {
           console.log('user not registered')
-          setEmailError(result)
-          // alert('You need to register')
-        } else if (result === 'Wrong password') {
+          setEmailError(result.message)
+        } else if (result.message === 'Wrong password') {
           console.log('Invalid Password')
-          setPasswordError("Invalid Email/Password")
-          // alert('Invalid Password')
+          setPasswordError('Invalid Email/Password')
         } else if (result.message === 'Welcome Professional') {
           localStorage.setItem('accesstoken', result.accessToken)
           localStorage.setItem('usertype', 'professional')
-          localStorage.setItem('user', result.user)
+          localStorage.setItem('professional', JSON.stringify(result.user))
           console.log('!!Welcome to Urbanscape!!')
           window.location.href = '/professional'
         } else {
@@ -110,8 +111,9 @@ export default function UserLogin() {
           window.location.href = '/'
         }
       })
-      .catch((error) => console.log('error', error))
-
+      .catch((error) => {
+        console.log('error', error)
+      })
   }
 
   return (
@@ -216,3 +218,19 @@ export default function UserLogin() {
     </ThemeProvider>
   )
 }
+
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      userInfo: state.user.userInfo,
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(userAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserLogin)
