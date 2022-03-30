@@ -18,6 +18,9 @@ import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { BASE_URL } from '../../utils/string'
 
+
+
+const theme = createTheme()
 export default function UpdatePassword() {
   const bgImage = require('../../asserts/images/app-bg.jpg')
   const [passwordError, setPasswordError] = useState()
