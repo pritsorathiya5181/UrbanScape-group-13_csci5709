@@ -26,6 +26,9 @@ const useStyles = makeStyles({
   },
 })
 
+/**
+ * ServiceTile takes in a specific service category as props, and shows it's title and description as a card
+ */
 function ServiceTile(props) {
   const classes = useStyles()
   let navigate = useNavigate()

@@ -25,6 +25,9 @@ const useStyles = makeStyles({
   },
 })
 
+/**
+ * UserHomePage sections the home page into carousel, service categories tiles, newsletter and footer.
+ */
 const UserHomePage = (props) => {
   const [serviceCategories, setServiceCategories] = useState([])
   const classes = useStyles()
@@ -50,6 +53,7 @@ const UserHomePage = (props) => {
 
   return (
     <div>
+      {/* Carousel Component */}
       <div>
         <Grid item xs={12} sm={6} md={1}>
           <ServiceCarousel categories={serviceCategories} />
@@ -57,6 +61,7 @@ const UserHomePage = (props) => {
         </Grid>
       </div>
 
+      {/*ServiceTile component to show each service category detail on tiles */}
       <div>
         <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 1 }} >
           {serviceCategories.map((service, index) => {
@@ -71,8 +76,10 @@ const UserHomePage = (props) => {
         </Grid>
       </div>
 
+      {/*Newsletter component for subscribing to company newsletters */}
       <NewsLetter />
 
+      {/*Footer section with About Us, Quick Links and Company contact information */}
       <Footer />
     </div>
   )

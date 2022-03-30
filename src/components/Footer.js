@@ -30,13 +30,11 @@ const ContactItem = styled.div`
 const Payment = styled.img`
   width: 50%;
 `
-
+/**
+ * Footer shows the About Us, Useful links and company information as a footer in a responsive format.
+ */
 const Footer = () => {
   return (
-
-
-
-
     <Grid sx={{ padding: "50px" }} container spacing={3}>
       <Grid item xs={6}>
         <Title>About Us</Title>

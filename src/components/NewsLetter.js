@@ -39,6 +39,9 @@ const Button = styled.button`
   color: white;
 `
 
+/**
+ * NewsLetter accepts an email ID, and saves it in the database for newsletter subscriptions, it also prompts the user with status of subscription with a disappearing info message
+ */
 function NewsLetter(props) {
   const [subscriptiondetail, setSubscription] = React.useState({ email: '' })
   const [isSubscribeSuccess, setSubscriptionSuccess] = React.useState(false)
