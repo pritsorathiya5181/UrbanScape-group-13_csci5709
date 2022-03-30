@@ -18,8 +18,6 @@ import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { BASE_URL } from '../../utils/string'
 
-
-
 const theme = createTheme()
 export default function UpdatePassword() {
   const bgImage = require('../../asserts/images/app-bg.jpg')
@@ -101,9 +99,7 @@ export default function UpdatePassword() {
   }
 
   return (
-    <ThemeProvider
-    // theme={theme}
-    >
+    <ThemeProvider theme={theme}>
       <Grid container component='main' sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
