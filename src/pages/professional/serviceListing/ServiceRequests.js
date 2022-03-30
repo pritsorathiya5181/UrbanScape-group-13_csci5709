@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux'
 import * as ServiceAction from '../../../action/ServiceAction'
 import * as orderAction from '../../../action/orderAction'
 import Loader from '../../../components/customloader/Loader'
-import { hasToken } from '../../../utils/scale'
+import { getProfessionalUser, hasToken } from '../../../utils/scale'
 
 const ServiceRequests = (props) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false)
@@ -32,8 +32,13 @@ const ServiceRequests = (props) => {
   }, [])
 
   function getServicesStats() {
+    var userInfo = getProfessionalUser()
+    if (userInfo) {
+      userInfo = JSON.parse(userInfo)
+    }
+
     setServiceLoading(true)
-    const userId = 'd86aa655-fe4a-40ee-af69-67718d7ec759'
+    const userId = userInfo?._id
     props.serviceaction
       .getServiceStats(userId)
       .then((res) => {

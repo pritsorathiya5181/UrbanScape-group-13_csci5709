@@ -30,8 +30,13 @@ const ServiceProfile = (props) => {
     }
 
     function getServices() {
+      var userInfo = getProfessionalUser()
+      if (userInfo) {
+        userInfo = JSON.parse(userInfo)
+      }
+
       setServiceLoading(true)
-      const userId = 'd86aa655-fe4a-40ee-af69-67718d7ec759'
+      const userId = userInfo?._id
       props.action
         .getRecords(userId)
         .then((res) => {

@@ -47,7 +47,11 @@ function App() {
             element={<CustomerProfilePage />}
           />
           <Route exact path='/customer/cartpage/' element={<CartPage />} />
-          <Route exact path='/customer/notloggedin/' element={<NotLoggedIn />} />
+          <Route
+            exact
+            path='/customer/notloggedin/'
+            element={<NotLoggedIn />}
+          />
 
           <Route exact path='/professional' element={<Dashboard />} />
           <Route

@@ -1,3 +1,4 @@
+import { getProfessionalUser } from '../utils/scale'
 import { BASE_URL } from '../utils/string'
 
 export function approveServiceRequest(serviceItem) {
@@ -9,6 +10,11 @@ export function approveServiceRequest(serviceItem) {
           subtype: 'loading',
         })
 
+        var userInfo = getProfessionalUser()
+        if (userInfo) {
+          userInfo = JSON.parse(userInfo)
+        }
+
         var myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
 
@@ -19,7 +25,7 @@ export function approveServiceRequest(serviceItem) {
           clientEmail: 'prit.sorathiya@gmail.com',
           serviceCategory: serviceItem?.serviceCategory,
           serviceName: serviceItem?.serviceName,
-          professionalName: 'Mike',
+          professionalName: userInfo?.firstname || 'Mike',
         })
 
         var requestOptions = {
@@ -67,9 +73,14 @@ export function cancelServiceRequest(serviceItem) {
         var myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
 
+        var userInfo = getProfessionalUser()
+        if (userInfo) {
+          userInfo = JSON.parse(userInfo)
+        }
+
         var raw = JSON.stringify({
           itemNo: serviceItem?.itemNo,
-          professionalName: 'Mike',
+          professionalName: userInfo?.firstname || 'Mike',
         })
 
         var requestOptions = {
