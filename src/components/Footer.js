@@ -1,4 +1,6 @@
-// Author: Prits Sri Pandey - B00877337
+/**
+ * Author: Priti Sri Pandey - B00877337
+ */
 
 import { MailOutline, Phone, Room } from '@mui/icons-material'
 import styled from 'styled-components'

@@ -1,4 +1,6 @@
-// Author: Prit Ajaykumar Sorathiya - B00890175
+/**
+ * Author: Priti Sri Pandey - B00877337
+ */
 
 import { Send } from '@mui/icons-material'
 import styled from 'styled-components'

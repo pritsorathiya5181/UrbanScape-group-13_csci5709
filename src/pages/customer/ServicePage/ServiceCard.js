@@ -1,3 +1,6 @@
+/**
+ * Author: Priti Sri Pandey - B00877337
+ */
 import React from 'react';
 import clsx from 'clsx';
 import { useState } from 'react';
@@ -98,9 +101,8 @@ const validatePhoneNumber = (mobileNum) => {
 const handleSubmit = (event) => {
   event.preventDefault();
 
-  if(!hasToken()) {
-    alert('Please login to continue')
-    window.location.href = '/userlogin'
+  if (!hasToken()) {
+    window.location.href = '/customer/unauthenticated/'
   }
 
   if(validatePhoneNumber(bookingFormDetails.contactNum)) {
