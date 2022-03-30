@@ -86,6 +86,7 @@ const NavBar = () => {
 
   const handleClose = () => {
     setServiceOption(null)
+    handleCloseNavMenu()
   }
 
   const handlePageClicks = (pages) => {
@@ -207,7 +208,7 @@ const NavBar = () => {
           }}
         >
           {MENU.PAGES.map((page) => (
-            <MenuItem key={page} onClick={() => handlePageClicks(page)}>
+            <MenuItem key={page} onClick={page === 'Services' ? handleClick : () => handlePageClicks(page)}>
               <Typography textAlign='center'>{page}</Typography>
               {page === 'Services' && <ArrowDropDownIcon />}
             </MenuItem>
