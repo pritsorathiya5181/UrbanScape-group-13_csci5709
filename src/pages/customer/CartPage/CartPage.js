@@ -58,7 +58,7 @@ function getCartItems() {
 useEffect(() => {
 
   if (!hasToken()) {
-    window.location.href = '/customer/notloggedin/'
+    window.location.href = '/customer/unauthenticated/'
   }
   setTimeout(() => { getCartItems() }, 1000);
 }, [])
