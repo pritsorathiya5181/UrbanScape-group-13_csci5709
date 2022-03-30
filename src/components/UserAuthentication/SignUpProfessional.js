@@ -45,7 +45,7 @@ export default function SignUpProfessional() {
     return re.test(email)
   }
   const validatePwd = (password) => {
-    var re = /^[A-Z]*$/
+    var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
     return re.test(password)
   }
   const handleFName = (event) => {
@@ -88,8 +88,8 @@ export default function SignUpProfessional() {
 
   const handlePassword = (event) => {
     const Password = event.target.value
-    if (validatePwd(Password)) {
-      setPasswordError('Should have special and alphanumeric characters ')
+    if (!validatePwd(Password)) {
+      setPasswordError('Should have alphanumeric characters and atleast one special character')
     } else if (Password.length < 8) {
       setPasswordError('Minimum 8 characters are required')
     } else {
@@ -98,14 +98,16 @@ export default function SignUpProfessional() {
   }
 
   const handleWorkingHours = (event) => {
-    let fromHours = document.getElementById('workinghoursfrom').value
-    let toHours = document.getElementById('workinghoursto').value
-    console.log(fromHours + ' ' + toHours)
-    let fromHrs = new Date('01/01/2000 ' + fromHours)
-    let toHrs = new Date('01/01/2000 ' + toHours)
-    if (fromHours && toHours) {
-      if (fromHrs?.getTime() > toHrs?.getTime()) {
-        setWorkingHoursFrom('From time should be before to time')
+    let fromHours = document.getElementById("workinghoursfrom").value;
+    let toHours = document.getElementById("workinghoursto").value;
+    console.log(fromHours+" "+toHours);
+    let fromHrs = new Date("01/01/2000 "+fromHours);
+    let toHrs = new Date("01/01/2000 "+toHours);
+    if(fromHours && toHours) {
+      if(fromHrs?.getTime() > toHrs?.getTime()) {
+        setWorkingHoursFrom("From time should be before to time")
+      } else {
+        setWorkingHoursFrom('')
       }
     }
   }
@@ -127,28 +129,32 @@ export default function SignUpProfessional() {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
     if (fnameError?.length > 0) {
-      alert('Error in FirstName')
+      alert(fnameError)
       return
     }
 
     if (lnameError?.length > 0) {
-      alert('Error in LastName')
+      alert(lnameError)
       return
     }
     if (emailError?.length > 0) {
-      alert('Error in Email')
+      alert(emailError)
       return
     }
     if (phonenoError?.length > 0) {
-      alert('Invalid phone Number')
+      alert(phonenoError)
       return
     }
     if (passwordError?.length > 0) {
-      alert('Error in Password')
+      alert(passwordError)
       return
     }
     if (confirmPasswordError?.length > 0) {
-      alert('Error in Confirm Password')
+      alert(confirmPasswordError)
+      return
+    }
+    if (workingHoursFrom?.length > 0) {
+      alert(workingHoursFrom)
       return
     }
     if (document.getElementById('experience').value < 0) {

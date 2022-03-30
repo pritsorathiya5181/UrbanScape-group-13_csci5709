@@ -45,6 +45,9 @@ export default function Otp(props) {
       .then((result) => {
         if (result === 'otp matched') {
           navigateupdate('/updatepassword', { state: currUser })
+        } else if(result === 'OTP expired') {
+          alert("OTP expired");
+          navigateupdate('/forgetpassword')
         } else {
           alert('Enter valid otp')
         }
@@ -100,7 +103,9 @@ export default function Otp(props) {
                 name='otp'
                 autoComplete='otp'
               />
-
+            <Typography >
+              *OTP is valid for 5 minutes only
+            </Typography>
               <Button
                 type='submit'
                 fullWidth
