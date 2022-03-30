@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Loader from '../../../components/customloader/Loader'
 import DashboardPrimary from './DashboardPrimary'
-import { hasToken } from '../../../utils/scale'
+import { getUserType, hasToken } from '../../../utils/scale'
 
 const Dashboard = (props) => {
   const [serviceLoading, setServiceLoading] = useState(false)
@@ -16,7 +16,7 @@ const Dashboard = (props) => {
   const [serviceList, setServicesList] = useState(props.servicesData || [])
 
   useEffect(() => {
-    if (!hasToken()) {
+    if (!hasToken() || getUserType() !== 'professional') {
       alert('Please login to continue')
       window.location.href = '/'
     }
