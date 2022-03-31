@@ -30,6 +30,9 @@ const ProfessionalProfilePage = (props) => {
   const [experience, setExperience] = useState('')
   const [workedHours, setWorkedHours] = useState('')
   const [address, setAddress] = useState('')
+  const [userData, setUserData] = useState()
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   useEffect(() => {
     if (!hasToken() || getUserType() !== 'professional') {
@@ -44,8 +47,12 @@ const ProfessionalProfilePage = (props) => {
       props.action
         .getProfessionalUser(userInfo.email)
         .then((res) => {
-          console.log('res', res)
-          console.log('res', props)
+          setUserData(res?.user)
+          setName(`${res?.user?.firstname} ${res?.user?.lastname}`)
+          setEmail(res?.user?.email)
+          setMobileNo(res?.user?.phoneno)
+          setExperience(res?.user?.experience)
+          setAddress(res?.user?.preferredlocation)
         })
         .catch((err) => {
           console.log('err', err)
@@ -82,6 +89,12 @@ const ProfessionalProfilePage = (props) => {
       case 'address':
         setAddress(value)
         break
+      case 'newpassword':
+        setPassword(value)
+        break
+      case 'confirmnewpass':
+        setConfirmPassword(value)
+        break
       default:
         break
     }
@@ -95,6 +108,63 @@ const ProfessionalProfilePage = (props) => {
       },
     },
   }))
+
+  const changePassword = () => {
+    if (password === confirmPassword) {
+      const value = {
+        password: password.trim(),
+      }
+      props.action
+        .updateProfessionalUser(email, value)
+        .then((res) => {
+          swal('Password updated successfully', '', 'success')
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
+    } else {
+      swal('Password does not match', '', 'error')
+    }
+  }
+
+  const updateProfile = () => {
+    const value = {
+      firstname: name.split(' ')[0],
+      lastname: name.split(' ')[1],
+      phoneno: mobileNo,
+      preferredlocation: address,
+      experience: experience,
+      about: about,
+    }
+    props.action
+      .updateProfessionalUser(email, value)
+      .then((res) => {
+        swal('Profile updated successfully', '', 'success')
+      })
+      .catch((err) => {
+        swal('Profile update fails', '', 'error')
+      })
+  }
+
+  const deleteProfile = () => {
+    props.action
+      .deleteProfessionalUser(email)
+      .then((res) => {
+        swal('Profile deleted successfully', '', 'success').then(() => {
+          logout()
+        })
+      })
+      .catch((err) => {
+        swal(err.message, '', 'error')
+      })
+  }
+
+  const logout = () => {
+    localStorage.removeItem('accesstoken')
+    localStorage.removeItem('usertype')
+    localStorage.removeItem('professional')
+    window.location.href = '/'
+  }
 
   const classes = useStyles()
 
@@ -190,6 +260,7 @@ const ProfessionalProfilePage = (props) => {
             },
           }}
           variant='contained'
+          onClick={() => logout()}
         >
           Logout
         </Button>
@@ -255,7 +326,7 @@ const ProfessionalProfilePage = (props) => {
               />
               <p className=''>Years</p>
             </section>
-            <section className='row-option'>
+            {/* <section className='row-option'>
               <p className=''>Worked hours</p>
               <TextField
                 required
@@ -274,7 +345,7 @@ const ProfessionalProfilePage = (props) => {
                 onChange={handleChangeInput}
               />
               <p className=''>Hours</p>
-            </section>
+            </section> */}
           </section>
 
           <section>
@@ -311,12 +382,8 @@ const ProfessionalProfilePage = (props) => {
               icon: 'warning',
               buttons: true,
               dangerMode: true,
-            }).then((willDelete) => {
-              if (willDelete) {
-                swal('Account has been deleted successfully!', {
-                  icon: 'success',
-                })
-              }
+            }).then(() => {
+              deleteProfile()
             })
           }}
         >
@@ -352,7 +419,7 @@ const ProfessionalProfilePage = (props) => {
                 paddingTop: '10px',
               }}
               type='password'
-              value={name}
+              value={password}
               placeholder='********'
               onChange={handleChangeInput}
             />
@@ -369,7 +436,7 @@ const ProfessionalProfilePage = (props) => {
                 paddingTop: '10px',
               }}
               type='password'
-              value={email}
+              value={confirmPassword}
               placeholder='********'
               onChange={handleChangeInput}
             />
@@ -386,13 +453,16 @@ const ProfessionalProfilePage = (props) => {
             },
           }}
           variant='contained'
+          onClick={() => {
+            changePassword()
+          }}
         >
           Change
         </Button>
       </section>
     )
   }
-  console.log('profile open', isProfileMenuOpen)
+
   return (
     <>
       <NavBar />
@@ -467,6 +537,9 @@ const ProfessionalProfilePage = (props) => {
               },
             }}
             variant='contained'
+            onClick={() => {
+              updateProfile()
+            }}
           >
             Update Profile
           </Button>

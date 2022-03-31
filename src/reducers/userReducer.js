@@ -25,6 +25,26 @@ const userReducer = (state = initialState, action) => {
             ? action.professionalUserInfo
             : state.professionalUserInfo,
       }
+
+    case 'UPDATE_PROFESSIONAL_USER':
+      return {
+        ...state,
+        updateProfessionalError: action.error ? action.error : null,
+        updateProfessionalSuccess: action.subtype === 'success',
+        updateProfessionalLoading: action.subtype === 'loading',
+        updateProfessional:
+          action.subtype === 'success'
+            ? action.updateProfessional
+            : state.updateProfessional,
+      }
+
+    case 'DELETE_PROFESSIONAL_USER':
+      return {
+        ...state,
+        deleteProfessionalError: action.error ? action.error : null,
+        deleteProfessionalSuccess: action.subtype === 'success',
+        deleteProfessionalLoading: action.subtype === 'loading',
+      }
     default:
       return state
   }

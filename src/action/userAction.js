@@ -78,7 +78,7 @@ export function getProfessionalUser(email) {
                 subtype: 'error',
                 error: result.message,
               })
-              resolve(result)
+              rejects(result)
             }
           })
           .catch((error) => {
@@ -87,6 +87,106 @@ export function getProfessionalUser(email) {
       } catch (error) {
         dispatch({
           type: 'GET_PROFESSIONAL_USER',
+          error: error,
+        })
+      }
+    })
+  }
+}
+
+export function updateProfessionalUser(email, value) {
+  return function (dispatch, getState) {
+    return new Promise(async (resolve, rejects) => {
+      try {
+        dispatch({
+          type: 'UPDATE_PROFESSIONAL_USER',
+          subtype: 'loading',
+        })
+
+        var myHeaders = new Headers()
+        myHeaders.append('Content-Type', 'application/json')
+
+        var raw = JSON.stringify(value)
+
+        var requestOptions = {
+          method: 'PUT',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow',
+        }
+
+        fetch(`${BASE_URL}user/professional/${email}`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            console.log('update professional user==', result)
+            if (result.success) {
+              dispatch({
+                type: 'UPDATE_PROFESSIONAL_USER',
+                subtype: 'success',
+                updateProfessional: result.user,
+              })
+              resolve(result)
+            } else {
+              dispatch({
+                type: 'UPDATE_PROFESSIONAL_USER',
+                subtype: 'error',
+                error: result.message,
+              })
+              rejects(result)
+            }
+          })
+          .catch((error) => {
+            rejects(error)
+          })
+      } catch (error) {
+        dispatch({
+          type: 'UPDATE_PROFESSIONAL_USER',
+          error: error,
+        })
+      }
+    })
+  }
+}
+
+export function deleteProfessionalUser(email) {
+  return function (dispatch, getState) {
+    return new Promise(async (resolve, rejects) => {
+      try {
+        dispatch({
+          type: 'DELETE_PROFESSIONAL_USER',
+          subtype: 'loading',
+        })
+
+        var requestOptions = {
+          method: 'DELETE',
+          redirect: 'follow',
+        }
+
+        fetch(`${BASE_URL}user/professional/${email}`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            console.log('delete professional user==', result)
+            if (result.success) {
+              dispatch({
+                type: 'DELETE_PROFESSIONAL_USER',
+                subtype: 'success',
+              })
+              resolve(result)
+            } else {
+              dispatch({
+                type: 'DELETE_PROFESSIONAL_USER',
+                subtype: 'error',
+                error: result.message,
+              })
+              rejects(result)
+            }
+          })
+          .catch((error) => {
+            rejects(error)
+          })
+      } catch (error) {
+        dispatch({
+          type: 'DELETE_PROFESSIONAL_USER',
           error: error,
         })
       }
