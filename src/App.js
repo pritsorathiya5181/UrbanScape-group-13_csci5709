@@ -26,6 +26,8 @@ import PlumbingService from './pages/customer/ServicePage/PlumbingService'
 import Contact from './pages/customer/Support/Contact'
 import NotLoggedIn from './pages/customer/profile/NotLoggedIn'
 
+import MyOrders from '../src/pages/customer/Orders/MyOrders'
+
 function App() {
   const url = window.location.pathname
 
@@ -87,6 +89,9 @@ function App() {
           <Route path='/forgetpassword' element={<ForgetPassword />} />
           <Route path='/otp' element={<Otp />} />
           <Route path='/updatepassword' element={<UpdatePassword />} />
+
+          <Route path='/myorders' element={<MyOrders/>} />
+
         </Routes>
       </Router>
     </Provider>
