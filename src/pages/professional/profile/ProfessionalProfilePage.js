@@ -5,6 +5,7 @@ import './ProfessionalProfilePage.css'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import { Button, FormControl, TextField } from '@mui/material'
 import useWindowDimensions, {
+  getProfessionalUser,
   getUserType,
   hasToken,
 } from '../../../utils/scale'
@@ -35,7 +36,20 @@ const ProfessionalProfilePage = (props) => {
       alert('Please login to continue')
       window.location.href = '/'
     } else {
-      console.log(props)
+      var userInfo = getProfessionalUser()
+      if (userInfo) {
+        userInfo = JSON.parse(userInfo)
+      }
+
+      props.action
+        .getProfessionalUser(userInfo.email)
+        .then((res) => {
+          console.log('res', res)
+          console.log('res', props)
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
     }
 
     if (width > 800) {
@@ -378,7 +392,7 @@ const ProfessionalProfilePage = (props) => {
       </section>
     )
   }
-  console.log('first', isProfileMenuOpen)
+  console.log('profile open', isProfileMenuOpen)
   return (
     <>
       <NavBar />

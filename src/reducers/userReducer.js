@@ -13,6 +13,18 @@ const userReducer = (state = initialState, action) => {
         userInfo:
           action.subtype === 'success' ? action.userInfo : state.userInfo,
       }
+
+    case 'GET_PROFESSIONAL_USER':
+      return {
+        ...state,
+        professionalUserInfoError: action.error ? action.error : null,
+        professionalUserInfoSuccess: action.subtype === 'success',
+        professionalUserInfoLoading: action.subtype === 'loading',
+        professionalUserInfo:
+          action.subtype === 'success'
+            ? action.professionalUserInfo
+            : state.professionalUserInfo,
+      }
     default:
       return state
   }
