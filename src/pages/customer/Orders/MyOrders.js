@@ -1,7 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
-import axios from "axios"
+import axios from 'axios';
 
 import "./MyOrders.css";
+import Table from "./OrdersTable";
 
 const Genres = ({ values }) => {
     return (
@@ -17,7 +18,7 @@ const Genres = ({ values }) => {
     );
   };
 
-  function MyOrders(){
+  export default function MyOrders(){
 
     const columns = useMemo(
         () => [
