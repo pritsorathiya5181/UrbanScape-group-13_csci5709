@@ -11,7 +11,7 @@ import * as ServiceAction from '../../../action/ServiceAction'
 import * as orderAction from '../../../action/orderAction'
 import Loader from '../../../components/customloader/Loader'
 import { useLocation } from 'react-router-dom'
-import { hasToken } from '../../../utils/scale'
+import { getUserType, hasToken } from '../../../utils/scale'
 
 const ServiceHistory = (props) => {
   const { state } = useLocation()
@@ -27,11 +27,9 @@ const ServiceHistory = (props) => {
   )
   const [serviceLoading, setServiceLoading] = useState(false)
 
-  console.log('state', state)
   useEffect(() => {
-    if (!hasToken()) {
-      alert('Please login to continue')
-      window.location.href = '/'
+    if (!hasToken() || getUserType() !== 'professional') {
+      window.location.href = '/notloggedin/'
     }
 
     function getServicesStats() {

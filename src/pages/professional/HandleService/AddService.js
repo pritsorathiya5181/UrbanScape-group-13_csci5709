@@ -19,6 +19,7 @@ import Loader from '../../../components/customloader/Loader'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import useWindowDimensions, {
   getProfessionalUser,
+  getUserType,
   hasToken,
 } from '../../../utils/scale'
 import AddIcon from '@mui/icons-material/Add'
@@ -64,9 +65,8 @@ const AddService = (props) => {
   const classes = useStyles()
 
   useEffect(() => {
-    if (!hasToken()) {
-      window.location.href = '/'
-      alert('Please login to continue')
+    if (!hasToken() || getUserType() !== 'professional') {
+      window.location.href = '/notloggedin/'
     }
 
     if (

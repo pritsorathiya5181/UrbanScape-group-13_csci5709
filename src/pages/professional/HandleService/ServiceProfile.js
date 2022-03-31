@@ -10,6 +10,7 @@ import NavBar from '../../../components/professional/NavBar/NavBar'
 import AddIcon from '@mui/icons-material/Add'
 import useWindowDimensions, {
   getProfessionalUser,
+  getUserType,
   hasToken,
 } from '../../../utils/scale'
 import * as PATH from '../../../utils/string'
@@ -24,9 +25,8 @@ const ServiceProfile = (props) => {
   const [serviceLoading, setServiceLoading] = useState(false)
 
   useEffect(() => {
-    if (!hasToken()) {
-      window.location.href = '/'
-      alert('Please login to continue')
+    if (!hasToken() || getUserType() !== 'professional') {
+      window.location.href = '/notloggedin/'
     }
 
     function getServices() {

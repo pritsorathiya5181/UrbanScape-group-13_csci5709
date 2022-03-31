@@ -21,8 +21,8 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     if (!hasToken() || getUserType() !== 'professional') {
-      alert('Please login to continue')
-      window.location.href = '/'
+      // alert('Please login to continue')
+      window.location.href = '/notloggedin/'
     }
     var userInfo = getProfessionalUser()
     if (userInfo) {

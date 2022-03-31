@@ -11,7 +11,11 @@ import { bindActionCreators } from 'redux'
 import * as ServiceAction from '../../../action/ServiceAction'
 import * as orderAction from '../../../action/orderAction'
 import Loader from '../../../components/customloader/Loader'
-import { getProfessionalUser, hasToken } from '../../../utils/scale'
+import {
+  getProfessionalUser,
+  getUserType,
+  hasToken,
+} from '../../../utils/scale'
 
 const ServiceRequests = (props) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false)
@@ -23,9 +27,8 @@ const ServiceRequests = (props) => {
   const [serviceLoading, setServiceLoading] = useState(false)
 
   useEffect(() => {
-    if (!hasToken()) {
-      alert('Please login to continue')
-      window.location.href = '/'
+    if (!hasToken() || getUserType() !== 'professional') {
+      window.location.href = '/notloggedin/'
     }
 
     getServicesStats()

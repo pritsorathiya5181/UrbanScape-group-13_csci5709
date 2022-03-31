@@ -37,8 +37,7 @@ const ProfessionalProfilePage = (props) => {
 
   useEffect(() => {
     if (!hasToken() || getUserType() !== 'professional') {
-      alert('Please login to continue')
-      window.location.href = '/'
+      window.location.href = '/notloggedin/'
     } else {
       var userInfo = getProfessionalUser()
       if (userInfo) {

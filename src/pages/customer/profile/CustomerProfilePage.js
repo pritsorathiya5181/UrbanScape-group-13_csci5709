@@ -35,8 +35,7 @@ const CustomerProfilePage = (props) => {
 
   useEffect(() => {
     if (!hasToken() || getUserType() !== 'customer') {
-      alert('Please login to continue')
-      window.location.href = '/'
+      window.location.href = '/customer/notloggedin/'
     } else {
       var userInfo = getCustomerUser()
       if (userInfo) {

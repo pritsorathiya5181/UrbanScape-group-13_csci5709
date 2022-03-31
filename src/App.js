@@ -52,6 +52,7 @@ function App() {
             path='/customer/notloggedin/'
             element={<NotLoggedIn />}
           />
+          <Route exact path='/notloggedin/' element={<NotLoggedIn />} />
 
           <Route exact path='/professional' element={<Dashboard />} />
           <Route
