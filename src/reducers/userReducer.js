@@ -14,37 +14,38 @@ const userReducer = (state = initialState, action) => {
           action.subtype === 'success' ? action.userInfo : state.userInfo,
       }
 
-    case 'GET_PROFESSIONAL_USER':
+    case 'GET_CUSTOMER_USER':
       return {
         ...state,
-        professionalUserInfoError: action.error ? action.error : null,
-        professionalUserInfoSuccess: action.subtype === 'success',
-        professionalUserInfoLoading: action.subtype === 'loading',
-        professionalUserInfo:
+        customerUserInfoError: action.error ? action.error : null,
+        customerUserInfoSuccess: action.subtype === 'success',
+        customerUserInfoLoading: action.subtype === 'loading',
+        customerUserInfo:
           action.subtype === 'success'
-            ? action.professionalUserInfo
-            : state.professionalUserInfo,
+            ? action.customerUserInfo
+            : state.customerUserInfo,
       }
 
-    case 'UPDATE_PROFESSIONAL_USER':
+    case 'UPDATE_CUSTOMER_USER':
       return {
         ...state,
-        updateProfessionalError: action.error ? action.error : null,
-        updateProfessionalSuccess: action.subtype === 'success',
-        updateProfessionalLoading: action.subtype === 'loading',
-        updateProfessional:
+        updateCustomerError: action.error ? action.error : null,
+        updateCustomerSuccess: action.subtype === 'success',
+        updateCustomerLoading: action.subtype === 'loading',
+        updateCustomer:
           action.subtype === 'success'
-            ? action.updateProfessional
-            : state.updateProfessional,
+            ? action.updateCustomer
+            : state.updateCustomer,
       }
 
-    case 'DELETE_PROFESSIONAL_USER':
+    case 'DELETE_CUSTOMER_USER':
       return {
         ...state,
-        deleteProfessionalError: action.error ? action.error : null,
-        deleteProfessionalSuccess: action.subtype === 'success',
-        deleteProfessionalLoading: action.subtype === 'loading',
+        deleteCustomerError: action.error ? action.error : null,
+        deleteCustomerSuccess: action.subtype === 'success',
+        deleteCustomerLoading: action.subtype === 'loading',
       }
+
     default:
       return state
   }

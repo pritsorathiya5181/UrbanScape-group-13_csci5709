@@ -23,6 +23,7 @@ const ProfessionalProfilePage = (props) => {
   const [isProfileMenuOpen, setisProfileMenuOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState('info')
   const [isAlertOpen, setIsAlertOpen] = useState(false)
+  const [profileImg, setProfileImg] = useState()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [mobileNo, setMobileNo] = useState('')
@@ -53,6 +54,8 @@ const ProfessionalProfilePage = (props) => {
           setMobileNo(res?.user?.phoneno)
           setExperience(res?.user?.experience)
           setAddress(res?.user?.preferredlocation)
+          res?.user?.photoUrl && setProfileImg(res?.user?.photoUrl)
+          setAbout(res?.user?.about)
         })
         .catch((err) => {
           console.log('err', err)
@@ -109,6 +112,21 @@ const ProfessionalProfilePage = (props) => {
     },
   }))
 
+  const handleFileChange = (event) => {
+    const { target } = event
+    const { files } = target
+
+    if (files && files[0]) {
+      var reader = new FileReader()
+
+      reader.onload = (event) => {
+        setProfileImg(event.target.result)
+      }
+
+      reader.readAsDataURL(files[0])
+    }
+  }
+
   const changePassword = () => {
     if (password === confirmPassword) {
       const value = {
@@ -129,6 +147,7 @@ const ProfessionalProfilePage = (props) => {
 
   const updateProfile = () => {
     const value = {
+      photoUrl: profileImg,
       firstname: name.split(' ')[0],
       lastname: name.split(' ')[1],
       phoneno: mobileNo,
@@ -175,13 +194,43 @@ const ProfessionalProfilePage = (props) => {
           <section className='profile-img'>
             {/* <PersonIcon fontSize='large' /> */}
             <img
-              src={require('../../../asserts/logo/app/Capture.JPG')}
+              src={
+                profileImg || require('../../../asserts/logo/app/Capture.JPG')
+              }
               alt='profile_image'
               width={'100%'}
               height={'100%'}
             />
           </section>
         </section>
+        <div style={{ flexDirection: 'column', display: 'flex' }}>
+          <input
+            id='car'
+            type='file'
+            accept='image/*'
+            capture='camera'
+            onChange={handleFileChange}
+            style={{
+              backgroundColor: 'red',
+              position: 'absolute',
+              alignSelf: 'center',
+              padding: '10px 10px',
+              marginTop: '5px',
+              opacity: 0,
+            }}
+          />
+          <div
+            style={{
+              alignSelf: 'center',
+              boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+              backgroundColor: '#f1f1f1',
+              padding: '10px 10px',
+              marginTop: '5px',
+            }}
+          >
+            Upload Profile Image
+          </div>
+        </div>
 
         <FormControl
           sx={{
@@ -226,7 +275,7 @@ const ProfessionalProfilePage = (props) => {
               // className={isMenu && classes.textField}
               value={email}
               placeholder='tomholland@gmail.com'
-              onChange={handleChangeInput}
+              // onChange={handleChangeInput}
             />
           </section>
 
