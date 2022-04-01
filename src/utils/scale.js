@@ -52,3 +52,12 @@ export const getProfessionalUser = () => {
     return null
   }
 }
+
+export const getCustomerUser = () => {
+  const userType = localStorage.getItem('usertype')
+  if (hasToken() && userType === 'customer') {
+    return localStorage.getItem('customer')
+  } else {
+    return null
+  }
+}

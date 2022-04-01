@@ -107,6 +107,7 @@ const UserLogin = (props) => {
         } else {
           localStorage.setItem('accesstoken', result.accessToken)
           localStorage.setItem('usertype', 'customer')
+          localStorage.setItem('customer', JSON.stringify(result.user))
           console.log('!!Welcome to Urbanscape!!')
           window.location.href = '/'
         }
