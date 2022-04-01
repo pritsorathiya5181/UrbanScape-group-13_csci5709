@@ -8,7 +8,10 @@ import './ServiceProfile.css'
 import ServiceCard from './ServiceCard'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import AddIcon from '@mui/icons-material/Add'
-import useWindowDimensions, { hasToken } from '../../../utils/scale'
+import useWindowDimensions, {
+  getProfessionalUser,
+  hasToken,
+} from '../../../utils/scale'
 import * as PATH from '../../../utils/string'
 import * as ServiceAction from '../../../action/ServiceAction'
 import Loader from '../../../components/customloader/Loader'

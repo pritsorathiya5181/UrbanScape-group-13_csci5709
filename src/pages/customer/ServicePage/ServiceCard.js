@@ -1,14 +1,16 @@
+/**
+ * Author: Priti Sri Pandey - B00877337
+ */
 import React from 'react';
 import clsx from 'clsx';
 import { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import Calendar from '../../../components/customer/DateTimePicker/Calendar'
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+import { hasToken } from '../../../utils/scale';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as cartAction from '../../../action/cartAction'
 import { bindActionCreators } from 'redux'
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: '200px',
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%',
   },
   cardAction: {
     display: 'flex',
@@ -45,9 +47,6 @@ const useStyles = makeStyles((theme) => ({
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
-    // transition: theme.transitions.create('transform', {
-    //   duration: theme.transitions.duration.shortest,
-    // }),
   },
   expandOpen: {
     transform: 'rotate(180deg)',
@@ -62,7 +61,24 @@ const useStyles = makeStyles((theme) => ({
 
 function ServiceCard(props) {
   const classes = useStyles()
-  const defaultFormValues = { fName: "", contactNum: undefined, email: "", address: "", bookingTime: "2017-05-24T10:30", instructions: "" };
+  const [isValidPhoneNum, setIsValidPhoneNum] = useState(true);
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
+  let newDate = new Date()
+
+  function addZero(i) {
+    if (i < 10) {i = "0" + i}
+    return i;
+  }
+  
+  let mobError = 'Please enter a valid mobile number.';
+  let h = addZero(newDate.getHours());
+  let m = addZero(newDate.getMinutes());
+
+   let defaultBookingDate = newDate.getFullYear() + "-0" + (newDate.getMonth() + 1) + "-" + (newDate.getDate() + 1) + 'T' + h + ':' + (m);
+   let minBookingDate = newDate.getFullYear() + "-0" + (newDate.getMonth() + 1) + "-" + (newDate.getDate() + 1) + 'T' + h + ':' + (m - 2);
+   defaultBookingDate = defaultBookingDate.toString();
+
+  const defaultFormValues = { fName: "", contactNum: undefined, email: "", address: "", bookingTime: defaultBookingDate, instructions: "" };
   const [bookingFormDetails, setBookingFormDetails] = useState(defaultFormValues);
   const [expanded, setExpanded] = React.useState(false)
 
@@ -71,21 +87,41 @@ function ServiceCard(props) {
     setBookingFormDetails({ ...bookingFormDetails, [name]: value });
   };
 
+const validatePhoneNumber = (mobileNum) => {
+  let mobRegex = /^\d{10}$/;
+  if(mobileNum.match(mobRegex)) {
+    setIsValidPhoneNum(true);
+      return true;
+  } else {
+    setIsValidPhoneNum(false);
+     return false;
+  }
+}
+
 const handleSubmit = (event) => {
   event.preventDefault();
+
+  if (!hasToken()) {
+    window.location.href = '/customer/unauthenticated/'
+  }
+
+  if(validatePhoneNumber(bookingFormDetails.contactNum)) {
   bookingFormDetails.serviceName = props.services.serviceName;
   bookingFormDetails.price = props.services.price;
   bookingFormDetails.serviceCategory = props.serviceCategory;
   props.action.addCartItem(bookingFormDetails).then((res) => {
+    setIsAddedToCart(true);
     console.log("Result" , res)
    })
    .catch((err) => {
      console.log('Add Cart Item Error', err)
    })
   handleClose();
+  } else {
 
   }
 
+  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -150,9 +186,12 @@ const handleSubmit = (event) => {
             onChange={handleBooking}
             name="contactNum"
             label="Contact Number"
-            type="number"
             variant="outlined"
           />
+          {!isValidPhoneNum && (
+       <p  style={{color:'red'}}>{mobError}</p>
+      )}
+           
           <TextField
             required 
             margin="dense"
@@ -185,6 +224,7 @@ const handleSubmit = (event) => {
                   name="bookingTime"
                   label="Book appointment"
                   type="datetime-local"
+                  InputProps={{inputProps: { min: minBookingDate} }}
                   value={bookingFormDetails.bookingTime}
                   onChange={handleBooking}
                   InputLabelProps={{

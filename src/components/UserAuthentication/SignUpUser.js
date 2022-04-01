@@ -15,26 +15,9 @@ import { Select } from '@mui/material'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useState } from 'react/cjs/react.development'
+import { useState } from 'react'
 import { BASE_URL } from '../../utils/string'
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
 
 const theme = createTheme()
 
@@ -56,7 +39,7 @@ export default function SignUpUser() {
     return re.test(email)
   }
   const validatePwd = (password) => {
-    var re = /^[A-Z]*$/
+    var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
     return re.test(password)
   }
   const handleFName = (event) => {
@@ -82,7 +65,7 @@ export default function SignUpUser() {
     const Email = event.target.value
     localStorage.setItem('email', 'Email')
     if (!validateEmail(Email)) {
-      setEmailError('Invalid email foramt')
+      setEmailError('Invalid email format')
     } else {
       setEmailError('')
     }
@@ -99,8 +82,8 @@ export default function SignUpUser() {
 
   const handlePassword = (event) => {
     const Password = event.target.value
-    if (validatePwd(Password)) {
-      setPasswordError('Should have special and alphanumeric characters ')
+    if (!validatePwd(Password)) {
+      setPasswordError('Should have alphanumeric characters and atleast one special character')
     } else if (Password.length < 8) {
       setPasswordError('Minimum 8 characters are required')
     } else {
@@ -126,29 +109,29 @@ export default function SignUpUser() {
 
     const data = new FormData(event.currentTarget)
     // eslint-disable-next-line no-console
-    if (fnameError.length > 0) {
-      alert('Error in FirstName')
+    if (fnameError?.length > 0) {
+      alert(fnameError)
       return
     }
 
-    if (lnameError.length > 0) {
-      alert('Error in LastName')
+    if (lnameError?.length > 0) {
+      alert(lnameError)
       return
     }
-    if (emailError.length > 0) {
-      alert('Error in Email')
+    if (emailError?.length > 0) {
+      alert(emailError)
       return
     }
     if (phonenoError.length > 0) {
-      alert('Invalid phone Number')
+      alert(phonenoError)
       return
     }
     if (passwordError.length > 0) {
-      alert('Error in Password')
+      alert(passwordError)
       return
     }
     if (confirmPasswordError.length > 0) {
-      alert('Error in Confirm Password')
+      alert(confirmPasswordError)
       return
     }
 

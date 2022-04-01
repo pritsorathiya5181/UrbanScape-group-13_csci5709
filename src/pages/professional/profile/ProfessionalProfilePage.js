@@ -4,13 +4,19 @@ import React, { useEffect, useState } from 'react'
 import './ProfessionalProfilePage.css'
 import NavBar from '../../../components/professional/NavBar/NavBar'
 import { Button, FormControl, TextField } from '@mui/material'
-import useWindowDimensions, { hasToken } from '../../../utils/scale'
+import useWindowDimensions, {
+  getUserType,
+  hasToken,
+} from '../../../utils/scale'
 import { makeStyles } from '@mui/styles'
 import DialogAlert from '../../../components/DialogAlert'
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos'
 import swal from 'sweetalert'
+import * as userAction from '../../../action/userAction'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-const ProfessionalProfilePage = () => {
+const ProfessionalProfilePage = (props) => {
   const { width } = useWindowDimensions()
 
   const [isProfileMenuOpen, setisProfileMenuOpen] = useState(false)
@@ -25,9 +31,11 @@ const ProfessionalProfilePage = () => {
   const [address, setAddress] = useState('')
 
   useEffect(() => {
-    if (!hasToken()) {
-      window.location.href = '/'
+    if (!hasToken() || getUserType() !== 'professional') {
       alert('Please login to continue')
+      window.location.href = '/'
+    } else {
+      console.log(props)
     }
 
     if (width > 800) {
@@ -409,7 +417,7 @@ const ProfessionalProfilePage = () => {
             </Button>
           )}
           <section className='row-option'>
-            <text
+            <small
               className={
                 selectedOption === 'info'
                   ? 'profile-option-btn left-option selected'
@@ -418,8 +426,8 @@ const ProfessionalProfilePage = () => {
               onClick={() => setSelectedOption('info')}
             >
               info
-            </text>
-            <text
+            </small>
+            <small
               className={
                 selectedOption === 'changepass'
                   ? 'profile-option-btn right-option selected'
@@ -428,7 +436,7 @@ const ProfessionalProfilePage = () => {
               onClick={() => setSelectedOption('changepass')}
             >
               change password
-            </text>
+            </small>
           </section>
           <section className='detail-view'>
             {selectedOption === 'info' && infoView()}
@@ -454,4 +462,21 @@ const ProfessionalProfilePage = () => {
   )
 }
 
-export default ProfessionalProfilePage
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      userInfo: state.user,
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(userAction, dispatch),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfessionalProfilePage)

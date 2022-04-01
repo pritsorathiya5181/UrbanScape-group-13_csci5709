@@ -1,5 +1,11 @@
+/**
+ * Author: Priti Sri Pandey - B00877337
+ */
 import { BASE_URL } from '../utils/string'
 
+/**
+ * getServices() makes a GET call to Nodejs backend api to get all service categories from MongoDB database
+ */
 export function getServices() {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {

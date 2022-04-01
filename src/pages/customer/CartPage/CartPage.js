@@ -23,6 +23,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import * as cartAction from '../../../action/cartAction'
+import { hasToken } from '../../../utils/scale'
 
 
 
@@ -55,10 +56,11 @@ function getCartItems() {
 
 
 useEffect(() => {
- 
-    getCartItems()
-    console.log("Number of items in cart" , props)
 
+  if (!hasToken()) {
+    window.location.href = '/customer/unauthenticated/'
+  }
+   getCartItems() 
 }, [])
 
 

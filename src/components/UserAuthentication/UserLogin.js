@@ -14,28 +14,13 @@ import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../../utils/string'
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as userAction from '../../action/userAction'
 
 const theme = createTheme()
 
-export default function UserLogin() {
+const UserLogin = (props) => {
   const bgImage = require('../../asserts/images/app-bg.jpg')
   const navigateToHome = useNavigate()
   const [errors, setErrors] = React.useState({})
@@ -45,17 +30,14 @@ export default function UserLogin() {
   const [phonenoError, setPhoneNo] = useState()
   const [passwordError, setPasswordError] = useState()
   const [confirmPasswordError, setConfirmPasswordError] = useState()
-  const validateFName = (name) => {
-    var re = /[^a-zA-Z]/
-    return re.test(name)
-  }
+
   const validateEmail = (email) => {
     var re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     return re.test(email)
   }
   const validatePwd = (password) => {
-    var re = /^[A-Z]*$/
+    var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
     return re.test(password)
   }
   const handleEmail = (event) => {
@@ -70,8 +52,10 @@ export default function UserLogin() {
 
   const handlePassword = (event) => {
     const Password = event.target.value
-    if (validatePwd(Password)) {
-      setPasswordError('Should have special and alphanumeric characters ')
+    if (!validatePwd(Password)) {
+      setPasswordError(
+        'Should have alphanumeric characters and atleast one special character'
+      )
     } else if (Password?.length < 8) {
       setPasswordError('Minimum 8 characters are required')
     } else {
@@ -80,59 +64,56 @@ export default function UserLogin() {
   }
 
   const handleSubmit = (event) => {
+    setEmailError('')
+    setPasswordError('')
     event.preventDefault()
     const data = new FormData(event.currentTarget)
 
     if (emailError?.length > 0) {
-      alert('Error in Email')
+      alert(emailError)
       return
     }
 
     if (passwordError?.length > 0) {
-      alert('Error in Password')
+      alert(passwordError)
       return
     }
 
-    // eslint-disable-next-line no-console
     var email = data.get('email')
     var password = data.get('password')
 
-    var raw = ''
+    // var raw = ''
 
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    }
+    // var requestOptions = {
+    //   method: 'GET',
+    //   redirect: 'follow',
+    // }
 
-    fetch(`${BASE_URL}auth/users/${email}/${password}`, requestOptions)
-      .then((response) => response.json())
+    props.action
+      .userLogin(email, password)
       .then((result) => {
-        console.log(result)
         if (result.message === 'User not registered') {
           console.log('user not registered')
-          alert('You need to register')
+          setEmailError(result.message)
         } else if (result.message === 'Wrong password') {
           console.log('Invalid Password')
-          alert('Invalid Password')
+          setPasswordError('Invalid Email/Password')
         } else if (result.message === 'Welcome Professional') {
           localStorage.setItem('accesstoken', result.accessToken)
           localStorage.setItem('usertype', 'professional')
-          localStorage.setItem('user', result.user)
-          alert('!!Welcome to Urbanscape!!')
+          localStorage.setItem('professional', JSON.stringify(result.user))
+          console.log('!!Welcome to Urbanscape!!')
           window.location.href = '/professional'
         } else {
           localStorage.setItem('accesstoken', result.accessToken)
           localStorage.setItem('usertype', 'customer')
-          alert('!!Welcome to Urbanscape!!')
+          console.log('!!Welcome to Urbanscape!!')
           window.location.href = '/'
         }
       })
-      .catch((error) => console.log('error', error))
-
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
+      .catch((error) => {
+        console.log('error', error)
+      })
   }
 
   return (
@@ -202,7 +183,9 @@ export default function UserLogin() {
                 onBlur={(e) => handlePassword(e)}
               />
               {/* <p style={{color:"red"}}>{passwordError}</p> */}
-
+              <Typography style={{ color: 'red', width: '500px' }}>
+                {passwordError}
+              </Typography>
               <Button
                 type='submit'
                 fullWidth
@@ -235,3 +218,19 @@ export default function UserLogin() {
     </ThemeProvider>
   )
 }
+
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      userInfo: state.user.userInfo,
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(userAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserLogin)

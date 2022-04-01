@@ -1,4 +1,6 @@
-// Author: Prit Ajaykumar Sorathiya - B00890175
+/**
+ * Author: Priti Sri Pandey - B00877337
+ */
 
 import { Send } from '@mui/icons-material'
 import styled from 'styled-components'
@@ -37,6 +39,9 @@ const Button = styled.button`
   color: white;
 `
 
+/**
+ * NewsLetter accepts an email ID, and saves it in the database for newsletter subscriptions, it also prompts the user with status of subscription with a disappearing info message
+ */
 function NewsLetter(props) {
   const [subscriptiondetail, setSubscription] = React.useState({ email: '' })
   const [isSubscribeSuccess, setSubscriptionSuccess] = React.useState(false)

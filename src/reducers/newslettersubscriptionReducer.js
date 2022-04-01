@@ -1,3 +1,6 @@
+/**
+ * Author: Priti Sri Pandey - B00877337
+ */
 const initialState = []
 
 const newsletterSubscriptionReducer = (state = initialState, action) => {

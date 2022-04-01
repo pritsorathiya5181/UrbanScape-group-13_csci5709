@@ -30,7 +30,7 @@ const NavBar = () => {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     toolbar: {
       height: '50px',
@@ -86,6 +86,7 @@ const NavBar = () => {
 
   const handleClose = () => {
     setServiceOption(null)
+    handleCloseNavMenu()
   }
 
   const handlePageClicks = (pages) => {
@@ -207,7 +208,7 @@ const NavBar = () => {
           }}
         >
           {MENU.PAGES.map((page) => (
-            <MenuItem key={page} onClick={() => handlePageClicks(page)}>
+            <MenuItem key={page} onClick={page === 'Services' ? handleClick : () => handlePageClicks(page)}>
               <Typography textAlign='center'>{page}</Typography>
               {page === 'Services' && <ArrowDropDownIcon />}
             </MenuItem>
@@ -299,7 +300,7 @@ const NavBar = () => {
   }
 
   return (
-    <AppBar position='static'>
+    <AppBar position='static' style={{backgroundColor: "#2a2a2a"}}>
       <Container maxWidth='100%'>
         <Toolbar disableGutters className={classes.toolbar}>
           <Box

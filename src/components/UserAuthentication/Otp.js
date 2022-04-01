@@ -16,23 +16,6 @@ import { useState } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { BASE_URL } from '../../utils/string'
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
 
 const theme = createTheme()
 
@@ -62,6 +45,9 @@ export default function Otp(props) {
       .then((result) => {
         if (result === 'otp matched') {
           navigateupdate('/updatepassword', { state: currUser })
+        } else if(result === 'OTP expired') {
+          alert("OTP expired");
+          navigateupdate('/forgetpassword')
         } else {
           alert('Enter valid otp')
         }
@@ -117,7 +103,9 @@ export default function Otp(props) {
                 name='otp'
                 autoComplete='otp'
               />
-
+            <Typography >
+              *OTP is valid for 5 minutes only
+            </Typography>
               <Button
                 type='submit'
                 fullWidth
