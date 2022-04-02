@@ -167,7 +167,7 @@ export function deleteService(serviceId) {
   }
 }
 
-export function getServiceStats(userId) {
+export function getServiceStats(userId, userEmail) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
       try {
@@ -181,7 +181,7 @@ export function getServiceStats(userId) {
           redirect: 'follow',
         }
 
-        fetch(`${BASE_URL}service/stats/${userId}`, requestOptions)
+        fetch(`${BASE_URL}service/stats/${userId}/${userEmail}`, requestOptions)
           .then((response) => response.json())
           .then((result) => {
             console.log('service stats==', result)

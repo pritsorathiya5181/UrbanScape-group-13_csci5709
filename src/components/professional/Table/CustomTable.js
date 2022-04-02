@@ -11,9 +11,14 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import moment from 'moment'
 import { Button } from '@mui/material'
+import { getProfessionalUser } from '../../../utils/scale'
 
 export default function CustomTable(props) {
   const columns = props?.headerData
+  var userInfo = getProfessionalUser()
+  if (userInfo) {
+    userInfo = JSON.parse(userInfo)
+  }
 
   function createData(serviceNo, service) {
     return {
@@ -39,6 +44,25 @@ export default function CustomTable(props) {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value)
     setPage(0)
+  }
+
+  const getOrderStatus = (row) => {
+    if (
+      row?.orderItemStatus === 'Approved' ||
+      row?.orderItemStatus === 'Cancelled'
+    ) {
+      return row?.orderItemStatus
+    } else if (row?.orderItemStatus === 'Pending') {
+      const professionalArr = row?.professionalName?.split(' ')
+      const hasProfessional = professionalArr.filter(
+        (name) => name.toLowerCase() === userInfo?.email.toLowerCase()
+      )
+      if (hasProfessional.length > 0) {
+        return 'Cancelled'
+      } else {
+        return 'Pending'
+      }
+    }
   }
 
   return (
@@ -126,7 +150,8 @@ export default function CustomTable(props) {
                                       marginLeft: '10px',
                                     }}
                                   >
-                                    {row?.orderItemStatus}
+                                    {/* {row?.orderItemStatus} */}
+                                    {getOrderStatus(row)}
                                   </Button>
                                 </p>
                               )}
