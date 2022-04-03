@@ -1,15 +1,11 @@
 // Author: Aeshna Verma - B00880776
 
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import {
   Button,
-  FormControl,
-  MenuItem,
-  Select,
   TextField,
-  Tooltip,
   Typography
 } from '@mui/material'
 
@@ -29,7 +25,6 @@ import { hasToken } from '../../../utils/scale'
 
 const CartPage = (props) => {
 
-const navigate = useNavigate()
 
 const [cart, setCart] = useState(props.cartData || {})
 const [cartItems, setCartItems] = useState(props.cartData.cartItems || [])

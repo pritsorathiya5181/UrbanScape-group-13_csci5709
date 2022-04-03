@@ -1,20 +1,16 @@
 // Author: Aeshna Verma - B00880776
 
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import {
   Button,
   FormControl,
   MenuItem,
   Select,
-  TextField,
-  Tooltip,
-  Typography,
-  InputLabel ,
-  FormHelperText 
+  InputLabel 
 } from '@mui/material'
-import { SelectChangeEvent } from '@mui/material/Select';
+
 
 import { connect } from 'react-redux'
 import * as cartAction from '../../../action/cartAction'
@@ -29,11 +25,22 @@ import CardDetails from './CardDetails';
     const [discount, setDiscount] = useState(props.cartData.cartDiscountAmount || 0)
     const [itemsCount, setItemsCount] = useState(props.cartData.cartDiscountAmount || 0)
     const [paymentMethod, setPaymentMethod] = useState('');
+    const [payUsingCard, setPayUsingCard] = useState(true)
     
 
     const handleChange = (event) => {
         setPaymentMethod(event.target.value);
-    };
+        console.log(event.target.value)
+        const payMeans = event.target.value
+        if(payMeans === "card"){
+          payUsingCard = true
+        }
+        else if(payMeans === "payafterService"){
+          payUsingCard = false
+        }
+    }
+
+
 
     function getCartItems() {
       const user = 'dan'
@@ -82,16 +89,12 @@ import CardDetails from './CardDetails';
     onChange={handleChange}
     >
     <MenuItem value={"card"}>Debit/credit Card</MenuItem>
-    <MenuItem value={"afterService"}>Cash after service</MenuItem>
+    <MenuItem value={"payafterService"}>Cash after service</MenuItem>
     </Select>
-    <Button > Proceed </Button>
     </FormControl>
-
-   
-   
   
      <div>
-    <CardDetails></CardDetails>
+    <CardDetails payUsingCard ></CardDetails>
     <Button variant="contained">Pay</Button>
     </div>
 
