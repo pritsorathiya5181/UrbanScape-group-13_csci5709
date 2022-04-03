@@ -36,9 +36,9 @@
 .menu {
   left: 0;
   width: 100%;
-  background-color: var(--theme-dark);
+  /* background-color: var(--theme-dark); */
   transition: all 1s ease-in;
-  color: var(--theme-white);
+  /* color: var(--theme-white); */
 }
 
 .inactive {
@@ -93,7 +93,7 @@
 .detail-view {
   /* border: 2px solid var(--theme-dark); */
   width: 80%;
-  height: 510px;
+  height: 480px;
   padding: 20px;
 }
 

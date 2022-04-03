@@ -13,7 +13,7 @@ export function deleteItem(itemId, itemprice) {
           subtype: 'loading',
         })
 
-        const userName = 'aes'
+        const userName = 'dan'
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -98,7 +98,7 @@ export function getCartItems(userId) {
         try {
           console.log("Cart Items Are " + JSON.stringify(value));
        
-          let user = 'aes';
+          let user = 'dan';
 
           const uniqueItemId= Date.now().toString()
           const servicedate = moment(value.bookingTime).format("DD-MMM-YYYY")

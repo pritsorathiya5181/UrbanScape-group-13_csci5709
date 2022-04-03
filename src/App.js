@@ -27,6 +27,7 @@ import Contact from './pages/customer/Support/Contact'
 import NotLoggedIn from './pages/customer/profile/NotLoggedIn'
 
 import MyOrders from '../src/pages/customer/Orders/MyOrders'
+import Payment from './pages/customer/Payment/Payment'
 
 function App() {
   const url = window.location.pathname
@@ -48,8 +49,14 @@ function App() {
             path='/customer/myprofile/'
             element={<CustomerProfilePage />}
           />
-          <Route exact path='/customer/cartpage/' element={<CartPage />} />
-          <Route exact path='/customer/unauthenticated/' element={<NotLoggedIn />} />
+          <Route exact path='/cartpage/' element={<CartPage />} />
+          <Route exact path='/payment/' element={<Payment />} />
+          <Route
+            exact
+            path='/customer/unauthenticated/'
+            element={<NotLoggedIn />}
+          />
+          <Route exact path='/notloggedin/' element={<NotLoggedIn />} />
 
           <Route exact path='/professional' element={<Dashboard />} />
           <Route
@@ -90,8 +97,7 @@ function App() {
           <Route path='/otp' element={<Otp />} />
           <Route path='/updatepassword' element={<UpdatePassword />} />
 
-          <Route path='/myorders' element={<MyOrders/>} />
-
+          <Route path='/myorders' element={<MyOrders />} />
         </Routes>
       </Router>
     </Provider>
