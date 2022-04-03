@@ -35,7 +35,7 @@ const [cart, setCart] = useState(props.cartData || {})
 const [cartItems, setCartItems] = useState(props.cartData.cartItems || [])
 
 function getCartItems() {
-  const user = 'aes'
+  const user = 'dan'
   props.action
     .getCartItems(user)
     .then((res) => {
