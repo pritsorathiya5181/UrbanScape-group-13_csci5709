@@ -74,8 +74,10 @@ function ServiceCard(props) {
   let h = addZero(newDate.getHours());
   let m = addZero(newDate.getMinutes());
 
-   let defaultBookingDate = newDate.getFullYear() + "-0" + (newDate.getMonth() + 1) + "-" + (newDate.getDate() + 1) + 'T' + h + ':' + (m);
-   let minBookingDate = newDate.getFullYear() + "-0" + (newDate.getMonth() + 1) + "-" + (newDate.getDate() + 1) + 'T' + h + ':' + (m - 2);
+   let twoDigitMonth=((newDate.getMonth()+1)>=10)? (newDate.getMonth()+1) : '0' + (newDate.getMonth()+1);  
+   let twoDigitDate=((newDate.getDate() + 1)>=10)? (newDate.getDate() + 1) : '0' + (newDate.getDate() + 1);
+   let defaultBookingDate = newDate.getFullYear() + "-" + twoDigitMonth + "-" + twoDigitDate + 'T' + h + ':' + (m);
+   let minBookingDate = newDate.getFullYear() + "-" + twoDigitMonth + "-" + twoDigitDate + 'T' + h + ':' + (m-2);
    defaultBookingDate = defaultBookingDate.toString();
 
   const defaultFormValues = { fName: "", contactNum: undefined, email: "", address: "", bookingTime: defaultBookingDate, instructions: "" };
