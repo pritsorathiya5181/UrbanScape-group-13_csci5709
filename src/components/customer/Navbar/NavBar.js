@@ -77,7 +77,7 @@ const NavBar = () => {
   }
 
   const navigateToCart = () => {
-    navigate('./customer/cartpage')
+    navigate('./cartpage')
   }
 
   const handleClick = (event) => {
