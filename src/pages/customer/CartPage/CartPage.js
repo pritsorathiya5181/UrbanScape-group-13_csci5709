@@ -25,9 +25,13 @@ import { hasToken } from '../../../utils/scale'
 
 const CartPage = (props) => {
 
-
+let navigate = useNavigate()
 const [cart, setCart] = useState(props.cartData || {})
 const [cartItems, setCartItems] = useState(props.cartData.cartItems || [])
+
+function handleCheckout() {
+  navigate('.././payment')
+}
 
 function getCartItems() {
   const user = 'dan'
@@ -156,7 +160,7 @@ function  removeFromCart (itemId, itemPrice) {
   </div>
 
   <div style={{ display: "flex" , justifyContent: "center" , padding: 50}}>
-  <Button disabled variant="contained"  sx = {{backgroundColor: "#D3DEDC" , p:1}}  >
+  <Button onClick= {handleCheckout} variant="contained"  sx = {{backgroundColor: "#D3DEDC" , p:1}}  >
     CHECKOUT
   </Button>
   </div>
