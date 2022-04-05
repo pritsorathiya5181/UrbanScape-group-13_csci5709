@@ -34,19 +34,13 @@ function getCartItems() {
   props.action
     .getCartItems(user)
     .then((res) => {
-      console.log("Result" , res.cart)
-      let itemsList = res.cart.cartItems
-      console.log("Items" , itemsList)
-      console.log("props" , props)
       setCart(res.cart)
       setCartItems(res.cart.cartItems)
 
     })
     .catch((err) => {
-     // alert(err)
        console.log('err', err)
     })
-    console.log("p1", (props))
   }
 
 

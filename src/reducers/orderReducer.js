@@ -18,6 +18,13 @@ const activitiesReducer = (state = initialState, action) => {
         cancelServiceSuccess: action.subtype === 'success',
         cancelServiceLoading: action.subtype === 'loading',
       }
+    case 'SAVE_ORDER_REQUEST':
+      return {
+        ...state,
+        saveOrderError: action.error ? action.error : null,
+        saveOrderSuccess: action.subtype === 'success',
+        saveOrderLoading: action.subtype === 'loading',
+      }      
     default:
       return state
   }

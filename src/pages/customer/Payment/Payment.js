@@ -14,6 +14,7 @@ import {
 
 import { connect } from 'react-redux'
 import * as cartAction from '../../../action/cartAction'
+import * as orderAction from '../../../action/orderAction'
 import { hasToken } from '../../../utils/scale'
 import CardDetails from './CardDetails';
 
@@ -24,49 +25,72 @@ import CardDetails from './CardDetails';
     const [cartTotal, setCartTotal] = useState(props.cartData.cartTotalAmount || 0)
     const [discount, setDiscount] = useState(props.cartData.cartDiscountAmount || 0)
     const [itemsCount, setItemsCount] = useState(props.cartData.cartDiscountAmount || 0)
-    const [paymentMethod, setPaymentMethod] = useState('');
-    const [payUsingCard, setPayUsingCard] = useState(true)
-    
+    const [payUsingCard, setPayUsingCard] = useState()
+    const [paymentMethod, setPaymentMethod] = useState('')
+    const [cart, setCart] = useState(props.cartData || {})
+    const [cartItems, setCartItems] = useState(props.cartData.cartItems || [])
 
+    
     const handleChange = (event) => {
         setPaymentMethod(event.target.value);
-        console.log(event.target.value)
-        const payMeans = event.target.value
-        if(payMeans === "card"){
-          payUsingCard = true
+        console.log(" Payment method ", event.target.value)
+
+
+        if(event.target.value === "card"){
+          console.log("if")
+          setPayUsingCard(true) 
         }
-        else if(payMeans === "payafterService"){
-          payUsingCard = false
+        else if (event.target.value === "cash"){
+          console.log("else")
+          setPayUsingCard(false) 
         }
+  
+        console.log("Pay using card is " , payUsingCard)
+
+        
     }
-
-
 
     function getCartItems() {
       const user = 'dan'
+      console.log("Payment get Cart details" )
       props.action
         .getCartItems(user)
         .then((res) => {
-          console.log("Payment Result" , res.cart)
-          setCartTotal(res.cart.cartTotalAmount)
-          setDiscount(res.cart.cartDiscountAmount)
-          setItemsCount(res.cart.cartItems.length)
-
-    
+        setCart(res.cart)
+        setCartItems(res.cart.cartItems)
+        setCartTotal(res.cart.cartTotalAmount)
+        setDiscount(res.cart.cartDiscountAmount)
+        setItemsCount(res.cart.cartItems.length)
         })
         .catch((err) => {
-          alert(err)
-           console.log('err', err)
+        console.log('err', err)
         })
+        
+
+      }
+
+      function saveOrder(){
+        const user = 'dareynolds'
+        console.log("Save Order")
+        // console.log(cartItems)
+        props.orderaction.saveOrderRequest(user,cart)
+        // .then((res) => {
+        //   console.log("Save Order " , res)
+    
+        // })
+        // .catch((err) => {
+        //   alert(err)
+        //    console.log('save Order err', err)
+        // })
+
 
       }
     
-    
     useEffect(() => {
     
-    //   if (!hasToken()) {
-    //     window.location.href = '/customer/unauthenticated/'
-    //   }
+      if (!hasToken()) {
+        window.location.href = '/customer/unauthenticated/'
+      }
        getCartItems() 
     
     }, [])
@@ -88,18 +112,33 @@ import CardDetails from './CardDetails';
     label="Payment Method"
     onChange={handleChange}
     >
+
     <MenuItem value={"card"}>Debit/credit Card</MenuItem>
-    <MenuItem value={"payafterService"}>Cash after service</MenuItem>
+    <MenuItem value={"cash"}>Cash after service</MenuItem>
     </Select>
+    
     </FormControl>
   
-     <div>
-    <CardDetails payUsingCard ></CardDetails>
-    <Button variant="contained">Pay</Button>
+    <div>
+    { payUsingCard && <div>    
+        <CardDetails payUsingCard ></CardDetails>
+        <Button 
+        variant="contained" 
+        onClick = {saveOrder}
+        >
+        Pay</Button>
+      </div> 
+    }
+
+    { !payUsingCard && 
+      <div>     
+        <Button variant="contained">Proceed</Button>
+      </div> 
+    }
+    
     </div>
-
-
-
+  
+  
     </div>
   )
   
@@ -108,7 +147,8 @@ import CardDetails from './CardDetails';
 function mapStateToProps(state) {
     if (state) {
       return {
-        cartData: state.cart
+        cartData: state.cart,
+        orders: state.orders,
       }
     }
   }
@@ -116,6 +156,7 @@ function mapStateToProps(state) {
   function mapDispatchToProps(dispatch) {
     return {
       action: bindActionCreators(cartAction, dispatch),
+      orderaction: bindActionCreators(orderAction, dispatch),
     }
   }
 
