@@ -115,3 +115,62 @@ export function cancelServiceRequest(serviceItem) {
     })
   }
 }
+
+
+export function saveOrderRequest(user, cart)  {
+  return function (dispatch, getState) {
+    return new Promise(async (resolve, rejects) => {
+      try {
+        console.log("Inside save order request action " + user);
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        const oid = Date.now().toString()
+        var addProperties  = { professionalName : "null", orderItemStatus: "pending"}
+        const orderDetails = [ ...cart.cartItems]
+        
+        orderDetails.forEach((element) => {
+          element.professionalName = null
+          element.orderItemStatus = "Pending"
+         })
+
+        var raw = JSON.stringify({
+          "orderId": oid,
+          "userName": user,
+          "orderAmount": cart.cartTotalAmount,
+          "discountAmount": cart.cartDiscountAmount,
+          "taxAmount": cart.cartTaxAmount,
+          "orderDetails": orderDetails
+        });
+        
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+fetch(`${BASE_URL}order/payment/${user}`, requestOptions)
+.then(response => response.text())
+.then((result) => {
+  console.log('add order :', result)
+  dispatch({
+    type: 'SAVE_ORDER_REQUEST',
+    subtype: 'success',
+  })
+  resolve(result)
+})
+.catch((error) => {
+  console.log("saveOrder error ",error)
+  rejects(error)
+})
+
+       
+      } catch (error) {
+        dispatch({
+          type: 'SAVE_ORDER_REQUEST',
+          error: error,
+        })
+      }
+    })
+  }
+}

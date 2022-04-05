@@ -18,29 +18,29 @@ function CardDetails( props) {
   return (
        <div>
 
-        <div class="col-xs-12 col-md-4">
+        <div className="col-xs-12 col-md-4">
         
         <h3 > Enter card details: </h3>
       
         <FormControl disabled={true}>
         <FormLabel > CARD NUMBER :</FormLabel>
                    
-        <TextField type="text" placeholder="Valid Card Number" disabled={true}  />             
-        <div class="row">
-        <div class="col-xs-7 col-md-7">
+        <input type="text" placeholder="Valid Card Number" disabled={true}  />             
+        <div className="row">
+        <div className="col-xs-7 col-md-7">
                      
         <label >  EXPIRY DATE</label>
 
-        <div class="col-xs-6 col-lg-6">
+        <div className="col-xs-6 col-lg-6">
         <input type="text"  placeholder="MM" required />
         </div>
 
-        <div class="col-xs-6 col-lg-6">
+        <div className="col-xs-6 col-lg-6">
         <input type="text" placeholder="YY" required />
         </div>
         </div>
      
-        <div class="col-xs-5 col-md-5">           
+        <div className="col-xs-5 col-md-5">           
         <label >   CV CODE</label>
         <input type="password"  placeholder="CV" required />
         </div>
