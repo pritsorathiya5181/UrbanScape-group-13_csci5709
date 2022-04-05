@@ -50,6 +50,11 @@ import CardDetails from './CardDetails';
         
     }
 
+    function handleSubmit() {
+      navigate('.././success')
+    }
+    
+
     function getCartItems() {
       const user = 'dan'
       console.log("Payment get Cart details" )
@@ -83,7 +88,7 @@ import CardDetails from './CardDetails';
         //    console.log('save Order err', err)
         // })
 
-
+        handleSubmit()
       }
     
     useEffect(() => {
