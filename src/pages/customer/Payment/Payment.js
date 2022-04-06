@@ -8,7 +8,14 @@ import {
   FormControl,
   MenuItem,
   Select,
-  InputLabel 
+  InputLabel,
+  Card,
+  Box,
+  Typography,
+  ListItem,
+  Avatar,
+  ListItemText,
+  Divider
 } from '@mui/material'
 
 
@@ -93,9 +100,9 @@ import CardDetails from './CardDetails';
     
     useEffect(() => {
     
-      if (!hasToken()) {
-        window.location.href = '/customer/unauthenticated/'
-      }
+      // if (!hasToken()) {
+      //   window.location.href = '/customer/unauthenticated/'
+      // }
        getCartItems() 
     
     }, [])
@@ -103,13 +110,35 @@ import CardDetails from './CardDetails';
  
 
   return (
-    <div>Order Summary 
-    <p>Cart Total  Amount {cartTotal}  </p>   
-    <p> Discount Applied {discount}  </p>   
-    <p> No of Items {itemsCount}  </p>    
+    <div>
 
+    
+    <Box display = "flex"
+    justifyContent="center"
+    alignItems = "center"
+    padding='30px'> 
+    <Typography  variant = "h3" display="block" >Order Summary  </Typography> 
+    </Box>
 
-    <FormControl required sx={{ m: 1, minWidth: 120 }} > 
+    <Box display = "flex"
+    justifyContent="center"
+    alignItems = "center"> 
+    <Typography  variant = "h5" display="block" > Total amount to Pay:  {cartTotal}  </Typography>
+    </Box>
+
+    <Box display = "flex"
+    justifyContent="center"
+    alignItems = "center"
+    paddingBottom='30px'>
+    <Typography  variant = "h5" display="block" >  No of Services Booked:  {itemsCount}  </Typography>  
+    </Box>
+    
+    <Box display = "flex"
+    justifyContent="center"
+    alignItems = "center"
+    paddingBottom='30px'>
+
+    <FormControl required sx={{ m: 1, minWidth: 180 }} > 
     <InputLabel id="paymeans"> Payment Method</InputLabel>
     <Select
     id="paymeans"
@@ -123,21 +152,42 @@ import CardDetails from './CardDetails';
     </Select>
     
     </FormControl>
-  
+
+    </Box>
+
+
     <div>
-    { payUsingCard && <div>    
-        <CardDetails payUsingCard ></CardDetails>
+    { payUsingCard && <div> 
+      <Box  display = "flex"
+    justifyContent="center"
+    alignItems = "center">
+
+        <CardDetails  ></CardDetails>
+        </Box>
+
+        <Box  display = "flex"
+    justifyContent="center"
+    alignItems = "center">
         <Button 
         variant="contained" 
         onClick = {saveOrder}
         >
-        Pay</Button>
+        Pay
+        </Button>
+        </Box>
+      
       </div> 
     }
 
     { !payUsingCard && 
-      <div>     
-        <Button variant="contained">Proceed</Button>
+      <div>  
+           <Box display = "flex"
+          justifyContent="center"
+           alignItems = "center">   
+        <Button variant="contained"
+         onClick = {saveOrder}
+         >Proceed</Button>
+         </Box>
       </div> 
     }
     

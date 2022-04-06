@@ -9,27 +9,51 @@ import {
     Typography,
     InputLabel ,
     FormHelperText, 
-    FormLabel
+    FormLabel,
+    Card,
+    Box,
+    Divider
   } from '@mui/material'
 
+
+  
 function CardDetails( props) {
 
   console.log(" CardDetails props: " , props)
   return (
-       <div>
+       <div
+      //  style={{
+      //   display: "flex",
+      //   padding: "1em 0.7em",
+      //   width: "100%",
+      //   alignItems: "center"
+      // }}
+      >
 
-        <div className="col-xs-12 col-md-4">
-        
-        <h3 > Enter card details: </h3>
+  
+<Divider /> 
+        <div className="col-xs-12 col-md-4" alignItems="center">
+        <Box  display = "flex"
+    justifyContent="center"
+    alignItems = "center"
+    paddingTop='20px'
+    paddingBottom='20px'>
       
-        <FormControl disabled={true}>
-        <FormLabel > CARD NUMBER :</FormLabel>
-                   
-        <input type="text" placeholder="Valid Card Number" disabled={true}  />             
-        <div className="row">
+        <Typography variant= "h4">  Enter card details </Typography>
+        </Box>
+        <FormControl>
+
+ 
+        <FormLabel > CARD NUMBER </FormLabel>         
+        <input type="text" placeholder="Valid Card Number"   />             
+    
+
+        <div className="row" alignItems="center">
+        
         <div className="col-xs-7 col-md-7">
+
                      
-        <label >  EXPIRY DATE</label>
+        <FormLabel >  EXPIRY DATE </FormLabel>
 
         <div className="col-xs-6 col-lg-6">
         <input type="text"  placeholder="MM" required />
@@ -39,15 +63,18 @@ function CardDetails( props) {
         <input type="text" placeholder="YY" required />
         </div>
         </div>
-     
+
+
         <div className="col-xs-5 col-md-5">           
-        <label >   CV CODE</label>
-        <input type="password"  placeholder="CV" required />
+        <FormLabel > CVV CODE </FormLabel> 
+        <input type="password"  placeholder="CVV" required />
         </div>
     
         </div>
         </FormControl>
+
         </div>
+
    </div>
  
   );
