@@ -142,10 +142,10 @@ import { hasToken } from '../../../utils/scale'
     
 
     function getCartItems() {
-      const user = 'dan'
+    //  const user = 'dan'
       console.log("Payment get Cart details" )
       props.action
-        .getCartItems(user)
+        .getCartItems()
         .then((res) => {
         setCart(res.cart)
         setCartItems(res.cart.cartItems)
