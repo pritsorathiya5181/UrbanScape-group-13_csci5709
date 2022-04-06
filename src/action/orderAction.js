@@ -22,8 +22,7 @@ export function approveServiceRequest(serviceItem) {
         var raw = JSON.stringify({
           itemNo: serviceItem?.itemNo,
           clientName: serviceItem?.clientName,
-          //   clientEmail: serviceItem?.clientEmail,
-          clientEmail: 'prit.sorathiya@gmail.com',
+          clientEmail: serviceItem?.clientEmail || 'prit.sorathiya@gmail.com',
           serviceCategory: serviceItem?.serviceCategory,
           serviceName: serviceItem?.serviceName,
           professionalName: userInfo?.firstname || 'Mike',
@@ -118,62 +117,61 @@ export function cancelServiceRequest(serviceItem) {
   }
 }
 
-
-export function saveOrderRequest( cart)  {
+export function saveOrderRequest(cart) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
       try {
-
         var userInfo = getCustomerUser()
         if (userInfo) {
           userInfo = JSON.parse(userInfo)
         }
         const user = userInfo?.firstname || 'dan'
 
-        console.log("Inside save order request action " + user);
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
+        console.log('Inside save order request action ' + user)
+        var myHeaders = new Headers()
+        myHeaders.append('Content-Type', 'application/json')
         const oid = Date.now().toString()
-        var addProperties  = { professionalName : "null", orderItemStatus: "pending"}
-        const orderDetails = [ ...cart.cartItems]
-        
+        var addProperties = {
+          professionalName: 'null',
+          orderItemStatus: 'pending',
+        }
+        const orderDetails = [...cart.cartItems]
+
         orderDetails.forEach((element) => {
           element.professionalName = null
-          element.orderItemStatus = "Pending"
-         })
+          element.orderItemStatus = 'Pending'
+        })
 
         var raw = JSON.stringify({
-          "orderId": oid,
-          "userName": user,
-          "orderAmount": cart.cartTotalAmount,
-          "discountAmount": cart.cartDiscountAmount,
-          "taxAmount": cart.cartTaxAmount,
-          "orderDetails": orderDetails
-        });
-        
+          orderId: oid,
+          userName: user,
+          orderAmount: cart.cartTotalAmount,
+          discountAmount: cart.cartDiscountAmount,
+          taxAmount: cart.cartTaxAmount,
+          orderDetails: orderDetails,
+        })
+
         var requestOptions = {
           method: 'POST',
           headers: myHeaders,
           body: raw,
-          redirect: 'follow'
-        };
+          redirect: 'follow',
+        }
 
-fetch(`${BASE_URL}order/payment/${user}`, requestOptions)
-.then(response => response.text())
-.then((result) => {
-  console.log('add order :', result)
-  dispatch({
-    type: 'SAVE_ORDER_REQUEST',
-    subtype: 'success',
-  })
-  resolve(result)
-})
-.catch((error) => {
-  console.log("saveOrder error ",error)
-  rejects(error)
-})
-
-       
+        fetch(`${BASE_URL}order/payment/${user}`, requestOptions)
+          .then((response) => response.text())
+          .then((result) => {
+            console.log('add order :', result)
+            dispatch({
+              type: 'SAVE_ORDER_REQUEST',
+              subtype: 'success',
+            })
+            resolve(result)
+          })
+          .catch((error) => {
+            console.log('saveOrder error ', error)
+            rejects(error)
+          })
       } catch (error) {
         dispatch({
           type: 'SAVE_ORDER_REQUEST',
