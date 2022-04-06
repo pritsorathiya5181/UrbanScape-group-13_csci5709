@@ -137,7 +137,7 @@ export function getCartItems() {
             "clientAddress": value.address,
             "clientName": value.fName,
             "clientContact": value.contactNum,
-            "clientEmail": value.address,
+            "clientEmail": value.email,
             "servicePrice": value.price,
             "professionalName": null,
             "orderItemStatus": "Pending",

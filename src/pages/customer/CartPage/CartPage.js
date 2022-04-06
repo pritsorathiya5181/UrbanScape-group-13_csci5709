@@ -160,7 +160,7 @@ function  removeFromCart (itemId, itemPrice) {
   </div>
 
   <div style={{ display: "flex" , justifyContent: "center" , padding: 50}}>
-  <Button onClick= {handleCheckout} variant="contained"  sx = {{backgroundColor: "#D3DEDC" , p:1}}  >
+  <Button onClick= {handleCheckout} variant="contained"   >
     CHECKOUT
   </Button>
   </div>
