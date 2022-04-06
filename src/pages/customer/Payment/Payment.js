@@ -33,7 +33,8 @@ import { hasToken } from '../../../utils/scale'
     const [paymentMethod, setPaymentMethod] = useState('')
     const [cart, setCart] = useState(props.cartData || {})
     const [cartItems, setCartItems] = useState(props.cartData.cartItems || [])
-    const [formErrors, setFormErrors] = useState({});
+    const [formErrors, setFormErrors] = useState({})
+    const [isDisabled, setIsDisabled] = useState(true)
 
     const [formFields, setFormFields] = useState({
       cardNumber: "",
@@ -42,6 +43,7 @@ import { hasToken } from '../../../utils/scale'
       cvvCode: ""
  
  });
+
 
 
 
@@ -101,10 +103,12 @@ import { hasToken } from '../../../utils/scale'
         if(event.target.value === "card"){
           console.log("if")
           setPayUsingCard(true) 
+          setIsDisabled(false)
         }
         else if (event.target.value === "cash"){
           console.log("else")
           setPayUsingCard(false) 
+          setIsDisabled(false)
         }
   
         console.log("Pay using card is " , payUsingCard)
@@ -327,12 +331,13 @@ import { hasToken } from '../../../utils/scale'
 
     { !payUsingCard && 
       <div>  
-           <Box display = "flex"
-               justifyContent="center"
-               alignitems = "center">   
+          <Box display = "flex"
+          justifyContent="center"
+          alignitems = "center">   
         
         <Button variant="contained"
          onClick = {saveOrder}
+         disabled = {isDisabled}
          >Proceed
          </Button>
          </Box>
