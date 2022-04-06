@@ -271,7 +271,7 @@ import { hasToken } from '../../../utils/scale'
         onChange = {handleFormFields}
         value = {formFields.cardNumber}
         />  
-           <p>{formErrors.cardNumber}</p>             
+           <p style={{color: 'red'}}> {formErrors.cardNumber}</p>             
     
 
         <div className="row" alignitems="center">
@@ -283,7 +283,7 @@ import { hasToken } from '../../../utils/scale'
         name = "expiryMonth"
         onChange = {handleFormFields}
         value = {formFields.expiryMonth} />
-         <p>{formErrors.expiryMonth}</p>       
+         <p style={{color: 'red'}}>{formErrors.expiryMonth}</p>       
         </div>
 
         <div className="col-xs-6 col-lg-6">
@@ -291,7 +291,7 @@ import { hasToken } from '../../../utils/scale'
         name = "expiryYear"
         onChange = {handleFormFields} 
         value = {formFields.expiryYear} />
-         <p>{formErrors.expiryYear}</p>  
+         <p style={{color: 'red'}}>{formErrors.expiryYear}</p>  
         </div>
         </div>
 
@@ -301,7 +301,7 @@ import { hasToken } from '../../../utils/scale'
         name = "cvvCode" 
         onChange = {handleFormFields}
         value = {formFields.cvvCode} />
-              <p>{formErrors.cvvCode}</p>  
+              <p style={{color: 'red'}}>{formErrors.cvvCode}</p>  
         </div>
     
         </div>
