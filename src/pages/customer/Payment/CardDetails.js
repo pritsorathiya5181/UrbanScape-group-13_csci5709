@@ -36,18 +36,17 @@ function CardDetails( props) {
         <Box  display = "flex"
     justifyContent="center"
     alignItems = "center"
-    paddingTop='20px'>
+    paddingTop='20px'
+    paddingBottom='20px'>
       
         <Typography variant= "h4">  Enter card details </Typography>
         </Box>
         <FormControl>
 
-        <Box  display = "flex"
-    justifyContent="center"
-    alignItems = "center">
+ 
         <FormLabel > CARD NUMBER </FormLabel>         
         <input type="text" placeholder="Valid Card Number"   />             
-        </Box>
+    
 
         <div className="row" alignItems="center">
         

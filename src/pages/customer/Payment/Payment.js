@@ -138,7 +138,7 @@ import CardDetails from './CardDetails';
     alignItems = "center"
     paddingBottom='30px'>
 
-    <FormControl required sx={{ m: 1, minWidth: 120 }} > 
+    <FormControl required sx={{ m: 1, minWidth: 180 }} > 
     <InputLabel id="paymeans"> Payment Method</InputLabel>
     <Select
     id="paymeans"
