@@ -152,12 +152,7 @@ function  removeFromCart (itemId, itemPrice) {
     return (
     
 <div>
-  <div  style={{ display: "flex" , justifyContent: "center"}}>
-  <TextField id="filled-basic" label="Enter coupon code" variant="filled" / >
-  <Button disabled variant="contained"  sx = {{backgroundColor: "#D3DEDC"}}   >
-  APPLY
-  </Button>
-  </div>
+ 
 
   <div style={{ display: "flex" , justifyContent: "center" , padding: 50}}>
   <Button onClick= {handleCheckout} variant="contained"   >
