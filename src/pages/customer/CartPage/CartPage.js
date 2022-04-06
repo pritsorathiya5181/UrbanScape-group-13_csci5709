@@ -34,9 +34,9 @@ function handleCheckout() {
 }
 
 function getCartItems() {
-  const user = 'dan'
+//  const user = 'dan'
   props.action
-    .getCartItems(user)
+    .getCartItems()
     .then((res) => {
       setCart(res.cart)
       setCartItems(res.cart.cartItems)
