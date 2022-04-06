@@ -34,9 +34,9 @@ function handleCheckout() {
 }
 
 function getCartItems() {
-  const user = 'dan'
+//  const user = 'dan'
   props.action
-    .getCartItems(user)
+    .getCartItems()
     .then((res) => {
       setCart(res.cart)
       setCartItems(res.cart.cartItems)
@@ -160,7 +160,7 @@ function  removeFromCart (itemId, itemPrice) {
   </div>
 
   <div style={{ display: "flex" , justifyContent: "center" , padding: 50}}>
-  <Button onClick= {handleCheckout} variant="contained"  sx = {{backgroundColor: "#D3DEDC" , p:1}}  >
+  <Button onClick= {handleCheckout} variant="contained"   >
     CHECKOUT
   </Button>
   </div>

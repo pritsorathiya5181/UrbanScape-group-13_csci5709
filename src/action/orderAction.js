@@ -1,5 +1,6 @@
 import { getProfessionalUser } from '../utils/scale'
 import { BASE_URL } from '../utils/string'
+import { getCustomerUser } from '../utils/scale'
 
 export function approveServiceRequest(serviceItem) {
   return function (dispatch, getState) {
@@ -116,10 +117,16 @@ export function cancelServiceRequest(serviceItem) {
   }
 }
 
-export function saveOrderRequest(user, cart) {
+export function saveOrderRequest(cart) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
       try {
+        var userInfo = getCustomerUser()
+        if (userInfo) {
+          userInfo = JSON.parse(userInfo)
+        }
+        const user = userInfo?.firstname || 'dan'
+
         console.log('Inside save order request action ' + user)
         var myHeaders = new Headers()
         myHeaders.append('Content-Type', 'application/json')
