@@ -102,6 +102,21 @@ const CustomerProfilePage = (props) => {
     },
   }))
 
+  const handleFileChange = (event) => {
+    const { target } = event
+    const { files } = target
+
+    if (files && files[0]) {
+      var reader = new FileReader()
+
+      reader.onload = (event) => {
+        setProfileImg(event.target.result)
+      }
+
+      reader.readAsDataURL(files[0])
+    }
+  }
+
   const changePassword = () => {
     if (password === confirmPassword) {
       const value = {
@@ -168,13 +183,43 @@ const CustomerProfilePage = (props) => {
           <section className='profile-img'>
             {/* <PersonIcon fontSize='large' /> */}
             <img
-              src={require('../../../asserts/logo/app/Capture.JPG')}
+              src={
+                profileImg || require('../../../asserts/logo/app/Capture.JPG')
+              }
               alt='profile_image'
               width={'100%'}
               height={'100%'}
             />
           </section>
         </section>
+        <div style={{ flexDirection: 'column', display: 'flex' }}>
+          <input
+            id='car'
+            type='file'
+            accept='image/*'
+            capture='camera'
+            onChange={handleFileChange}
+            style={{
+              backgroundColor: 'red',
+              position: 'absolute',
+              alignSelf: 'center',
+              padding: '10px 10px',
+              marginTop: '5px',
+              opacity: 0,
+            }}
+          />
+          <div
+            style={{
+              alignSelf: 'center',
+              boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+              backgroundColor: '#f1f1f1',
+              padding: '10px 10px',
+              marginTop: '5px',
+            }}
+          >
+            Upload Profile Image
+          </div>
+        </div>
 
         <FormControl sx={{ width: '92%', marginTop: '30px' }}>
           <section>
@@ -222,6 +267,7 @@ const CustomerProfilePage = (props) => {
               variant='standard'
               id='mobileno'
               type='text'
+              inputProps={{ maxLength: 10 }}
               sx={{
                 width: '100%',
                 paddingTop: '10px',
