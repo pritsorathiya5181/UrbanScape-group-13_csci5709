@@ -179,9 +179,9 @@ import { hasToken } from '../../../utils/scale'
     
     useEffect(() => {
     
-      // if (!hasToken()) {
-      //   window.location.href = '/customer/unauthenticated/'
-      // }
+      if (!hasToken()) {
+        window.location.href = '/customer/unauthenticated/'
+      }
        getCartItems() 
     
     }, [])

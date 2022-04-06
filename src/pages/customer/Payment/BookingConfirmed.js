@@ -1,4 +1,6 @@
-import React from 'react'
+// Author: Aeshna Verma - B00880776
+
+import React, { useEffect, useState } from 'react'
 import {
   Typography,
   Divider,
@@ -6,8 +8,15 @@ import {
   Link
 } from '@mui/material'
 import {useNavigate } from 'react-router-dom'
+import { connect } from 'react-redux'
+import * as cartAction from '../../../action/cartAction'
+import { bindActionCreators } from 'redux'
+import { hasToken } from '../../../utils/scale'
 
-function BookingConfirmed() {
+
+
+
+const BookingConfirmed = (props) => {
 
   const navigate = useNavigate()
 
@@ -16,6 +25,28 @@ function BookingConfirmed() {
     console.log("clicked")
     navigate('/')
   }
+
+  function emptyCart() {
+    //  const user = 'dan'
+      props.action
+        .emptyCart()
+        .then((res) => {
+          console.log("Empty cart after booking : " , res)
+    
+        })
+        .catch((err) => {
+           console.log('err', err)
+        })
+      }
+
+  useEffect(() => {
+
+    if (!hasToken()) {
+      window.location.href = '/customer/unauthenticated/'
+    }
+     emptyCart() 
+  }, [])
+
 
   return (
     <div>
@@ -45,4 +76,20 @@ function BookingConfirmed() {
   )
 }
 
-export default BookingConfirmed
+
+
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      cartData: state.cart
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(cartAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookingConfirmed)
