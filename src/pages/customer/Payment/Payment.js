@@ -161,10 +161,10 @@ import { hasToken } from '../../../utils/scale'
       }
 
       function saveOrder(){
-        const user = 'dareynolds'
+       // const user = 'dareynolds'
         console.log("Save Order")
         // console.log(cartItems)
-        props.orderaction.saveOrderRequest(user,cart)
+        props.orderaction.saveOrderRequest(cart)
         // .then((res) => {
         //   console.log("Save Order " , res)
     
