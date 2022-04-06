@@ -188,3 +188,61 @@ fetch(`${BASE_URL}cart/${user}`, requestOptions)
       })
     }
   }
+
+  
+export function emptyCart() {
+  return function (dispatch, getState) {
+    return new Promise(async (resolve, rejects) => {
+      try {
+        dispatch({
+          type: 'DELETE_ITEM',
+          subtype: 'loading',
+        })
+
+        var userInfo = getCustomerUser()
+        if (userInfo) {
+          userInfo = JSON.parse(userInfo)
+        }
+
+         console.log(" emptyCart session userInfo: " , (userInfo))
+    
+
+        const userName = userInfo?.firstname || 'dan'
+        console.log("username " , userName)
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+         "user": userName
+        });
+
+var requestOptions = {
+  method: 'DELETE',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+
+fetch(`${BASE_URL}cart/`, requestOptions)
+  .then(response => response.json())
+  .then(result => {
+    dispatch({
+      type: 'DELETE_ITEM',
+      subtype: 'success',
+    })
+    resolve(result)
+  })
+  .catch((error) => {
+    rejects(error)
+  })
+      } catch (error) {
+        dispatch({
+          type: 'DELETE_ITEM',
+          error: error,
+        })
+      }
+    })
+  }
+}
