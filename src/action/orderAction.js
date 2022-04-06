@@ -80,7 +80,8 @@ export function cancelServiceRequest(serviceItem) {
 
         var raw = JSON.stringify({
           itemNo: serviceItem?.itemNo,
-          professionalName: userInfo?.firstname || 'Mike',
+          // professionalName: userInfo?.firstname || 'Mike',
+          professionalEmail: userInfo?.email || 'Mike',
         })
 
         var requestOptions = {

@@ -42,8 +42,9 @@ const ServiceRequests = (props) => {
 
     setServiceLoading(true)
     const userId = userInfo?._id
+    const userEmail = userInfo?.email
     props.serviceaction
-      .getServiceStats(userId)
+      .getServiceStats(userId, userEmail)
       .then((res) => {
         setServiceLoading(false)
         setServiceRequests(res?.serviceStats?.pendingRequests)

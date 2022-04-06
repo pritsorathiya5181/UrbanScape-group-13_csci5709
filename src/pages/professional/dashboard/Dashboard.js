@@ -33,8 +33,9 @@ const Dashboard = (props) => {
       setServiceLoading(true)
       const userId = userInfo?._id
       // 'd86aa655-fe4a-40ee-af69-67718d7ec759'
+      const userEmail = userInfo?.email
       props.action
-        .getServiceStats(userId)
+        .getServiceStats(userId, userEmail)
         .then((res) => {
           setServiceLoading(false)
           setServiceStatsData(res.serviceStats)
