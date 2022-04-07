@@ -105,6 +105,9 @@ const NavBar = (props) => {
     if (pages === 'Support') {
       navigate('/support')
     }
+    if (pages === 'Reviews') {
+      navigate('/displayReview')
+    }
     handleCloseNavMenu()
   }
 

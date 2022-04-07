@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import './ProfessionalProfilePage.css'
 import NavBar from '../../../components/professional/NavBar/NavBar'
-import { Button, FormControl, TextField } from '@mui/material'
+import { Button, FormControl, TextField, Tooltip } from '@mui/material'
 import useWindowDimensions, {
   getProfessionalUser,
   getUserType,
@@ -43,6 +43,8 @@ const ProfessionalProfilePage = (props) => {
       if (userInfo) {
         userInfo = JSON.parse(userInfo)
       }
+
+      console.log('userInfo', userInfo)
 
       props.action
         .getProfessionalUser(userInfo.email)
@@ -242,40 +244,44 @@ const ProfessionalProfilePage = (props) => {
         >
           <section>
             <p className='profile-personal-title'>Name</p>
-            <TextField
-              required
-              variant='standard'
-              id='name'
-              type='text'
-              sx={{
-                width: '100%',
-                paddingTop: '10px',
-              }}
-              // InputProps={{ style: { color: isMenu && 'white' } }}
-              // className={isMenu && classes.textField}
-              value={name}
-              placeholder='Tom Holland'
-              onChange={handleChangeInput}
-            />
+            <Tooltip title='Not-editable'>
+              <TextField
+                required
+                variant='standard'
+                id='name'
+                type='text'
+                sx={{
+                  width: '100%',
+                  paddingTop: '10px',
+                }}
+                // InputProps={{ style: { color: isMenu && 'white' } }}
+                // className={isMenu && classes.textField}
+                value={name}
+                placeholder='Tom Holland'
+                // onChange={handleChangeInput}
+              />
+            </Tooltip>
           </section>
 
           <section>
             <p className='profile-personal-title'>Email</p>
-            <TextField
-              required
-              variant='standard'
-              id='email'
-              type='text'
-              sx={{
-                width: '100%',
-                paddingTop: '10px',
-              }}
-              // InputProps={{ style: { color: isMenu && 'white' } }}
-              // className={isMenu && classes.textField}
-              value={email}
-              placeholder='tomholland@gmail.com'
-              // onChange={handleChangeInput}
-            />
+            <Tooltip title='Not-editable'>
+              <TextField
+                required
+                variant='standard'
+                id='email'
+                type='text'
+                sx={{
+                  width: '100%',
+                  paddingTop: '10px',
+                }}
+                // InputProps={{ style: { color: isMenu && 'white' } }}
+                // className={isMenu && classes.textField}
+                value={email}
+                placeholder='tomholland@gmail.com'
+                // onChange={handleChangeInput}
+              />
+            </Tooltip>
           </section>
 
           <section>
