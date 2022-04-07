@@ -25,6 +25,8 @@ import CarpenterService from './pages/customer/ServicePage/CarpenterService'
 import PlumbingService from './pages/customer/ServicePage/PlumbingService'
 import Contact from './pages/customer/Support/Contact'
 import NotLoggedIn from './pages/customer/profile/NotLoggedIn'
+import AddReview from './components/UserReviews/AddReview'
+import DisplayReview from './components/UserReviews/DisplayReview'
 
 function App() {
   const url = window.location.pathname
@@ -87,6 +89,8 @@ function App() {
           <Route path='/forgetpassword' element={<ForgetPassword />} />
           <Route path='/otp' element={<Otp />} />
           <Route path='/updatepassword' element={<UpdatePassword />} />
+          <Route path='/addreview' element={<AddReview/>}/>
+          <Route path='/displayReview' element={<DisplayReview />}/>
         </Routes>
       </Router>
     </Provider>
