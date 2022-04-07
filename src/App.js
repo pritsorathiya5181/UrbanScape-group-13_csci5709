@@ -25,6 +25,8 @@ import CarpenterService from './pages/customer/ServicePage/CarpenterService'
 import PlumbingService from './pages/customer/ServicePage/PlumbingService'
 import Contact from './pages/customer/Support/Contact'
 import NotLoggedIn from './pages/customer/profile/NotLoggedIn'
+import AddReview from './components/UserReviews/AddReview'
+import DisplayReview from './components/UserReviews/DisplayReview'
 
 import MyOrders from '../src/pages/customer/Orders/MyOrders'
 import Payment from './pages/customer/Payment/Payment'
@@ -100,6 +102,8 @@ function App() {
           <Route path='/updatepassword' element={<UpdatePassword />} />
 
           <Route path='/myorders' element={<MyOrders />} />
+          <Route path='/addreview' element={<AddReview />} />
+          <Route path='/displayReview' element={<DisplayReview />} />
         </Routes>
       </Router>
     </Provider>
