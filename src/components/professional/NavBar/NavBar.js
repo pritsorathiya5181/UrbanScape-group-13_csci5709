@@ -71,6 +71,8 @@ const NavBar = () => {
       navigate(`${PATH.partnerBaseUrl}/myservices`)
     } else if (endpoint === 'Schedule') {
       navigate(`${PATH.partnerBaseUrl}/servicerequests`)
+    } else if (endpoint === 'Service History') {
+      navigate(`${PATH.partnerBaseUrl}/servicehistory`)
     }
     handleCloseNavMenu()
   }
@@ -209,7 +211,7 @@ const NavBar = () => {
   }
 
   return (
-    <AppBar position='static' style={{backgroundColor: "#2a2a2a"}}>
+    <AppBar position='static' style={{ backgroundColor: '#2a2a2a' }}>
       <Container maxWidth='100%'>
         <Toolbar disableGutters className={classes.toolbar}>
           <Box

@@ -8,7 +8,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Loader from '../../../components/customloader/Loader'
 import DashboardPrimary from './DashboardPrimary'
-import { getUserType, hasToken } from '../../../utils/scale'
+import {
+  getUserType,
+  hasToken,
+  getProfessionalUser,
+} from '../../../utils/scale'
 
 const Dashboard = (props) => {
   const [serviceLoading, setServiceLoading] = useState(false)
@@ -17,15 +21,21 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     if (!hasToken() || getUserType() !== 'professional') {
-      alert('Please login to continue')
-      window.location.href = '/'
+      // alert('Please login to continue')
+      window.location.href = '/notloggedin/'
+    }
+    var userInfo = getProfessionalUser()
+    if (userInfo) {
+      userInfo = JSON.parse(userInfo)
     }
 
     function getServicesStats() {
       setServiceLoading(true)
-      const userId = 'd86aa655-fe4a-40ee-af69-67718d7ec759'
+      const userId = userInfo?._id
+      // 'd86aa655-fe4a-40ee-af69-67718d7ec759'
+      const userEmail = userInfo?.email
       props.action
-        .getServiceStats(userId)
+        .getServiceStats(userId, userEmail)
         .then((res) => {
           setServiceLoading(false)
           setServiceStatsData(res.serviceStats)
@@ -38,7 +48,7 @@ const Dashboard = (props) => {
 
     function getServices() {
       setServiceLoading(true)
-      const userId = 'd86aa655-fe4a-40ee-af69-67718d7ec759'
+      const userId = userInfo?._id
       props.action
         .getRecords(userId)
         .then((res) => {

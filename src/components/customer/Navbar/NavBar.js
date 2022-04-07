@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -20,17 +20,20 @@ import HouseIcon from '@mui/icons-material/House'
 import PersonIcon from '@mui/icons-material/Person'
 import MenuIcon from '@mui/icons-material/Menu'
 import Badge from '@mui/material/Badge'
+import { bindActionCreators } from 'redux'
+import * as cartAction from '../../../action/cartAction'
+import { connect } from 'react-redux'
 
 import * as MENU from '../../../utils/constant'
 import { makeStyles } from '@mui/styles'
 import { hasToken } from '../../../utils/scale'
 
-const NavBar = () => {
+const NavBar = (props) => {
   let navigate = useNavigate()
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1
+      flexGrow: 1,
     },
     toolbar: {
       height: '50px',
@@ -41,6 +44,15 @@ const NavBar = () => {
   const [pageNavOption, setPageNameOption] = useState(null)
   const [profileSettingOption, setProfileSettingOption] = useState(null)
   const [serviceOption, setServiceOption] = useState(null)
+  const [cartItemsCount, setCartItemsCount] = useState(
+    props?.cartData?.cartData?.cartItems?.length || 0
+  )
+
+  // console.log("NAV BAR PROPS ", props.cartData.cartData.cartItems.length)
+
+  useEffect(() => {
+    setCartItemsCount(props?.cartData?.cartData?.cartItems?.length)
+  }, [props?.cartData])
 
   const handleOpenNavMenu = (event) => {
     setPageNameOption(event.currentTarget)
@@ -77,7 +89,7 @@ const NavBar = () => {
   }
 
   const navigateToCart = () => {
-    navigate('./customer/cartpage')
+    navigate('./cartpage')
   }
 
   const handleClick = (event) => {
@@ -90,13 +102,15 @@ const NavBar = () => {
   }
 
   const handlePageClicks = (pages) => {
-    if(pages === 'Support') {
-      navigate("/support")
-    } 
+    if (pages === 'Support') {
+      navigate('/support')
+    }
+    if (pages === 'Reviews') {
+      navigate('/displayReview')
+    }
     handleCloseNavMenu()
   }
 
-  
   const onProfileOptionClick = (item) => {
     console.log(item)
     if (item === 'Login As Customer/Professional') {
@@ -112,7 +126,7 @@ const NavBar = () => {
         alert('Please login in to continue')
       }
     } else if (item === 'My Order History') {
-      // window.location.href = '/professional/servicehistory/'
+      window.location.href = '/myorders'
     } else if (item === 'Logout') {
       localStorage.removeItem('accesstoken')
       localStorage.removeItem('usertype')
@@ -121,7 +135,6 @@ const NavBar = () => {
     handleCloseUserMenu()
   }
 
-  
   const openMenu = Boolean(serviceOption)
 
   const renderAppIconView = () => {
@@ -154,7 +167,9 @@ const NavBar = () => {
             <Button
               key={index.toString()}
               //   onClick={handleCloseNavMenu}
-              onClick={page === 'Services' ? handleClick : () => handlePageClicks(page)}
+              onClick={
+                page === 'Services' ? handleClick : () => handlePageClicks(page)
+              }
               sx={{
                 my: 2,
                 color: 'white',
@@ -208,7 +223,12 @@ const NavBar = () => {
           }}
         >
           {MENU.PAGES.map((page) => (
-            <MenuItem key={page} onClick={page === 'Services' ? handleClick : () => handlePageClicks(page)}>
+            <MenuItem
+              key={page}
+              onClick={
+                page === 'Services' ? handleClick : () => handlePageClicks(page)
+              }
+            >
               <Typography textAlign='center'>{page}</Typography>
               {page === 'Services' && <ArrowDropDownIcon />}
             </MenuItem>
@@ -229,8 +249,8 @@ const NavBar = () => {
       >
         <Tooltip title='Open cart'>
           <IconButton sx={{ paddingRight: 1 }} onClick={navigateToCart}>
-          <Badge color="secondary" badgeContent={0}>
-            <ShoppingCartIcon fontSize='large' sx={{ color: 'white' } } />
+            <Badge color='secondary' badgeContent={cartItemsCount}>
+              <ShoppingCartIcon fontSize='large' sx={{ color: 'white' }} />
             </Badge>
           </IconButton>
         </Tooltip>
@@ -300,7 +320,7 @@ const NavBar = () => {
   }
 
   return (
-    <AppBar position='static' style={{backgroundColor: "#2a2a2a"}}>
+    <AppBar position='static' style={{ backgroundColor: '#2a2a2a' }}>
       <Container maxWidth='100%'>
         <Toolbar disableGutters className={classes.toolbar}>
           <Box
@@ -329,4 +349,19 @@ const NavBar = () => {
     </AppBar>
   )
 }
-export default NavBar
+
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      cartData: state.cart,
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(cartAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

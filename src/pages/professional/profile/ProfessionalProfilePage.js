@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from 'react'
 import './ProfessionalProfilePage.css'
 import NavBar from '../../../components/professional/NavBar/NavBar'
-import { Button, FormControl, TextField } from '@mui/material'
+import { Button, FormControl, TextField, Tooltip } from '@mui/material'
 import useWindowDimensions, {
+  getProfessionalUser,
   getUserType,
   hasToken,
 } from '../../../utils/scale'
@@ -22,6 +23,7 @@ const ProfessionalProfilePage = (props) => {
   const [isProfileMenuOpen, setisProfileMenuOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState('info')
   const [isAlertOpen, setIsAlertOpen] = useState(false)
+  const [profileImg, setProfileImg] = useState()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [mobileNo, setMobileNo] = useState('')
@@ -29,13 +31,36 @@ const ProfessionalProfilePage = (props) => {
   const [experience, setExperience] = useState('')
   const [workedHours, setWorkedHours] = useState('')
   const [address, setAddress] = useState('')
+  const [userData, setUserData] = useState()
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   useEffect(() => {
     if (!hasToken() || getUserType() !== 'professional') {
-      alert('Please login to continue')
-      window.location.href = '/'
+      window.location.href = '/notloggedin/'
     } else {
-      console.log(props)
+      var userInfo = getProfessionalUser()
+      if (userInfo) {
+        userInfo = JSON.parse(userInfo)
+      }
+
+      console.log('userInfo', userInfo)
+
+      props.action
+        .getProfessionalUser(userInfo.email)
+        .then((res) => {
+          setUserData(res?.user)
+          setName(`${res?.user?.firstname} ${res?.user?.lastname}`)
+          setEmail(res?.user?.email)
+          setMobileNo(res?.user?.phoneno)
+          setExperience(res?.user?.experience)
+          setAddress(res?.user?.preferredlocation)
+          res?.user?.photoUrl && setProfileImg(res?.user?.photoUrl)
+          setAbout(res?.user?.about)
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
     }
 
     if (width > 800) {
@@ -68,6 +93,12 @@ const ProfessionalProfilePage = (props) => {
       case 'address':
         setAddress(value)
         break
+      case 'newpassword':
+        setPassword(value)
+        break
+      case 'confirmnewpass':
+        setConfirmPassword(value)
+        break
       default:
         break
     }
@@ -82,6 +113,79 @@ const ProfessionalProfilePage = (props) => {
     },
   }))
 
+  const handleFileChange = (event) => {
+    const { target } = event
+    const { files } = target
+
+    if (files && files[0]) {
+      var reader = new FileReader()
+
+      reader.onload = (event) => {
+        setProfileImg(event.target.result)
+      }
+
+      reader.readAsDataURL(files[0])
+    }
+  }
+
+  const changePassword = () => {
+    if (password === confirmPassword) {
+      const value = {
+        password: password.trim(),
+      }
+      props.action
+        .updateProfessionalUser(email, value)
+        .then((res) => {
+          swal('Password updated successfully', '', 'success')
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
+    } else {
+      swal('Password does not match', '', 'error')
+    }
+  }
+
+  const updateProfile = () => {
+    const value = {
+      photoUrl: profileImg,
+      firstname: name.split(' ')[0],
+      lastname: name.split(' ')[1],
+      phoneno: mobileNo,
+      preferredlocation: address,
+      experience: experience,
+      about: about,
+    }
+    props.action
+      .updateProfessionalUser(email, value)
+      .then((res) => {
+        swal('Profile updated successfully', '', 'success')
+      })
+      .catch((err) => {
+        swal('Profile update fails', '', 'error')
+      })
+  }
+
+  const deleteProfile = () => {
+    props.action
+      .deleteProfessionalUser(email)
+      .then((res) => {
+        swal('Profile deleted successfully', '', 'success').then(() => {
+          logout()
+        })
+      })
+      .catch((err) => {
+        swal(err.message, '', 'error')
+      })
+  }
+
+  const logout = () => {
+    localStorage.removeItem('accesstoken')
+    localStorage.removeItem('usertype')
+    localStorage.removeItem('professional')
+    window.location.href = '/'
+  }
+
   const classes = useStyles()
 
   const profilePersonalDetailView = (isMenu) => {
@@ -91,13 +195,43 @@ const ProfessionalProfilePage = (props) => {
           <section className='profile-img'>
             {/* <PersonIcon fontSize='large' /> */}
             <img
-              src={require('../../../asserts/logo/app/Capture.JPG')}
+              src={
+                profileImg || require('../../../asserts/logo/app/Capture.JPG')
+              }
               alt='profile_image'
               width={'100%'}
               height={'100%'}
             />
           </section>
         </section>
+        <div style={{ flexDirection: 'column', display: 'flex' }}>
+          <input
+            id='car'
+            type='file'
+            accept='image/*'
+            capture='camera'
+            onChange={handleFileChange}
+            style={{
+              backgroundColor: 'red',
+              position: 'absolute',
+              alignSelf: 'center',
+              padding: '10px 10px',
+              marginTop: '5px',
+              opacity: 0,
+            }}
+          />
+          <div
+            style={{
+              alignSelf: 'center',
+              boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+              backgroundColor: '#f1f1f1',
+              padding: '10px 10px',
+              marginTop: '5px',
+            }}
+          >
+            Upload Profile Image
+          </div>
+        </div>
 
         <FormControl
           sx={{
@@ -110,40 +244,44 @@ const ProfessionalProfilePage = (props) => {
         >
           <section>
             <p className='profile-personal-title'>Name</p>
-            <TextField
-              required
-              variant='standard'
-              id='name'
-              type='text'
-              sx={{
-                width: '100%',
-                paddingTop: '10px',
-              }}
-              // InputProps={{ style: { color: isMenu && 'white' } }}
-              // className={isMenu && classes.textField}
-              value={name}
-              placeholder='Tom Holland'
-              onChange={handleChangeInput}
-            />
+            <Tooltip title='Not-editable'>
+              <TextField
+                required
+                variant='standard'
+                id='name'
+                type='text'
+                sx={{
+                  width: '100%',
+                  paddingTop: '10px',
+                }}
+                // InputProps={{ style: { color: isMenu && 'white' } }}
+                // className={isMenu && classes.textField}
+                value={name}
+                placeholder='Tom Holland'
+                // onChange={handleChangeInput}
+              />
+            </Tooltip>
           </section>
 
           <section>
             <p className='profile-personal-title'>Email</p>
-            <TextField
-              required
-              variant='standard'
-              id='email'
-              type='text'
-              sx={{
-                width: '100%',
-                paddingTop: '10px',
-              }}
-              // InputProps={{ style: { color: isMenu && 'white' } }}
-              // className={isMenu && classes.textField}
-              value={email}
-              placeholder='tomholland@gmail.com'
-              onChange={handleChangeInput}
-            />
+            <Tooltip title='Not-editable'>
+              <TextField
+                required
+                variant='standard'
+                id='email'
+                type='text'
+                sx={{
+                  width: '100%',
+                  paddingTop: '10px',
+                }}
+                // InputProps={{ style: { color: isMenu && 'white' } }}
+                // className={isMenu && classes.textField}
+                value={email}
+                placeholder='tomholland@gmail.com'
+                // onChange={handleChangeInput}
+              />
+            </Tooltip>
           </section>
 
           <section>
@@ -176,6 +314,7 @@ const ProfessionalProfilePage = (props) => {
             },
           }}
           variant='contained'
+          onClick={() => logout()}
         >
           Logout
         </Button>
@@ -241,7 +380,7 @@ const ProfessionalProfilePage = (props) => {
               />
               <p className=''>Years</p>
             </section>
-            <section className='row-option'>
+            {/* <section className='row-option'>
               <p className=''>Worked hours</p>
               <TextField
                 required
@@ -260,7 +399,7 @@ const ProfessionalProfilePage = (props) => {
                 onChange={handleChangeInput}
               />
               <p className=''>Hours</p>
-            </section>
+            </section> */}
           </section>
 
           <section>
@@ -297,12 +436,8 @@ const ProfessionalProfilePage = (props) => {
               icon: 'warning',
               buttons: true,
               dangerMode: true,
-            }).then((willDelete) => {
-              if (willDelete) {
-                swal('Account has been deleted successfully!', {
-                  icon: 'success',
-                })
-              }
+            }).then(() => {
+              deleteProfile()
             })
           }}
         >
@@ -338,7 +473,7 @@ const ProfessionalProfilePage = (props) => {
                 paddingTop: '10px',
               }}
               type='password'
-              value={name}
+              value={password}
               placeholder='********'
               onChange={handleChangeInput}
             />
@@ -355,7 +490,7 @@ const ProfessionalProfilePage = (props) => {
                 paddingTop: '10px',
               }}
               type='password'
-              value={email}
+              value={confirmPassword}
               placeholder='********'
               onChange={handleChangeInput}
             />
@@ -372,13 +507,16 @@ const ProfessionalProfilePage = (props) => {
             },
           }}
           variant='contained'
+          onClick={() => {
+            changePassword()
+          }}
         >
           Change
         </Button>
       </section>
     )
   }
-  console.log('first', isProfileMenuOpen)
+
   return (
     <>
       <NavBar />
@@ -453,6 +591,9 @@ const ProfessionalProfilePage = (props) => {
               },
             }}
             variant='contained'
+            onClick={() => {
+              updateProfile()
+            }}
           >
             Update Profile
           </Button>

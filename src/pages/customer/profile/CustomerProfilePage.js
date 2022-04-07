@@ -2,30 +2,60 @@
 
 import React, { useEffect, useState } from 'react'
 import './CustomerProfilePage.css'
-import NavBar from '../../../components/professional/NavBar/NavBar'
 import PersonIcon from '@mui/icons-material/Person'
-import { Button, FormControl, TextField } from '@mui/material'
-import useWindowDimensions, { hasToken } from '../../../utils/scale'
+import { Button, FormControl, TextField, Tooltip } from '@mui/material'
+import useWindowDimensions, {
+  getCustomerUser,
+  getUserType,
+  hasToken,
+} from '../../../utils/scale'
 import { makeStyles } from '@mui/styles'
 import DialogAlert from '../../../components/DialogAlert'
 import swal from 'sweetalert'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as userAction from '../../../action/userAction'
+import ArrowBackIos from '@mui/icons-material/ArrowBackIos'
 
-const CustomerProfilePage = () => {
+const CustomerProfilePage = (props) => {
   const { width } = useWindowDimensions()
 
   const [isProfileMenuOpen, setisProfileMenuOpen] = useState(false)
   const [isAlertOpen, setIsAlertOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState('info')
+  const [profileImg, setProfileImg] = useState()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [mobileNo, setMobileNo] = useState('')
   const [about, setAbout] = useState('')
   const [address, setAddress] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [userData, setUserData] = useState()
 
   useEffect(() => {
-    if (!hasToken()) {
-      alert('Please login to continue')
-      window.location.href = '/'
+    if (!hasToken() || getUserType() !== 'customer') {
+      window.location.href = '/customer/notloggedin/'
+    } else {
+      var userInfo = getCustomerUser()
+      if (userInfo) {
+        userInfo = JSON.parse(userInfo)
+      }
+
+      props.action
+        .getCustomerUser(userInfo.email)
+        .then((res) => {
+          setUserData(res?.user)
+          setName(`${res?.user?.firstname} ${res?.user?.lastname}`)
+          setEmail(res?.user?.email)
+          setMobileNo(res?.user?.phoneno)
+          res?.user?.address && setAddress(res?.user?.address)
+          res?.user?.photoUrl && setProfileImg(res?.user?.photoUrl)
+          setAbout(res?.user?.about)
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
     }
 
     if (width > 800) {
@@ -52,6 +82,12 @@ const CustomerProfilePage = () => {
       case 'address':
         setAddress(value)
         break
+      case 'newpassword':
+        setPassword(value)
+        break
+      case 'confirmnewpass':
+        setConfirmPassword(value)
+        break
       default:
         break
     }
@@ -66,6 +102,78 @@ const CustomerProfilePage = () => {
     },
   }))
 
+  const handleFileChange = (event) => {
+    const { target } = event
+    const { files } = target
+
+    if (files && files[0]) {
+      var reader = new FileReader()
+
+      reader.onload = (event) => {
+        setProfileImg(event.target.result)
+      }
+
+      reader.readAsDataURL(files[0])
+    }
+  }
+
+  const changePassword = () => {
+    if (password === confirmPassword) {
+      const value = {
+        password: password.trim(),
+      }
+      props.action
+        .updateCustomerUser(email, value)
+        .then((res) => {
+          swal('Password updated successfully', '', 'success')
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
+    } else {
+      swal('Password does not match', '', 'error')
+    }
+  }
+
+  const updateProfile = () => {
+    const value = {
+      photoUrl: profileImg,
+      firstname: name.split(' ')[0],
+      lastname: name.split(' ')[1],
+      phoneno: mobileNo,
+      address: address,
+      about: about,
+    }
+    props.action
+      .updateCustomerUser(email, value)
+      .then((res) => {
+        swal('Profile updated successfully', '', 'success')
+      })
+      .catch((err) => {
+        swal('Profile update fails', '', 'error')
+      })
+  }
+
+  const deleteProfile = () => {
+    props.action
+      .deleteCustomerUser(email)
+      .then((res) => {
+        swal('Profile deleted successfully', '', 'success').then(() => {
+          logout()
+        })
+      })
+      .catch((err) => {
+        swal(err.message, '', 'error')
+      })
+  }
+
+  const logout = () => {
+    localStorage.removeItem('accesstoken')
+    localStorage.removeItem('usertype')
+    localStorage.removeItem('professional')
+    window.location.href = '/'
+  }
+
   const classes = useStyles()
 
   const profilePersonalDetailView = (isMenu) => {
@@ -75,51 +183,85 @@ const CustomerProfilePage = () => {
           <section className='profile-img'>
             {/* <PersonIcon fontSize='large' /> */}
             <img
-              src={require('../../../asserts/logo/app/Capture.JPG')}
+              src={
+                profileImg || require('../../../asserts/logo/app/Capture.JPG')
+              }
               alt='profile_image'
               width={'100%'}
               height={'100%'}
             />
           </section>
         </section>
+        <div style={{ flexDirection: 'column', display: 'flex' }}>
+          <input
+            id='car'
+            type='file'
+            accept='image/*'
+            capture='camera'
+            onChange={handleFileChange}
+            style={{
+              backgroundColor: 'red',
+              position: 'absolute',
+              alignSelf: 'center',
+              padding: '10px 10px',
+              marginTop: '5px',
+              opacity: 0,
+            }}
+          />
+          <div
+            style={{
+              alignSelf: 'center',
+              boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
+              backgroundColor: '#f1f1f1',
+              padding: '10px 10px',
+              marginTop: '5px',
+            }}
+          >
+            Upload Profile Image
+          </div>
+        </div>
 
         <FormControl sx={{ width: '92%', marginTop: '30px' }}>
           <section>
             <p className='profile-personal-title'>Name</p>
-            <TextField
-              required
-              variant='standard'
-              id='name'
-              type='text'
-              sx={{
-                width: '100%',
-                paddingTop: '10px',
-              }}
-              InputProps={{ style: { color: isMenu && 'white' } }}
-              className={isMenu && classes.textField}
-              value={name}
-              placeholder='Tom Holland'
-              onChange={handleChangeInput}
-            />
+            <Tooltip title='Not-editable'>
+              <TextField
+                required
+                variant='standard'
+                id='name'
+                type='text'
+                sx={{
+                  width: '100%',
+                  paddingTop: '10px',
+                }}
+                // InputProps={{ style: { color: isMenu && 'white' } }}
+                // className={isMenu && classes.textField}
+                value={name}
+                placeholder='Tom Holland'
+                // onChange={handleChangeInput}
+              />
+            </Tooltip>
           </section>
 
           <section>
             <p className='profile-personal-title'>Email</p>
-            <TextField
-              required
-              variant='standard'
-              id='email'
-              type='text'
-              sx={{
-                width: '100%',
-                paddingTop: '10px',
-              }}
-              InputProps={{ style: { color: isMenu && 'white' } }}
-              className={isMenu && classes.textField}
-              value={email}
-              placeholder='tomholland@gmail.com'
-              onChange={handleChangeInput}
-            />
+            <Tooltip title='Not-editable'>
+              <TextField
+                required
+                variant='standard'
+                id='email'
+                type='text'
+                sx={{
+                  width: '100%',
+                  paddingTop: '10px',
+                }}
+                // InputProps={{ style: { color: isMenu && 'white' } }}
+                // className={isMenu && classes.textField}
+                value={email}
+                placeholder='tomholland@gmail.com'
+                // onChange={handleChangeInput}
+              />
+            </Tooltip>
           </section>
 
           <section>
@@ -129,12 +271,13 @@ const CustomerProfilePage = () => {
               variant='standard'
               id='mobileno'
               type='text'
+              inputProps={{ maxLength: 10 }}
               sx={{
                 width: '100%',
                 paddingTop: '10px',
               }}
-              InputProps={{ style: { color: isMenu && 'white' } }}
-              className={isMenu && classes.textField}
+              // InputProps={{ style: { color: isMenu && 'white' } }}
+              // className={isMenu && classes.textField}
               value={mobileNo}
               placeholder='+19029029021'
               onChange={handleChangeInput}
@@ -152,8 +295,22 @@ const CustomerProfilePage = () => {
             },
           }}
           variant='contained'
+          onClick={() => logout()}
         >
           Logout
+        </Button>
+        <section></section>
+        <Button
+          sx={{
+            // color: 'white !important',
+            marginTop: '10px',
+            display: isMenu ? 'flex' : 'none',
+          }}
+          variant='text'
+          onClick={() => setisProfileMenuOpen(false)}
+        >
+          <ArrowBackIos fontSize='small' />
+          Go Back
         </Button>
       </section>
     )
@@ -218,9 +375,7 @@ const CustomerProfilePage = () => {
               dangerMode: true,
             }).then((willDelete) => {
               if (willDelete) {
-                swal('Account has been deleted successfully!', {
-                  icon: 'success',
-                })
+                deleteProfile()
               }
             })
           }}
@@ -257,7 +412,7 @@ const CustomerProfilePage = () => {
                 paddingTop: '10px',
               }}
               type='password'
-              value={name}
+              value={password}
               placeholder='********'
               onChange={handleChangeInput}
             />
@@ -274,7 +429,7 @@ const CustomerProfilePage = () => {
                 paddingTop: '10px',
               }}
               type='password'
-              value={email}
+              value={confirmPassword}
               placeholder='********'
               onChange={handleChangeInput}
             />
@@ -291,6 +446,7 @@ const CustomerProfilePage = () => {
             },
           }}
           variant='contained'
+          onClick={() => changePassword()}
         >
           Change
         </Button>
@@ -301,11 +457,6 @@ const CustomerProfilePage = () => {
   return (
     <>
       <section>
-        {width < 800 && (
-          <PersonIcon
-            onClick={() => setisProfileMenuOpen(!isProfileMenuOpen)}
-          />
-        )}
         {width > 800 && (
           <aside className='split left'>
             {profilePersonalDetailView(false)}
@@ -333,6 +484,11 @@ const CustomerProfilePage = () => {
               : 'split right'
           }
         >
+          {width < 800 && (
+            <Button onClick={() => setisProfileMenuOpen(true)}>
+              My Profile
+            </Button>
+          )}
           <section className='row-option'>
             <text
               className={
@@ -370,6 +526,9 @@ const CustomerProfilePage = () => {
               },
             }}
             variant='contained'
+            onClick={() => {
+              updateProfile()
+            }}
           >
             Update Profile
           </Button>
@@ -379,4 +538,18 @@ const CustomerProfilePage = () => {
   )
 }
 
-export default CustomerProfilePage
+function mapStateToProps(state) {
+  if (state) {
+    return {
+      userInfo: state.user,
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    action: bindActionCreators(userAction, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerProfilePage)

@@ -17,7 +17,11 @@ import { v4 as uuidv4 } from 'uuid'
 import { connect } from 'react-redux'
 import Loader from '../../../components/customloader/Loader'
 import NavBar from '../../../components/professional/NavBar/NavBar'
-import useWindowDimensions, { hasToken } from '../../../utils/scale'
+import useWindowDimensions, {
+  getProfessionalUser,
+  getUserType,
+  hasToken,
+} from '../../../utils/scale'
 import AddIcon from '@mui/icons-material/Add'
 import * as ServiceAction from '../../../action/ServiceAction'
 import * as serviceCategoryAction from '../../../action/serviceCategoryAction'
@@ -61,9 +65,8 @@ const AddService = (props) => {
   const classes = useStyles()
 
   useEffect(() => {
-    if (!hasToken()) {
-      window.location.href = '/'
-      alert('Please login to continue')
+    if (!hasToken() || getUserType() !== 'professional') {
+      window.location.href = '/notloggedin/'
     }
 
     if (
@@ -186,6 +189,11 @@ const AddService = (props) => {
   }
 
   const onAddService = () => {
+    var userInfo = getProfessionalUser()
+    if (userInfo) {
+      userInfo = JSON.parse(userInfo)
+    }
+
     const serviceObj = {
       serviceId: uuidv4(),
       serviceCategory: category,
@@ -195,7 +203,8 @@ const AddService = (props) => {
       // serviceCost: cost,
       serviceImage: photos,
       serviceDescription: description,
-      userId: 'd86aa655-fe4a-40ee-af69-67718d7ec759',
+      userId: userInfo?._id,
+      //'d86aa655-fe4a-40ee-af69-67718d7ec759',
     }
 
     setServiceLoading(true)

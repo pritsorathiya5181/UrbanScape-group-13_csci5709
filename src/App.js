@@ -25,8 +25,12 @@ import CarpenterService from './pages/customer/ServicePage/CarpenterService'
 import PlumbingService from './pages/customer/ServicePage/PlumbingService'
 import Contact from './pages/customer/Support/Contact'
 import NotLoggedIn from './pages/customer/profile/NotLoggedIn'
+import AddReview from './components/UserReviews/AddReview'
+import DisplayReview from './components/UserReviews/DisplayReview'
 
 import MyOrders from '../src/pages/customer/Orders/MyOrders'
+import Payment from './pages/customer/Payment/Payment'
+import BookingConfirmed from './pages/customer/Payment/BookingConfirmed'
 
 function App() {
   const url = window.location.pathname
@@ -48,8 +52,15 @@ function App() {
             path='/customer/myprofile/'
             element={<CustomerProfilePage />}
           />
-          <Route exact path='/customer/cartpage/' element={<CartPage />} />
-          <Route exact path='/customer/unauthenticated/' element={<NotLoggedIn />} />
+          <Route exact path='/cartpage/' element={<CartPage />} />
+          <Route exact path='/payment/' element={<Payment />} />
+          <Route exact path='/success/' element={<BookingConfirmed />} />
+          <Route
+            exact
+            path='/customer/unauthenticated/'
+            element={<NotLoggedIn />}
+          />
+          <Route exact path='/notloggedin/' element={<NotLoggedIn />} />
 
           <Route exact path='/professional' element={<Dashboard />} />
           <Route
@@ -90,8 +101,9 @@ function App() {
           <Route path='/otp' element={<Otp />} />
           <Route path='/updatepassword' element={<UpdatePassword />} />
 
-          <Route path='/myorders' element={<MyOrders/>} />
-
+          <Route path='/myorders' element={<MyOrders />} />
+          <Route path='/addreview' element={<AddReview />} />
+          <Route path='/displayReview' element={<DisplayReview />} />
         </Routes>
       </Router>
     </Provider>

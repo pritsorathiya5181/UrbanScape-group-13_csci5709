@@ -1,7 +1,13 @@
 /*  Author: Prit Ajaykumar Sorathiya - B00890175 */
 
 //customer- navbar
-export const PAGES = ['Services', 'Offers', 'Reviews', 'FAQs', 'Support']
+export const PAGES = [
+  'Services',
+  // 'Offers',
+  'Reviews',
+  // 'FAQs',
+  'Support',
+]
 export const PROFILE_SETTINGS_WITHOUT_TOKEN = [
   'Login As Customer/Professional',
   'Signup As Professional',
@@ -16,7 +22,11 @@ export const PROFILE_SETTINGS_WITH_TOKEN = [
 ]
 
 //professional-navbar
-export const PROFESSIONAL_PAGES = ['Services', 'Schedule']
+export const PROFESSIONAL_PAGES = [
+  'Services',
+  'Service History',
+  // 'Schedule'
+]
 export const PROFESSIONAL_PROFILE_SETTINGS = ['My Profile', 'Logout']
 
 //professional-servicerequest-listing-tableheaders

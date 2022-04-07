@@ -62,11 +62,7 @@ function CarpenterService(props) {
             </Grid>
           )
         })}
-        {/* <Calendar></Calendar> */}
       </Grid>
-      {/* <Button className={classes.button} variant='contained' color='primary'>
-        Book Service
-      </Button> */}
     </div>
   )
 }

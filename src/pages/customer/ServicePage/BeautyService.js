@@ -3,12 +3,8 @@
  */
 import React from 'react'
 import ServiceCard from './ServiceCard'
-import headMassageImage from '../../../asserts/images/head-massage.jpg'
-import facialImage from '../../../asserts/images/facial.jpg'
-import haircutImage from '../../../asserts/images/haircut.jpg'
-import Calendar from '../../../components/customer/DateTimePicker/Calendar'
 import * as serviceCategoryAction from '../../../action/serviceCategoryAction'
-import { Button, Grid, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { useEffect, useState } from 'react'
 import { bindActionCreators } from 'redux'
@@ -66,11 +62,7 @@ function BeautyService(props) {
             </Grid>
           )
         })}
-        {/* <Calendar></Calendar> */}
       </Grid>
-      {/* <Button className={classes.button} variant='contained' color='primary'>
-        Book Service
-      </Button> */}
     </div>
   )
 }
