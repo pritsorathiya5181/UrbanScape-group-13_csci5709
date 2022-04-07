@@ -1,4 +1,6 @@
-/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'

@@ -1,4 +1,6 @@
-/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 import React, { useEffect, useState } from 'react'
 import swal from 'sweetalert'
@@ -17,9 +19,11 @@ import {
   hasToken,
 } from '../../../utils/scale'
 
+/**
+ * ServiceRequest Component is used to display the list of service requests
+ */
 const ServiceRequests = (props) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false)
-  // const reduxStates = useSelector((state) => state.services)
 
   const [serviceRequests, setServiceRequests] = useState(
     props?.serviceStatsData?.pendingRequests || []

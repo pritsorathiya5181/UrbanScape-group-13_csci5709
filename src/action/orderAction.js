@@ -2,6 +2,11 @@ import { getProfessionalUser } from '../utils/scale'
 import { BASE_URL } from '../utils/string'
 import { getCustomerUser } from '../utils/scale'
 
+/**
+ *
+ * @param {*} serviceItem - service object to be approved
+ * approveServiceRequest() makes a POST call to Nodejs backend api to approve the service request
+ */
 export function approveServiceRequest(serviceItem) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -61,6 +66,11 @@ export function approveServiceRequest(serviceItem) {
   }
 }
 
+/**
+ *
+ * @param {*} serviceItem - service object to be cancelled
+ * cancelServiceRequest() makes a POST call to Nodejs backend api to cancel the service request
+ */
 export function cancelServiceRequest(serviceItem) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -117,6 +127,11 @@ export function cancelServiceRequest(serviceItem) {
   }
 }
 
+/**
+ *
+ * @param {*} cart - cart object to be added
+ * saveOrderRequest() makes a POST call to Nodejs backend api to save the order request in MongoDB database
+ */
 export function saveOrderRequest(cart) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {

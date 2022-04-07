@@ -1,8 +1,9 @@
-/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 import React, { useEffect, useState } from 'react'
 import './CustomerProfilePage.css'
-import PersonIcon from '@mui/icons-material/Person'
 import { Button, FormControl, TextField, Tooltip } from '@mui/material'
 import useWindowDimensions, {
   getCustomerUser,
@@ -17,6 +18,9 @@ import { connect } from 'react-redux'
 import * as userAction from '../../../action/userAction'
 import ArrowBackIos from '@mui/icons-material/ArrowBackIos'
 
+/**
+ * CustomerProfilePage Component is used to display the customer profile details
+ */
 const CustomerProfilePage = (props) => {
   const { width } = useWindowDimensions()
 
@@ -174,14 +178,11 @@ const CustomerProfilePage = (props) => {
     window.location.href = '/'
   }
 
-  const classes = useStyles()
-
   const profilePersonalDetailView = (isMenu) => {
     return (
       <section className='profile-view'>
         <section className='profile-img-view'>
           <section className='profile-img'>
-            {/* <PersonIcon fontSize='large' /> */}
             <img
               src={
                 profileImg || require('../../../asserts/logo/app/Capture.JPG')
@@ -234,11 +235,8 @@ const CustomerProfilePage = (props) => {
                   width: '100%',
                   paddingTop: '10px',
                 }}
-                // InputProps={{ style: { color: isMenu && 'white' } }}
-                // className={isMenu && classes.textField}
                 value={name}
                 placeholder='Tom Holland'
-                // onChange={handleChangeInput}
               />
             </Tooltip>
           </section>
@@ -255,11 +253,8 @@ const CustomerProfilePage = (props) => {
                   width: '100%',
                   paddingTop: '10px',
                 }}
-                // InputProps={{ style: { color: isMenu && 'white' } }}
-                // className={isMenu && classes.textField}
                 value={email}
                 placeholder='tomholland@gmail.com'
-                // onChange={handleChangeInput}
               />
             </Tooltip>
           </section>
@@ -276,8 +271,6 @@ const CustomerProfilePage = (props) => {
                 width: '100%',
                 paddingTop: '10px',
               }}
-              // InputProps={{ style: { color: isMenu && 'white' } }}
-              // className={isMenu && classes.textField}
               value={mobileNo}
               placeholder='+19029029021'
               onChange={handleChangeInput}
@@ -302,7 +295,6 @@ const CustomerProfilePage = (props) => {
         <section></section>
         <Button
           sx={{
-            // color: 'white !important',
             marginTop: '10px',
             display: isMenu ? 'flex' : 'none',
           }}
@@ -366,7 +358,6 @@ const CustomerProfilePage = (props) => {
           color='error'
           variant='contained'
           onClick={() => {
-            // setIsAlertOpen(true)
             swal({
               title: 'Delete Account',
               text: 'Are you sure want to delete the account?',

@@ -34,19 +34,22 @@ const useStyles = makeStyles({
 
 function CarpenterService(props) {
   const classes = useStyles()
-  const [carpentryServices, setCarpentryServices] = useState([]);
-  const serviceCategoryName = 'Carpentry';
+  const [carpentryServices, setCarpentryServices] = useState([])
+  const serviceCategoryName = 'Carpentry'
 
   useEffect(() => {
-    props.action.getServices().then((res) => {
-      let servicesOffered = res.serviceCategories.filter(serviceCategory => serviceCategory.serviceCategory === 'Carpentry');
-      setCarpentryServices(servicesOffered[0].services);
-      
-     })
-     .catch((err) => {
-       console.log('Add Cart Item Error', err)
-     })
-}, [])
+    props.action
+      .getServices()
+      .then((res) => {
+        let servicesOffered = res.serviceCategories.filter(
+          (serviceCategory) => serviceCategory.serviceCategory === 'Carpentry'
+        )
+        setCarpentryServices(servicesOffered[0].services)
+      })
+      .catch((err) => {
+        console.log('Add Cart Item Error', err)
+      })
+  }, [])
   return (
     <div className={classes.header}>
       <Typography style={{ textAlign: 'center', padding: '20px' }} variant='h3'>
@@ -57,7 +60,10 @@ function CarpenterService(props) {
           return (
             <Grid item xs={12} sm={6} md={3}>
               <div>
-                <ServiceCard services={carpentryService} serviceCategory={serviceCategoryName}/>
+                <ServiceCard
+                  services={carpentryService}
+                  serviceCategory={serviceCategoryName}
+                />
               </div>
             </Grid>
           )
@@ -70,7 +76,7 @@ function CarpenterService(props) {
 function mapStateToProps(state) {
   if (state) {
     return {
-      serviceCategories: state.serviceCategories
+      serviceCategories: state.serviceCategories,
     }
   }
 }

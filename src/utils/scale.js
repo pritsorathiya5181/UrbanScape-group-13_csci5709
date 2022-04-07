@@ -1,4 +1,6 @@
-/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 import { useState, useEffect } from 'react'
 import { css } from 'styled-components'

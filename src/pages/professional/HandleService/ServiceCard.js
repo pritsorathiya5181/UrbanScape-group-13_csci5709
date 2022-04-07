@@ -1,4 +1,6 @@
-/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 import React, { useState } from 'react'
 import Card from '@mui/material/Card'
@@ -12,6 +14,9 @@ import useWindowDimensions from '../../../utils/scale'
 import { useNavigate } from 'react-router-dom'
 import * as PATH from '../../../utils/string'
 
+/**
+ * ServiceCard Component - Displays the service card
+ */
 const ServiceCard = ({ item }) => {
   const navigate = useNavigate()
   const { width } = useWindowDimensions()
@@ -104,10 +109,6 @@ const ServiceCard = ({ item }) => {
           {adjustContent(item.serviceDescription)}
         </Typography>
       </CardContent>
-      {/* <CardActions>
-        <Button size='small'>Share</Button>
-        <Button size='small'>Learn More</Button>
-      </CardActions> */}
     </Card>
   )
 }

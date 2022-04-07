@@ -1,4 +1,6 @@
-/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 import React, { useEffect, useState } from 'react'
 import './ProfessionalProfilePage.css'
@@ -17,6 +19,9 @@ import * as userAction from '../../../action/userAction'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+/**
+ * ProfessionalProfilePage Component is used to display the professional profile details
+ */
 const ProfessionalProfilePage = (props) => {
   const { width } = useWindowDimensions()
 

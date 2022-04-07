@@ -1,4 +1,6 @@
-/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 import React, { useEffect, useState } from 'react'
 import NavBar from '../../../components/professional/NavBar/NavBar'
@@ -17,6 +19,9 @@ import {
   hasToken,
 } from '../../../utils/scale'
 
+/**
+ * ServiceHistory Component is used to display processed services of the professional
+ */
 const ServiceHistory = (props) => {
   const { state } = useLocation()
 

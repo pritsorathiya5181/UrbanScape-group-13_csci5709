@@ -1,5 +1,16 @@
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
+
 import { BASE_URL } from '../utils/string'
 
+/**
+ *
+ * @param {*} email - registred email address
+ * @param {*} password - registred password
+ * userLogin() makes a POST call to Nodejs backend api to login the user with the given email and
+ * password from the MongoDB database
+ */
 export function userLogin(email, password) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -47,6 +58,11 @@ export function userLogin(email, password) {
   }
 }
 
+/**
+ *
+ * @param {*} email - registred email address of the professional
+ * getProfessionalUser() makes a GET call to Nodejs backend api to get the professional user details
+ */
 export function getProfessionalUser(email) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -94,6 +110,13 @@ export function getProfessionalUser(email) {
   }
 }
 
+/**
+ *
+ * @param {*} email - registred email address of the professional
+ * @param {*} value - updated profile details of the professional user
+ * updateProfessionalUser() makes a PUT call to Nodejs backend api to update the professional user details
+ * from the MongoDB database
+ */
 export function updateProfessionalUser(email, value) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -148,6 +171,12 @@ export function updateProfessionalUser(email, value) {
   }
 }
 
+/**
+ *
+ * @param {*} email - registred email address of the professional
+ * deleteProfessionalUser() makes a DELETE call to Nodejs backend api to delete the professional details
+ * from the MongoDB database
+ */
 export function deleteProfessionalUser(email) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -194,6 +223,11 @@ export function deleteProfessionalUser(email) {
   }
 }
 
+/**
+ *
+ * @param {*} email - registred email address of the customer
+ * getCustomerUser() makes a GET call to Nodejs backend api to get the customer user details from the MongoDB database
+ */
 export function getCustomerUser(email) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -241,6 +275,13 @@ export function getCustomerUser(email) {
   }
 }
 
+/**
+ *
+ * @param {*} email - registred email address of the customer
+ * @param {*} value - updated profile details of the customer user
+ * updateCustomerUser() makes a PUT call to Nodejs backend api to update the customer user details
+ * from the MongoDB database
+ */
 export function updateCustomerUser(email, value) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -295,6 +336,12 @@ export function updateCustomerUser(email, value) {
   }
 }
 
+/**
+ *
+ * @param {*} email - registred email address of the customer
+ * deleteCustomerUser() makes a DELETE call to Nodejs backend api to delete the customer details
+ * from the MongoDB database
+ */
 export function deleteCustomerUser(email) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {

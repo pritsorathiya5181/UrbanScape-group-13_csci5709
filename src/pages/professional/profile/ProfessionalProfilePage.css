@@ -1,4 +1,6 @@
-/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 .split {
   height: 100%;
@@ -37,7 +39,6 @@
 .menu {
   left: 0;
   width: 100%;
-  /* background-color: var(--theme-white) !important; */
   transition: all 1s ease-in;
   color: var(--theme-black);
 }

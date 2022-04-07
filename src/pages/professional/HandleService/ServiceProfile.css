@@ -1,10 +1,11 @@
-/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 .title-view {
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* background-color: white !important; */
 }
 
 .page-title {

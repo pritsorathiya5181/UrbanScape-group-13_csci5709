@@ -1,4 +1,6 @@
-/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -26,17 +28,17 @@ import AddIcon from '@mui/icons-material/Add'
 import * as ServiceAction from '../../../action/ServiceAction'
 import * as serviceCategoryAction from '../../../action/serviceCategoryAction'
 import * as PATH from '../../../utils/string'
-import { SERVICE_CATEGORY } from '../../../utils/service'
 
+/**
+ * AddService Component is used to add new service
+ */
 const AddService = (props) => {
   const navigate = useNavigate()
   const { state } = useLocation()
-
   const { width } = useWindowDimensions()
 
   const [category, setCategory] = useState('')
   const [serviceName, setServiceName] = useState('')
-  // const [cost, setCost] = useState('')
   const [location, setLocation] = useState('')
   const [fromTime, setFromTime] = useState('')
   const [toTime, setToTime] = useState('')
@@ -72,11 +74,8 @@ const AddService = (props) => {
     if (
       category?.length > 0 &&
       serviceName?.length > 0 &&
-      // cost.length > 0 &&
       photos.length > 1 &&
       location.length > 0 &&
-      // fromTime.length > 0 &&
-      // toTime.length > 0 &&
       description.length > 0
     ) {
       setIsDisabled(false)
@@ -89,7 +88,6 @@ const AddService = (props) => {
 
       setCategory(category || data?.serviceCategory)
       setServiceName(serviceName || data?.serviceName)
-      // setCost(cost || data?.serviceCost)
       photos.length > 1
         ? setPhotos(photos || data?.serviceImage)
         : setPhotos(data?.serviceImage)
@@ -99,7 +97,6 @@ const AddService = (props) => {
   }, [
     category,
     serviceName,
-    // cost,
     photos,
     location,
     fromTime,
@@ -133,23 +130,14 @@ const AddService = (props) => {
   const handleChangeInput = (event) => {
     const value = event.target.value
     switch (event.target.id) {
-      // case 'cost':
-      //   if (/^[0-9]*$/.test(value)) {
-      //     setCost(value)
-      //   } else {
-      //     setCost('')
-      //   }
-      //   break
       case 'location':
         setLocation(value)
         break
       case 'FromTime':
-        // setFromTime(convertTo12hours(value))
         setFromTime(value)
         break
       case 'ToTime':
         setToTime(value)
-        // setToTime(convertTo12hours(value))
         break
       case 'description':
         setDescription(value)
@@ -157,15 +145,6 @@ const AddService = (props) => {
       default:
         break
     }
-  }
-
-  const convertTo12hours = (timeIn24) => {
-    var hours = timeIn24.split(':')[0] // gives the value in 24 hours format
-    var AmOrPm = hours >= 12 ? 'pm' : 'am'
-    hours = hours % 12 || 12
-    var minutes = timeIn24.split(':')[1]
-    var finalTime = hours + ':' + minutes + ' ' + AmOrPm
-    return finalTime
   }
 
   const handleFileChange = (event) => {
@@ -199,12 +178,9 @@ const AddService = (props) => {
       serviceCategory: category,
       serviceName: serviceName,
       serviceLocation: location,
-      // serviceTime: fromTime + '-' + toTime,
-      // serviceCost: cost,
       serviceImage: photos,
       serviceDescription: description,
       userId: userInfo?._id,
-      //'d86aa655-fe4a-40ee-af69-67718d7ec759',
     }
 
     setServiceLoading(true)
@@ -226,7 +202,6 @@ const AddService = (props) => {
       serviceCategory: category,
       serviceName: serviceName,
       serviceLocation: location,
-      // serviceCost: cost,
       serviceImage: photos,
       serviceDescription: description,
     }
@@ -289,13 +264,11 @@ const AddService = (props) => {
             <section className='row'>
               <p className='serviceTitle'>Category</p>
               <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>
-                {/* <InputLabel id='demo-simple-select-helper-label'>Age</InputLabel> */}
                 <Select
                   displayEmpty
                   labelId='demo-simple-select-helper-label'
                   id='demo-simple-select-helper'
                   value={category}
-                  // label='Age'
                   onChange={onSelectCategory}
                   placeholder='Select Category'
                 >
@@ -317,13 +290,11 @@ const AddService = (props) => {
             <section className='row'>
               <p className='serviceTitle'>Name</p>
               <FormControl sx={{ width: getWidth(), textAlign: 'left' }}>
-                {/* <InputLabel id='demo-simple-select-helper-label'>Age</InputLabel> */}
                 <Select
                   displayEmpty
                   labelId='demo-simple-select-helper-label'
                   id='demo-simple-select-helper'
                   value={serviceName}
-                  // label='Age'
                   onChange={onSelectServiceName}
                   placeholder='Select Category'
                 >
@@ -345,23 +316,7 @@ const AddService = (props) => {
                 </Select>
               </FormControl>
             </section>
-            {/* <section className='row'>
-              <p className='serviceTitle'>Cost</p>
-              <TextField
-                required
-                sx={{ width: getWidth() }}
-                id='cost'
-                type='text'
-                value={cost}
-                placeholder='Service cost (e.g. 10, 20)'
-                InputProps={{
-                  classes: {
-                    input: classes.input,
-                  },
-                }}
-                onChange={handleChangeInput}
-              />
-            </section> */}
+
             <section className='row'>
               <p className='serviceTitle'>Photos</p>
               <div
@@ -395,7 +350,6 @@ const AddService = (props) => {
                         className='fileInput'
                       />
                       <div key={item.photoId} className='addImage'>
-                        {/* <i className='fas fa-plus fa-lg' /> */}
                         <AddIcon fontSize='large' />
                       </div>
                     </div>
@@ -403,6 +357,7 @@ const AddService = (props) => {
                 })}
               </div>
             </section>
+
             <section className='row'>
               <p className='serviceTitle'>Location</p>
               <TextField
@@ -415,39 +370,7 @@ const AddService = (props) => {
                 onChange={handleChangeInput}
               />
             </section>
-            {/* <section className='row'>
-            <p className='serviceTitle'>Time</p>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                width: getWidth(),
-              }}
-            >
-              <Tooltip title='From Time (e.g. 10.15 AM)'>
-                <TextField
-                  required
-                  sx={{ width: getWidth() / 2.1 }}
-                  id='FromTime'
-                  type='time'
-                  value={fromTime}
-                  placeholder='From'
-                  onChange={handleChangeInput}
-                />
-              </Tooltip>
-              <Tooltip title='To Time (e.g. 11.15 AM)'>
-                <TextField
-                  required
-                  sx={{ width: getWidth() / 2.1 }}
-                  id='ToTime'
-                  type='time'
-                  value={toTime}
-                  placeholder='To'
-                  onChange={handleChangeInput}
-                />
-              </Tooltip>
-            </div>
-          </section> */}
+
             <section className='row'>
               <p className='serviceTitle'>Description</p>
               <TextField
@@ -473,7 +396,6 @@ const AddService = (props) => {
                   }
                 >
                   <Button
-                    // disabled={isDisabled}
                     sx={{
                       width: width < 600 ? 320 : 170,
                       backgroundColor: '#1e88e5',

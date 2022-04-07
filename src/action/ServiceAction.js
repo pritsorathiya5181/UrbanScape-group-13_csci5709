@@ -1,5 +1,15 @@
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
+
 import { BASE_URL } from '../utils/string'
 
+/**
+ *
+ * @param {*} userId - user id of the logged in user
+ * getRecords() makes a GET call to Nodejs backend api to get all the service records of the
+ * logged in user from MongoDB database
+ */
 export function getRecords(userId) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -40,6 +50,11 @@ export function getRecords(userId) {
   }
 }
 
+/**
+ *
+ * @param {*} value - new service object
+ * addService() makes a POST call to Nodejs backend api to save the new service to the MongoDB database
+ */
 export function addService(value) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -85,6 +100,12 @@ export function addService(value) {
   }
 }
 
+/**
+ *
+ * @param {*} value -service's update value object
+ * @param {*} serviceId - service id of the service to be updated
+ * updateService() makes a PUT call to Nodejs backend api to update the service to the MongoDB database
+ */
 export function updateService(value, serviceId) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -130,6 +151,11 @@ export function updateService(value, serviceId) {
   }
 }
 
+/**
+ *
+ * @param {*} serviceId - service id of the service to be deleted
+ * deleteService() makes a DELETE call to Nodejs backend api to delete the service to the MongoDB database
+ */
 export function deleteService(serviceId) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {
@@ -167,6 +193,12 @@ export function deleteService(serviceId) {
   }
 }
 
+/**
+ *
+ * @param {*} userId - user id of the logged in user
+ * @param {*} userEmail - user email of the logged in user
+ * getServiceStats() makes a GET call to Nodejs backend api to get the service stats of the logged in user
+ */
 export function getServiceStats(userId, userEmail) {
   return function (dispatch, getState) {
     return new Promise(async (resolve, rejects) => {

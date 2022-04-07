@@ -1,4 +1,6 @@
-// Author: Prit Ajaykumar Sorathiya - B00890175
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'

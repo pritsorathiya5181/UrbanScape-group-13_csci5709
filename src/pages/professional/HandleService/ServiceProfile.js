@@ -1,4 +1,6 @@
-/*  Author: Prit Ajaykumar Sorathiya - B00890175 */
+/**
+ * Author: Prit Ajaykumar Sorathiya - B00890175
+ */
 
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -17,6 +19,9 @@ import * as PATH from '../../../utils/string'
 import * as ServiceAction from '../../../action/ServiceAction'
 import Loader from '../../../components/customloader/Loader'
 
+/**
+ * ServiceProfile Component is used to display the list of services
+ */
 const ServiceProfile = (props) => {
   const navigate = useNavigate()
   const { width } = useWindowDimensions()
@@ -52,7 +57,6 @@ const ServiceProfile = (props) => {
     getServices()
   }, [])
 
-  // setServices(servicesList)
   const navigateAddService = () => {
     navigate(`${PATH.partnerBaseUrl}/addservice`)
   }
