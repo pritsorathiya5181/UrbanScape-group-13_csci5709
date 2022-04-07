@@ -18,7 +18,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { useState } from 'react'
 import { BASE_URL } from '../../utils/string'
 
-
 const theme = createTheme()
 
 export default function SignUpUser() {
@@ -83,7 +82,9 @@ export default function SignUpUser() {
   const handlePassword = (event) => {
     const Password = event.target.value
     if (!validatePwd(Password)) {
-      setPasswordError('Should have alphanumeric characters and atleast one special character')
+      setPasswordError(
+        'Should have alphanumeric characters and atleast one special character'
+      )
     } else if (Password.length < 8) {
       setPasswordError('Minimum 8 characters are required')
     } else {
@@ -138,6 +139,7 @@ export default function SignUpUser() {
     var myHeaders = new Headers()
     myHeaders.append('Content-Type', 'application/json')
 
+    const fname = data.get('firstname')
     var raw = JSON.stringify({
       firstname: data.get('firstname'),
       lastname: data.get('lastname'),
@@ -158,6 +160,16 @@ export default function SignUpUser() {
       .then((result) => {
         console.log(result)
         if (result.success) {
+          var cartRequestOption = {
+            method: 'PUT',
+            redirect: 'follow',
+          }
+
+          fetch(`${BASE_URL}cart/${fname}`, cartRequestOption)
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.log('error', error))
+
           window.location.href = '/userlogin'
         } else {
           alert(result.message)
