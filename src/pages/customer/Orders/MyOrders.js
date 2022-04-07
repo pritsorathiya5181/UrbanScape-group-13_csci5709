@@ -1,93 +1,59 @@
-import React, { useMemo, useState, useEffect } from "react";
-import axios from 'axios';
+import React, { useMemo, useState, useEffect } from 'react'
+import './MyOrders.css'
+import { BASE_URL } from '../../../utils/string'
+import StickyHeadTable from './StickyHeadTable'
+import { getCustomerUser, getUserType, hasToken } from '../../../utils/scale'
 
-import "./MyOrders.css";
-import Table from "./OrdersTable";
+export default function MyOrders() {
+  const [data, setData] = useState([])
 
-const Genres = ({ values }) => {
-    return (
-      <>
-        {values.map((genre, idx) => {
-          return (
-            <span key={idx} className="badge">
-              {genre}
-            </span>
-          );
-        })}
-      </>
-    );
-  };
+  useEffect(() => {
+    ;(async () => {
+      if (!hasToken() || getUserType() !== 'customer') {
+        window.location.href = '/customer/notloggedin/'
+      } else {
+        var userInfo = getCustomerUser()
+        if (userInfo) {
+          userInfo = JSON.parse(userInfo)
+        }
 
-  export default function MyOrders(){
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow',
+        }
 
-    const columns = useMemo(
-        () => [
-          {
-            // first group - TV Show
-            Header: "TV Show",
-            // First group columns
-            columns: [
-              {
-                Header: "Name",
-                accessor: "show.name"
-              },
-              {
-                Header: "Type",
-                accessor: "show.type"
-              }
-            ]
-          },
-          {
-            // Second group - Details
-            Header: "Details",
-            // Second group columns
-            columns: [
-              {
-                Header: "Language",
-                accessor: "show.language"
-              },
-              {
-                Header: "Genre(s)",
-                accessor: "show.genres",
-                Cell: ({ cell: { value } }) => <Genres values={value} />
-              },
-              {
-                Header: "Runtime",
-                accessor: "show.runtime",
-                Cell: ({ cell: { value } }) => {
-                  const hour = Math.floor(value / 60);
-                  const min = Math.floor(value % 60);
-                  return (
-                    <>
-                      {hour > 0 ? `${hour} hr${hour > 1 ? "s" : ""} ` : ""}
-                      {min > 0 ? `${min} min${min > 1 ? "s" : ""}` : ""}
-                    </>
-                  );
-                }
-              },
-              {
-                Header: "Status",
-                accessor: "show.status"
-              }
-            ]
-          }
-        ],
-        []
-      );
+        fetch(`${BASE_URL}order/`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result)
+            setData(
+              result?.orders?.filter(
+                (item) => item.userName === userInfo?.firstname
+              )
+            )
+          })
+          .catch((error) => console.log('error', error))
+      }
+    })()
+  }, [])
 
-      const [data, setData] = useState([]);
-
-      useEffect(() => {
-        (async () => {
-          const result = await axios("https://api.tvmaze.com/search/shows?q=snow");
-          setData(result.data);
-        })();
-      }, []);
-
-      return (
-        <div className="MyOrders">
-          <Table columns={columns} data={data} />
-        </div>
-      );
-
-  }
+  return (
+    <div className='MyOrders'>
+      {data?.length > 0 ? (
+        <StickyHeadTable orderData={data} />
+      ) : (
+        <section
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <h1>You haven't order anything yet!</h1>
+        </section>
+      )}
+    </div>
+  )
+}
