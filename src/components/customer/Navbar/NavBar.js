@@ -30,7 +30,7 @@ const NavBar = () => {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1
+      flexGrow: 1,
     },
     toolbar: {
       height: '50px',
@@ -90,13 +90,12 @@ const NavBar = () => {
   }
 
   const handlePageClicks = (pages) => {
-    if(pages === 'Support') {
-      navigate("/support")
-    } 
+    if (pages === 'Support') {
+      navigate('/support')
+    }
     handleCloseNavMenu()
   }
 
-  
   const onProfileOptionClick = (item) => {
     console.log(item)
     if (item === 'Login As Customer/Professional') {
@@ -112,7 +111,7 @@ const NavBar = () => {
         alert('Please login in to continue')
       }
     } else if (item === 'My Order History') {
-      // window.location.href = '/professional/servicehistory/'
+      window.location.href = '/myorders'
     } else if (item === 'Logout') {
       localStorage.removeItem('accesstoken')
       localStorage.removeItem('usertype')
@@ -121,7 +120,6 @@ const NavBar = () => {
     handleCloseUserMenu()
   }
 
-  
   const openMenu = Boolean(serviceOption)
 
   const renderAppIconView = () => {
@@ -154,7 +152,9 @@ const NavBar = () => {
             <Button
               key={index.toString()}
               //   onClick={handleCloseNavMenu}
-              onClick={page === 'Services' ? handleClick : () => handlePageClicks(page)}
+              onClick={
+                page === 'Services' ? handleClick : () => handlePageClicks(page)
+              }
               sx={{
                 my: 2,
                 color: 'white',
@@ -208,7 +208,12 @@ const NavBar = () => {
           }}
         >
           {MENU.PAGES.map((page) => (
-            <MenuItem key={page} onClick={page === 'Services' ? handleClick : () => handlePageClicks(page)}>
+            <MenuItem
+              key={page}
+              onClick={
+                page === 'Services' ? handleClick : () => handlePageClicks(page)
+              }
+            >
               <Typography textAlign='center'>{page}</Typography>
               {page === 'Services' && <ArrowDropDownIcon />}
             </MenuItem>
@@ -229,8 +234,8 @@ const NavBar = () => {
       >
         <Tooltip title='Open cart'>
           <IconButton sx={{ paddingRight: 1 }} onClick={navigateToCart}>
-          <Badge color="secondary" badgeContent={0}>
-            <ShoppingCartIcon fontSize='large' sx={{ color: 'white' } } />
+            <Badge color='secondary' badgeContent={0}>
+              <ShoppingCartIcon fontSize='large' sx={{ color: 'white' }} />
             </Badge>
           </IconButton>
         </Tooltip>
@@ -300,7 +305,7 @@ const NavBar = () => {
   }
 
   return (
-    <AppBar position='static' style={{backgroundColor: "#2a2a2a"}}>
+    <AppBar position='static' style={{ backgroundColor: '#2a2a2a' }}>
       <Container maxWidth='100%'>
         <Toolbar disableGutters className={classes.toolbar}>
           <Box
