@@ -106,6 +106,13 @@
 - src/store/store.js
 
 ```
+### Feature (Payment)
+#### Author - Aeshna Verma
+```
+- src/pages/customer/Payment/Payment.js
+- src/pages/customer/Payment/BookingConfirmed.js
+
+```
 ## Getting Started
 
 ### Prerequisites
